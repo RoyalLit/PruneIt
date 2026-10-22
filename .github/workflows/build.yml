@@ -27,8 +27,8 @@ jobs:
       - name: Build (unsigned)
         run: |
           xcodebuild clean build \
-            -project purge.xcodeproj \
-            -scheme purge \
+            -project PruneIt.xcodeproj \
+            -scheme PruneIt \
             -configuration Release \
             -destination 'platform=macOS' \
             CODE_SIGN_IDENTITY="" \
@@ -40,11 +40,11 @@ jobs:
         run: |
           mkdir -p TestResults
           xcodebuild test \
-            -project purge.xcodeproj \
-            -scheme purge \
+            -project PruneIt.xcodeproj \
+            -scheme PruneIt \
             -destination 'platform=macOS' \
-            -skip-testing:PurgeTests/ProcessRunnerTests \
-            -skip-testing:PurgeTests/FolderSizingConcurrencyTests \
+            -skip-testing:PruneItTests/ProcessRunnerTests \
+            -skip-testing:PruneItTests/FolderSizingConcurrencyTests \
             -resultBundlePath TestResults/UnitTests.xcresult \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
@@ -54,10 +54,10 @@ jobs:
         timeout-minutes: 10
         run: |
           xcodebuild test \
-            -project purge.xcodeproj \
-            -scheme purge \
+            -project PruneIt.xcodeproj \
+            -scheme PruneIt \
             -destination 'platform=macOS' \
-            -only-testing:PurgeTests/ProcessRunnerTests \
+            -only-testing:PruneItTests/ProcessRunnerTests \
             -resultBundlePath TestResults/ProcessStressTests.xcresult \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
@@ -67,10 +67,10 @@ jobs:
         timeout-minutes: 10
         run: |
           xcodebuild test \
-            -project purge.xcodeproj \
-            -scheme purge \
+            -project PruneIt.xcodeproj \
+            -scheme PruneIt \
             -destination 'platform=macOS' \
-            -only-testing:PurgeTests/FolderSizingConcurrencyTests \
+            -only-testing:PruneItTests/FolderSizingConcurrencyTests \
             -resultBundlePath TestResults/FolderSizingStressTests.xcresult \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \

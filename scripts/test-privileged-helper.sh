@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
-# Build Purge signed, make sure the embedded privileged helper is really signed
+# Build PruneIt signed, make sure the embedded privileged helper is really signed
 # (not left ad-hoc), and install it to /Applications so the SMAppService daemon can
 # register. This is for LOCAL testing of the "Protected App Removal" helper — no DMG,
 # no notarization. Shipping still goes through scripts/make-dmg.sh.
 #
 # Usage: ./scripts/test-privileged-helper.sh
 #
-# You will be asked for your password once, to replace /Applications/Purge.app.
+# You will be asked for your password once, to replace /Applications/PruneIt.app.
 set -euo pipefail
 
 IDENTITY="Developer ID Application: Jithin Sabu (BX83ZBV95B)"
 TEAM="BX83ZBV95B"
-HELPER="Contents/MacOS/io.getpurge.helper"
+HELPER="Contents/MacOS/com.pahul.pruneit.helper"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # Build OUTSIDE the repo. The repo sits under ~/Documents, which iCloud syncs, and
 # iCloud stamps com.apple.FinderInfo / fileprovider xattrs on the build products.
 # codesign then refuses the bundle with "resource fork … not allowed". A per-user
 # temp dir carries none of that.
-DDIR="${TMPDIR:-/tmp}/purge-helpertest-dd"
+DDIR="${TMPDIR:-/tmp}/pruneit-helpertest-dd"
 
 cd "$REPO_ROOT"
 
@@ -29,10 +29,10 @@ if ! security find-identity -v -p codesigning | grep -q "$TEAM"; then
 fi
 
 echo "==> Building a signed Release (this is a real signed build, not signing-off)"
-xcodebuild -project purge.xcodeproj -scheme purge -configuration Release \
+xcodebuild -project PruneIt.xcodeproj -scheme PruneIt -configuration Release \
   -derivedDataPath "$DDIR" clean build >/dev/null
 
-APP="$DDIR/Build/Products/Release/Purge.app"
+APP="$DDIR/Build/Products/Release/PruneIt.app"
 [ -d "$APP" ] || { echo "Build did not produce $APP" >&2; exit 1; }
 [ -e "$APP/$HELPER" ] || { echo "Helper missing from the build at $HELPER" >&2; exit 1; }
 
@@ -62,18 +62,18 @@ echo "    Helper identity:"
 codesign -dvvv "$APP/$HELPER" 2>&1 | grep -E "^(Identifier|Authority=Developer ID|TeamIdentifier|flags)=" | sed 's/^/      /'
 
 echo "==> Installing to /Applications"
-osascript -e 'quit app "Purge"' >/dev/null 2>&1 || true
+osascript -e 'quit app "PruneIt"' >/dev/null 2>&1 || true
 sleep 1
-if [ -e "/Applications/Purge.app" ]; then
-  rm -rf "/Applications/Purge.app" 2>/dev/null || sudo rm -rf "/Applications/Purge.app"
+if [ -e "/Applications/PruneIt.app" ]; then
+  rm -rf "/Applications/PruneIt.app" 2>/dev/null || sudo rm -rf "/Applications/PruneIt.app"
 fi
-cp -R "$APP" "/Applications/Purge.app"
+cp -R "$APP" "/Applications/PruneIt.app"
 
 echo
-echo "==> Done. /Applications/Purge.app is signed and ready."
+echo "==> Done. /Applications/PruneIt.app is signed and ready."
 echo "    Next:"
-echo "      1. open -a Purge"
-echo "      2. Settings > Protected App Removal > turn it on, then approve Purge in"
+echo "      1. open -a PruneIt"
+echo "      2. Settings > Protected App Removal > turn it on, then approve PruneIt in"
 echo "         System Settings > General > Login Items & Extensions."
 echo "      3. Confirm the daemon registered:"
-echo "         sudo launchctl print system/io.getpurge.helper | head"
+echo "         sudo launchctl print system/com.pahul.pruneit.helper | head"

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Checks the translated .strings tables in purge/*.lproj.
+"""Checks the translated .strings tables in PruneIt/*.lproj.
 
 Fails on anything that would break at runtime: a table that doesn't parse, a
 key listed twice, or a translation whose format placeholders (%@, %lld, …)
@@ -17,7 +17,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-APP = ROOT / "purge"
+APP = ROOT / "PruneIt"
 EXPLANATIONS = APP / "Resources" / "explanations.json"
 PLACEHOLDER = re.compile(r"%(?:(\d+)\$)?[-+#0 ]*\d*(?:\.\d+)?(hh|ll|h|l|q|z|t|j|L)?([@diuoxXfFeEgGcsp])")
 ESCAPES = {'"': '"', "\\": "\\", "n": "\n", "t": "\t", "r": "\r", "'": "'"}

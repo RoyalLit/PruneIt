@@ -5,7 +5,7 @@ import Foundation
 /// one file. Plain JSON, never rewritten in place: a damaged file is moved aside.
 enum Journal {
     static let folder = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent("Library/Application Support/Purge/spikes")
+        .appendingPathComponent("Library/Application Support/PruneIt/spikes")
     static let file = folder.appendingPathComponent("apple-intelligence-models.json")
 
     static func load() -> [[String: Any]] {

@@ -1,11 +1,11 @@
 ---
 name: deletion-safety-check
-description: Safety review for any Purge change that can affect what gets deleted, such as the allowlist, safety levels, scan policies, explanations.json, FileDeleter, scheduled cleaning, the root helper, or the Apple Intelligence models removal. Use before you open or merge such a PR, and when asked whether a deletion change is safe.
+description: Safety review for any PruneIt change that can affect what gets deleted, such as the allowlist, safety levels, scan policies, explanations.json, FileDeleter, scheduled cleaning, the root helper, or the Apple Intelligence models removal. Use before you open or merge such a PR, and when asked whether a deletion change is safe.
 ---
 
 # Deletion safety check
 
-Purge's promise is that it never deletes something it shouldn't. This check finds what a change could newly remove, and proves the change is safe with a test.
+PruneIt's promise is that it never deletes something it shouldn't. This check finds what a change could newly remove, and proves the change is safe with a test.
 
 Before you start, read the newest entries in `docs/safety-notes.md`. They show the mistakes that already happened once.
 
@@ -21,18 +21,18 @@ Before you start, read the newest entries in `docs/safety-notes.md`. They show t
 4. **Can it be undone?** Files moved to the Trash can come back. Anything removed for good needs clear wording in the UI and the docs.
 
 5. **What else reads this?**
-   - `purge/Resources/explanations.json` and its zh-Hans text in `purge/zh-Hans.lproj/Explanations.strings`
-   - the purgemac.com/safety page, which is built from `DeletionSafetyPolicy.swift`, `explanations.json`, and `ProjectArtifactCatalog.swift`
-   - `PurgeTests/AllowlistAuditTests.swift` and `PurgeTests/DeletionSafetyPolicyTests.swift`
+   - `PruneIt/Resources/explanations.json` and its zh-Hans text in `PruneIt/zh-Hans.lproj/Explanations.strings`
+   - the pruneit.app/safety page, which is built from `DeletionSafetyPolicy.swift`, `explanations.json`, and `ProjectArtifactCatalog.swift`
+   - `PruneItTests/AllowlistAuditTests.swift` and `PruneItTests/DeletionSafetyPolicyTests.swift`
    - claims in `README.md` and `SECURITY.md`
 
 6. **Does it run when nobody is watching?** Scheduled cleans and launch-time actions run without the user. Check that a half-finished or repeated run can't remove more than one careful run would.
 
 ## Prove it
 
-Add or extend a test in `PurgeTests/` that fails if the key safety fact is wrong. Put it in `DeletionSafetyPolicyTests.swift` or `AllowlistAuditTests.swift`, or in the test file for the scan policy you changed. For example: "`~/.gem` is never `.safe`".
+Add or extend a test in `PruneItTests/` that fails if the key safety fact is wrong. Put it in `DeletionSafetyPolicyTests.swift` or `AllowlistAuditTests.swift`, or in the test file for the scan policy you changed. For example: "`~/.gem` is never `.safe`".
 
-Run it with `xcodebuild -project purge.xcodeproj -scheme purge -destination 'platform=macOS' test`. If you can't run it (for example, in a Linux cloud session), write "not run here" and leave it to CI or a Mac.
+Run it with `xcodebuild -project PruneIt.xcodeproj -scheme PruneIt -destination 'platform=macOS' test`. If you can't run it (for example, in a Linux cloud session), write "not run here" and leave it to CI or a Mac.
 
 ## Report
 

@@ -7,13 +7,13 @@ import Foundation
 /// /Library/Managed Preferences (technique from pared). It holds nothing else,
 /// and removing it is the whole undo.
 enum Profile {
-    static let identifier = "io.getpurge.spike.apple-intelligence-models"
+    static let identifier = "com.pahul.pruneit.spike.apple-intelligence-models"
     static let domain = "com.apple.MobileAsset"
     static let keyPrefix = "DownloadServerBaseURLOverride-"
-    static let blockedURL = "https://127.0.0.1:9/purge-blocked/"
+    static let blockedURL = "https://127.0.0.1:9/pruneit-blocked/"
     static let managedPreferences = "/Library/Managed Preferences/com.apple.MobileAsset.plist"
     static let file = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent("Downloads/Purge Apple Intelligence Models.mobileconfig")
+        .appendingPathComponent("Downloads/PruneIt Apple Intelligence Models.mobileconfig")
 
     static func key(for assetType: String) -> String { keyPrefix + assetType }
 
@@ -46,10 +46,10 @@ enum Profile {
             "PayloadVersion": 1,
             "PayloadIdentifier": identifier,
             "PayloadUUID": uuid(identifier),
-            "PayloadDisplayName": "Purge: Apple Intelligence models removed",
+            "PayloadDisplayName": "PruneIt: Apple Intelligence models removed",
             "PayloadDescription":
-                "Stops macOS downloading the Apple Intelligence models Purge removed. Remove this profile, or choose Download again in Purge, to let them come back.",
-            "PayloadOrganization": "Purge",
+                "Stops macOS downloading the Apple Intelligence models PruneIt removed. Remove this profile, or choose Download again in PruneIt, to let them come back.",
+            "PayloadOrganization": "PruneIt",
             "PayloadScope": "System",
             "PayloadRemovalDisallowed": false,
             "PayloadContent": [payload],

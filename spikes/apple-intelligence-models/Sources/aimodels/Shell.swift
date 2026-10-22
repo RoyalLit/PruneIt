@@ -2,7 +2,7 @@ import Foundation
 
 /// Runs a program without a shell and returns its output, with a deadline. The
 /// child's pipes are drained on background threads so a chatty child can never
-/// deadlock the wait (the trap Purge's ProcessRunner documents).
+/// deadlock the wait (the trap PruneIt's ProcessRunner documents).
 enum Shell {
     struct Result {
         let status: Int32

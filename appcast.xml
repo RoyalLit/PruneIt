@@ -5,9 +5,9 @@
      TODO: To publish your own updates via Sparkle:
      1. Generate an EdDSA key pair:
            sparkle/bin/generate_keys
-     2. Set the public key in purge/Info.plist under SUPublicEDKey.
+     2. Set the public key in PruneIt/Info.plist under SUPublicEDKey.
      3. Host this file on your GitHub Pages or release server and set
-        its URL in purge/Info.plist under SUFeedURL.
+        its URL in PruneIt/Info.plist under SUFeedURL.
      4. Use Sparkle's `generate_appcast` tool to populate items when releasing:
            sparkle/bin/generate_appcast /path/to/release_directory
 -->

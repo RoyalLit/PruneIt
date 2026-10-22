@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Fails when a view steps around the design system: raw colours, SwiftUI's
 // hierarchical greys, point sizes on text, or literal corner radii. The tokens
-// live in purge/Theme/AppColors.swift and purge/Views/AppStyle.swift; see
+// live in PruneIt/Theme/AppColors.swift and PruneIt/Views/AppStyle.swift; see
 // docs/design-system.md. Add `design-lint: allow` to a line to exempt it.
 //
 // Usage: node scripts/lint-design-tokens.mjs
@@ -11,11 +11,11 @@ import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const sourceRoot = join(root, "purge");
+const sourceRoot = join(root, "PruneIt");
 const tokenFiles = new Set([
-  "purge/Theme/AppColors.swift",
-  "purge/Views/AppStyle.swift",
-  "purge/Views/PurgeButtonStyle.swift",
+  "PruneIt/Theme/AppColors.swift",
+  "PruneIt/Views/AppStyle.swift",
+  "PruneIt/Views/PruneItButtonStyle.swift",
 ]);
 
 const rules = [
@@ -43,7 +43,7 @@ const rules = [
   },
   {
     pattern: /\b(AppButtonStyle|SolidDestructiveButtonStyle|OnboardingCapsuleButtonStyle|statusTextButton)\b/,
-    message: "removed button style; use PurgeButtonStyle (.purge(...))",
+    message: "removed button style; use PruneItButtonStyle (.pruneIt(...))",
   },
 ];
 

@@ -70,7 +70,7 @@ enum Worker {
 
     private static func describe(_ error: Error) -> String {
         let nsError = error as NSError
-        if nsError.domain == "io.getpurge.spike.aimodels" || error is Failure {
+        if nsError.domain == "com.pahul.pruneit.spike.aimodels" || error is Failure {
             return nsError.localizedDescription
         }
         var parts = ["\(nsError.domain) \(nsError.code): \(nsError.localizedDescription)"]
@@ -119,7 +119,7 @@ enum Worker {
             // exist reaches the handler and comes back "Could not get config".
             // Nothing real is named, so nothing is removed.
             guard PBLoadUnifiedAssets() else { throw Failure("UnifiedAssetFramework is missing") }
-            let target = "io.getpurge.spike.nonexistent.readonly-validation"
+            let target = "com.pahul.pruneit.spike.nonexistent.readonly-validation"
             var error: NSError?
             let sent = PBSendAssetOperation(["Operation": "ResetAssetSets", "AssetSets": [target]], 45, &error)
             if sent { return ["reachedHandler": false, "detail": "the service accepted a reset for a set that does not exist"] }

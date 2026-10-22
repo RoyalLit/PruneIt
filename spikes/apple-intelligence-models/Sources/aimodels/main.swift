@@ -2,7 +2,7 @@ import Foundation
 
 let usage = """
 aimodels: spike for removing the Apple Intelligence models and downloading them again later
-(jithin-sabu/purge-app#133). Not part of Purge; nothing here is shipped.
+(jithin-sabu/purge-app#133). Not part of PruneIt; nothing here is shipped.
 
   aimodels status                  what is installed, who uses it, the profile, free space
   aimodels measure [--dump] [--all] [--sets a,b]
@@ -20,7 +20,7 @@ aimodels: spike for removing the Apple Intelligence models and downloading them 
   aimodels journal                 print the journal
 
 Private calls run in a throwaway child process. The journal is at
-~/Library/Application Support/Purge/spikes/apple-intelligence-models.json.
+~/Library/Application Support/PruneIt/spikes/apple-intelligence-models.json.
 
 """
 
@@ -46,19 +46,19 @@ case "measure":
     rest.rejectUnknown()
     exit(Commands.measure(sets: sets, dump: dump, all: all) ? 0 : 1)
 case "check":
-    let options = Commands.PurgeOptions(from: &rest)
+    let options = Commands.PruneItOptions(from: &rest)
     let sets = rest.option("--sets")
     rest.rejectUnknown()
     exit(Commands.check(sets: sets, options: options) ? 0 : 1)
 case "remove":
-    let options = Commands.PurgeOptions(from: &rest)
+    let options = Commands.PruneItOptions(from: &rest)
     let sets = rest.option("--sets")
     let dryRun = rest.flag("--dry-run")
     let yes = rest.flag("--yes") || rest.flag("-y")
     let noProfile = rest.flag("--no-profile")
-    let noPurge = rest.flag("--no-purge")
+    let noPruneIt = rest.flag("--no-purge")
     rest.rejectUnknown()
-    exit(Commands.remove(sets: sets, dryRun: dryRun, yes: yes, noProfile: noProfile, noPurge: noPurge, options: options) ? 0 : 1)
+    exit(Commands.remove(sets: sets, dryRun: dryRun, yes: yes, noProfile: noProfile, noPruneIt: noPruneIt, options: options) ? 0 : 1)
 case "restore":
     let sets = rest.option("--sets")
     let yes = rest.flag("--yes") || rest.flag("-y")

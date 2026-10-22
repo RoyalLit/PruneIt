@@ -8,7 +8,7 @@
 
 ## Blast radius
 
-<!-- What could this change affect outside the diff? If it changes what Purge can delete, say why that is safe and which test proves it. Delete this section for docs-only changes. -->
+<!-- What could this change affect outside the diff? If it changes what PruneIt can delete, say why that is safe and which test proves it. Delete this section for docs-only changes. -->
 
 ## Verification
 

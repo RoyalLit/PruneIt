@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest an idea or improvement for Purge
+description: Suggest an idea or improvement for PruneIt
 labels: [enhancement]
 body:
   - type: textarea
@@ -26,6 +26,6 @@ body:
   - type: markdown
     attributes:
       value: |
-        Purge is intentionally scoped around trash-by-default, allowlist-based
+        PruneIt is intentionally scoped around trash-by-default, allowlist-based
         cleanup, and no destructive shortcuts. Features that fit that model are
-        more likely to land — see [CONTRIBUTING.md](https://github.com/jithin-sabu/purge-app/blob/main/CONTRIBUTING.md).
+        more likely to land — see [CONTRIBUTING.md](CONTRIBUTING.md).

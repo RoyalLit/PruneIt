@@ -3,7 +3,7 @@ import Foundation
 enum Commands {
     /// Knobs for the CacheDelete step, kept explicit because none of them is
     /// documented: the spike records which values this macOS answers.
-    struct PurgeOptions {
+    struct PruneItOptions {
         var service = CacheDeleteCheck.defaultService
         var urgency = CacheDeleteCheck.defaultUrgency
         /// `CacheDeleteCopyPurgeableSpaceWithInfo` answers the synchronous call
@@ -11,7 +11,7 @@ enum Commands {
         var queryStyle = "sync"
         /// `CacheDeletePurgeSpaceWithInfo` takes a reply block: the synchronous
         /// call crashed the worker on macOS 27.0.
-        var purgeStyle = "block"
+        var pruneItStyle = "block"
         var amount: Int64?
 
         init() {}
@@ -24,7 +24,7 @@ enum Commands {
             }
             if let style = arguments.option("--call-style") {
                 guard style == "sync" || style == "block" else { Log.fail("--call-style is sync or block") }
-                purgeStyle = style
+                pruneItStyle = style
             }
             if let style = arguments.option("--query-style") {
                 guard style == "sync" || style == "block" else { Log.fail("--query-style is sync or block") }
@@ -120,12 +120,12 @@ enum Commands {
         let blocks = Profile.installedBlocks()
         let foreign = Profile.foreignBlocks()
         if blocks.isEmpty {
-            Log.line("Download block: no Purge profile installed")
+            Log.line("Download block: no PruneIt profile installed")
         } else {
-            Log.line("Download block: Purge profile installed, blocking " + blocks.joined(separator: ", "))
+            Log.line("Download block: PruneIt profile installed, blocking " + blocks.joined(separator: ", "))
         }
         for (type, url) in foreign.sorted(by: { $0.key < $1.key }) {
-            Log.warn("another profile already redirects \(type) to \(url); not Purge's to touch")
+            Log.warn("another profile already redirects \(type) to \(url); not PruneIt's to touch")
         }
     }
 
@@ -184,7 +184,7 @@ enum Commands {
         var cacheDeleteProblem: String?
         var verdict: CacheDeleteCheck.Verdict?
 
-        var purgeAllowed: Bool { verdict?.honoured == true }
+        var pruneItAllowed: Bool { verdict?.honoured == true }
 
         var summary: [String: Any] {
             var out: [String: Any] = [
@@ -209,8 +209,8 @@ enum Commands {
     }
 
     /// Everything read-only that has to hold before a release or a purge.
-    /// `checkService` covers the asset service, `checkPurge` CacheDelete.
-    static func preflight(_ sets: [ModelSet], options: PurgeOptions, checkService: Bool, checkPurge: Bool) -> Preflight {
+    /// `checkService` covers the asset service, `checkPruneIt` CacheDelete.
+    static func preflight(_ sets: [ModelSet], options: PruneItOptions, checkService: Bool, checkPruneIt: Bool) -> Preflight {
         var result = Preflight()
         if checkService {
             Log.line("Asset service")
@@ -250,7 +250,7 @@ enum Commands {
             }
             Log.line()
         }
-        if checkPurge {
+        if checkPruneIt {
             Log.line("CacheDelete")
             result.knownServices = CacheDeleteCheck.knownServices()
             let ids = Set(result.knownServices.values)
@@ -312,25 +312,25 @@ enum Commands {
         text.split(separator: "\n", omittingEmptySubsequences: false).map { "    " + $0 }.joined(separator: "\n")
     }
 
-    static func check(sets: String?, options: PurgeOptions) -> Bool {
+    static func check(sets: String?, options: PruneItOptions) -> Bool {
         header()
         let selected: [ModelSet]
         do { selected = try Catalog.select(sets) } catch { Log.fail("\(error)") }
-        let result = preflight(selected, options: options, checkService: true, checkPurge: true)
+        let result = preflight(selected, options: options, checkService: true, checkPruneIt: true)
         let chosen: [String: Any] = [
             "service": options.service, "urgency": options.urgency,
-            "queryStyle": options.queryStyle, "purgeStyle": options.purgeStyle,
+            "queryStyle": options.queryStyle, "pruneItStyle": options.pruneItStyle,
         ]
         Journal.record("check", note: nil, fields: ["preflight": result.summary, "options": chosen])
         let serviceOK = !MacOS.releasesThroughService || (result.frameworkLoads && !result.mapped.isEmpty && result.handlerReached == true)
         Log.line(serviceOK ? "Release: ready" : "Release: not ready on this macOS")
-        Log.line(result.purgeAllowed ? "Purge: the service filter is honoured" : "Purge: would be refused")
-        return serviceOK && result.purgeAllowed
+        Log.line(result.pruneItAllowed ? "PruneIt: the service filter is honoured" : "PruneIt: would be refused")
+        return serviceOK && result.pruneItAllowed
     }
 
     // MARK: remove
 
-    static func remove(sets: String?, dryRun: Bool, yes: Bool, noProfile: Bool, noPurge: Bool, options: PurgeOptions) -> Bool {
+    static func remove(sets: String?, dryRun: Bool, yes: Bool, noProfile: Bool, noPruneIt: Bool, options: PruneItOptions) -> Bool {
         header()
         guard MacOS.major >= 15 else { return false }
         let selected: [ModelSet]
@@ -349,7 +349,7 @@ enum Commands {
         Log.line()
 
         let viaService = MacOS.releasesThroughService
-        let flight = preflight(selected, options: options, checkService: viaService, checkPurge: !noPurge)
+        let flight = preflight(selected, options: options, checkService: viaService, checkPruneIt: !noPruneIt)
         if viaService && (!flight.frameworkLoads || flight.mapped.isEmpty) {
             Log.error("this macOS does not match the catalog, so nothing is sent")
             return false
@@ -368,10 +368,10 @@ enum Commands {
         } else {
             Log.line("  2. open Apple Intelligence & Siri so you can turn Apple Intelligence off (Apple's own switch releases the models)")
         }
-        if noPurge {
+        if noPruneIt {
             Log.line("  3. skip the purge (--no-purge)")
-        } else if flight.purgeAllowed {
-            Log.line("  3. ask deleted to purge \(options.service) now, urgency \(options.urgency), \(options.purgeStyle) call")
+        } else if flight.pruneItAllowed {
+            Log.line("  3. ask deleted to purge \(options.service) now, urgency \(options.urgency), \(options.pruneItStyle) call")
         } else {
             Log.line("  3. the purge is refused: " + (flight.verdict?.reason ?? flight.cacheDeleteProblem ?? "the filter could not be judged"))
         }
@@ -454,33 +454,33 @@ enum Commands {
         record["released"] = released
         record["releaseFailures"] = releaseFailures
 
-        // 3. Purge now, only through the filter the read-only check confirmed.
-        if !noPurge {
-            if flight.purgeAllowed, let verdict = flight.verdict {
+        // 3. PruneIt now, only through the filter the read-only check confirmed.
+        if !noPruneIt {
+            if flight.pruneItAllowed, let verdict = flight.verdict {
                 let measuredTotal = before.compactMap(\.bytes).reduce(0, +)
                 let amount = options.amount ?? verdict.filteredAmount ?? (measuredTotal > 0 ? measuredTotal : nil)
                 if let amount, amount > 0 {
                     let info = CacheDeleteCheck.request(service: options.service, urgency: options.urgency, amount: amount)
-                    Log.line("Purge: asking for " + Format.bytes(amount) + " from \(options.service)")
-                    let purge = Worker.run("cd-purge", ["info": info, "style": options.purgeStyle, "timeout": 300.0], timeout: 300)
+                    Log.line("PruneIt: asking for " + Format.bytes(amount) + " from \(options.service)")
+                    let purge = Worker.run("cd-purge", ["info": info, "style": options.pruneItStyle, "timeout": 300.0], timeout: 300)
                     if purge.ok {
-                        Log.line("Purge: replied")
+                        Log.line("PruneIt: replied")
                         if let reply = purge.result["reply"] as? [String: Any] {
                             Log.line(indent(Format.json(reply)))
-                            record["purgeReply"] = reply
+                            record["pruneItReply"] = reply
                         }
                     } else {
-                        Log.warn("Purge: " + purge.problem)
-                        record["purgeProblem"] = purge.problem
+                        Log.warn("PruneIt: " + purge.problem)
+                        record["pruneItProblem"] = purge.problem
                     }
                 } else {
-                    Log.warn("Purge: no amount to ask for (nothing measured and the filtered query gave none); pass --amount")
-                    record["purgeProblem"] = "no amount"
+                    Log.warn("PruneIt: no amount to ask for (nothing measured and the filtered query gave none); pass --amount")
+                    record["pruneItProblem"] = "no amount"
                 }
             } else {
                 let reason = flight.verdict?.reason ?? flight.cacheDeleteProblem ?? "the filter could not be judged"
-                Log.warn("Purge refused: " + reason)
-                record["purgeProblem"] = "refused: " + reason
+                Log.warn("PruneIt refused: " + reason)
+                record["pruneItProblem"] = "refused: " + reason
             }
         }
 
@@ -529,7 +529,7 @@ enum Commands {
         let viaService = MacOS.releasesThroughService
         Log.line()
         Log.line("Plan")
-        if !blocks.isEmpty { Log.line("  1. remove the Purge profile (macOS lets only you do that)") }
+        if !blocks.isEmpty { Log.line("  1. remove the PruneIt profile (macOS lets only you do that)") }
         if viaService {
             Log.line("  2. ask the asset service to subscribe to " + selected.map(\.name).joined(separator: ", ") + " again; macOS downloads in the background")
         } else {
@@ -549,7 +549,7 @@ enum Commands {
 
         if !blocks.isEmpty {
             Shell.openSettings(Shell.profilesPane)
-            Log.line("In System Settings, select \"Purge: Apple Intelligence models removed\" and click Remove.")
+            Log.line("In System Settings, select \"PruneIt: Apple Intelligence models removed\" and click Remove.")
             Log.line("From a terminal instead: sudo profiles remove -identifier \(Profile.identifier)")
             guard Shell.waitFor("waiting for the profile to go", minutes: 10, { Profile.installedBlocks().isEmpty }) else {
                 Log.error("the profile is still installed, so downloads stay blocked; nothing else was changed")
@@ -561,7 +561,7 @@ enum Commands {
         }
 
         if viaService {
-            let flight = preflight(selected, options: PurgeOptions(), checkService: true, checkPurge: false)
+            let flight = preflight(selected, options: PruneItOptions(), checkService: true, checkPruneIt: false)
             guard flight.frameworkLoads, !flight.mapped.isEmpty else {
                 Log.error("this macOS does not match the catalog, so nothing is sent")
                 Journal.record("restore", note: "catalog mismatch", fields: record)

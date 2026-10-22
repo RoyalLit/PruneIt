@@ -1,10 +1,10 @@
-# Purge design system
+# PruneIt design system
 
-Every colour, button, font and radius in Purge comes from three files:
+Every colour, button, font and radius in PruneIt comes from three files:
 
-- `purge/Theme/AppColors.swift`: colours
-- `purge/Views/AppStyle.swift`: type scale, radii, spacing, row metrics
-- `purge/Views/PurgeButtonStyle.swift`: the one button style
+- `PruneIt/Theme/AppColors.swift`: colours
+- `PruneIt/Views/AppStyle.swift`: type scale, radii, spacing, row metrics
+- `PruneIt/Views/PruneItButtonStyle.swift`: the one button style
 
 `node scripts/lint-design-tokens.mjs` (also `npm run lint:design`, and a CI step) fails when a view uses a raw colour, a SwiftUI grey like `.secondary`, a point size or text style on text, a literal corner radius, a hex colour outside the theme file, or a removed button style. Add `design-lint: allow` to a line only when there is a real reason, and say why in a comment.
 
@@ -40,7 +40,7 @@ The cleanup celebration follows the app's appearance and draws on `surfaceBase`,
 
 ## Buttons
 
-`PurgeButtonStyle(role:size:width:)`, written `.buttonStyle(.purge(.primary))`.
+`PruneItButtonStyle(role:size:width:)`, written `.buttonStyle(.pruneIt(.primary))`.
 
 | Role | Look | Use for |
 | --- | --- | --- |

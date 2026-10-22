@@ -1,10 +1,10 @@
 # Spike: remove the Apple Intelligence models, and download them again later
 
 Standalone command-line tool for [purge-app#133](https://github.com/jithin-sabu/purge-app/issues/133).
-It is **not part of Purge** and nothing in it ships. Its job is to find out, on
+It is **not part of PruneIt** and nothing in it ships. Its job is to find out, on
 real Macs, whether the approach in the issue holds up before any of it is built
 into the app. The issue is explicit that this needs a yes before it lands:
-these would be Purge's first private Apple APIs and its first persistent change
+these would be PruneIt's first private Apple APIs and its first persistent change
 to the system.
 
 ## What it does
@@ -42,7 +42,7 @@ swift build -c release
 | Release (macOS 27) | `ResetAssetSets` over XPC to `com.apple.siri.uaf.subscription.service`, one set per request. `AssetSets` is checked non-empty in the bridge before a connection is even made. | pared, RemoveMacAI |
 | Release (macOS 15, 26) | Open Apple Intelligence & Siri; the user turns it off. | The issue |
 | Free the space now | `CacheDeletePurgeSpaceWithInfo` with `CACHE_DELETE_SERVICES` set to the MobileAsset service. Sent only after a read-only `CacheDeleteCopyPurgeableSpaceWithInfo` with and without the filter shows the filter at work. | Request keys from DeviceLink's `_DLPurgeDiskSpaceOnComputer` (via BrainLayer and pymobiledevice3). The services key is from a Mail cache-delete plist, not from a purge request: **unverified**. |
-| Keep them gone (macOS 27) | A profile forcing `com.apple.MobileAsset` `DownloadServerBaseURLOverride-<assetType>` to `https://127.0.0.1:9/purge-blocked/`, approved once by the user. | pared, RemoveMacAI |
+| Keep them gone (macOS 27) | A profile forcing `com.apple.MobileAsset` `DownloadServerBaseURLOverride-<assetType>` to `https://127.0.0.1:9/pruneit-blocked/`, approved once by the user. | pared, RemoveMacAI |
 | Download again | Remove the profile, then `Unsubscribe` and `Subscribe` the sets with the usage aliases from pared's catalog. On 15 and 26, the user turns the switch on. | pared |
 
 The order in `remove` is block first, then release, then purge: the block has
@@ -60,14 +60,14 @@ them again in the gap.
 - Private calls run in a child process.
 - Other accounts that use Apple Intelligence are named before anything is removed.
 - Space freed is the volume's free space before versus after, settled over
-  consecutive readings, with Purge's 64 MB noise floor. Apple's figures are
+  consecutive readings, with PruneIt's 64 MB noise floor. Apple's figures are
   shown as what they are: the records' sizes.
 - Nothing here is scheduled or automatic; every change asks first.
 
 ## Test plan (from the issue)
 
 Run on macOS 27, and if possible 15 and 26. Keep the journal
-(`~/Library/Application Support/Purge/spikes/apple-intelligence-models.json`)
+(`~/Library/Application Support/PruneIt/spikes/apple-intelligence-models.json`)
 and paste the table into the issue.
 
 1. `aimodels measure --dump --all > records.txt`: what do the Apple
@@ -104,7 +104,7 @@ Intelligence switched off in Settings, models still on disk.
 | CacheDelete query | The synchronous call works. Reply keys: `CACHE_DELETE_AMOUNT`, `CACHE_DELETE_FREESPACE`, `CACHE_DELETE_NONPURGEABLE_AMOUNT`, `CACHE_DELETE_VOLUME`. Purgeable 31.56 GB overall, 7.27 GB with `CACHE_DELETE_SERVICES` set to `com.apple.mobileassetd.cache-delete`: the filter is honoured. |
 | Profile | Installed from the Downloads file through System Settings. |
 | Release | Three sets accepted. Visual and CodeLM answered "Could not eliminate as there are current locks" (lock held by `UnifiedAssetFramework`'s own manager), yet all five folders were empty afterwards and all 229 records gone. pared documents the same: the lock error can outlive a successful forced removal. `remove` now judges those sets by their folders. |
-| Purge | `CacheDeletePurgeSpaceWithInfo` with the synchronous style crashed the worker (SIGSEGV), as designed. The purge now defaults to the reply-block style; untested until the next removal. |
+| PruneIt | `CacheDeletePurgeSpaceWithInfo` with the synchronous style crashed the worker (SIGSEGV), as designed. The purge now defaults to the reply-block style; untested until the next removal. |
 | Space | 166.61 GB free before, 190.53 GB after, 23.91 GB freed within the 30 s settling window, from the release alone. Why that is less than the 57.54 GB measured is open: several versions of one model can be on the filesystem at once (`measure` now shows a latest-version figure beside the all-records one), and deletion may still have been running. |
 
 So on macOS 27.0 the release step frees space by itself and the purge may
@@ -150,7 +150,7 @@ RemoveMacAI's release notes and issue tracker, read against this spike's results
   held 7 GB. The maintainer attributes it to Apple's estimate and purgeable
   accounting but has not located the space. This matches the purgeable
   behaviour measured here: the figure users see does not move the way the
-  record sum suggests. Purge must not promise it will.
+  record sum suggests. PruneIt must not promise it will.
 - **Third-party Core ML features can break.** Its issue 40 (open): Adobe
   Lightroom's AI Denoise stopped working after the models were removed and
   came back after revert; a Topaz Gigapixel crash in Core ML's model

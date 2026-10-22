@@ -19,8 +19,8 @@ import * as simpleIconsV16 from "simple-icons-v16";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
-const manifestPath = path.join(repoRoot, "purge/Resources/brand-icon-manifest.json");
-const outDir = path.join(repoRoot, "purge/Resources/BrandIcons");
+const manifestPath = path.join(repoRoot, "PruneIt/Resources/brand-icon-manifest.json");
+const outDir = path.join(repoRoot, "PruneIt/Resources/BrandIcons");
 const supplementalDir = path.join(repoRoot, "scripts/brand-icon-sources");
 const size = 56;
 

@@ -68,8 +68,8 @@ shasum -a 256 -c PruneIt-<version>.dmg.sha256
 
 ```sh
 xcodebuild build \
-  -project purge.xcodeproj \
-  -scheme purge \
+  -project PruneIt.xcodeproj \
+  -scheme PruneIt \
   -configuration Debug \
   -destination 'platform=macOS' \
   CODE_SIGN_IDENTITY="" \
@@ -89,8 +89,8 @@ The `.dmg` and a `.sha256` checksum file will be written to `build/`.
 
 ```sh
 xcodebuild test \
-  -project purge.xcodeproj \
-  -scheme purge \
+  -project PruneIt.xcodeproj \
+  -scheme PruneIt \
   -destination 'platform=macOS' \
   CODE_SIGN_IDENTITY="" \
   CODE_SIGNING_REQUIRED=NO \
@@ -105,14 +105,14 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for a full walkthrough.
 
 | Path | Purpose |
 |---|---|
-| `purge/` | Main SwiftUI app target |
-| `purge/Services/` | Scanners, safety policy, deletion engine |
-| `purge/Models/` | Data models |
-| `purge/Views/` | SwiftUI views |
-| `PurgeHelper/` | Privileged XPC helper (root-owned uninstall) |
-| `PurgeWatch/` | Background LaunchAgent that monitors deleted apps |
-| `PurgeAssetWorker/` | XPC worker for Apple Intelligence model release calls |
-| `PurgeTests/` | Unit tests (Swift Testing framework) |
+| `PruneIt/` | Main SwiftUI app target |
+| `PruneIt/Services/` | Scanners, safety policy, deletion engine |
+| `PruneIt/Models/` | Data models |
+| `PruneIt/Views/` | SwiftUI views |
+| `PruneItHelper/` | Privileged XPC helper (root-owned uninstall) |
+| `PruneItWatch/` | Background LaunchAgent that monitors deleted apps |
+| `PruneItAssetWorker/` | XPC worker for Apple Intelligence model release calls |
+| `PruneItTests/` | Unit tests (Swift Testing framework) |
 | `docs/` | Architecture notes, safety log, design system |
 | `scripts/` | Build, lint, and localization tools |
 

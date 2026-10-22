@@ -5,7 +5,7 @@ import Foundation
 enum Volume {
     static let root = URL(fileURLWithPath: "/")
 
-    /// The figure System Settings and Purge show: free blocks plus what macOS
+    /// The figure System Settings and PruneIt show: free blocks plus what macOS
     /// would purge on demand. Nil when the volume could not be read, which
     /// stays distinct from zero.
     static func freeBytes() -> Int64? {
@@ -26,7 +26,7 @@ enum Volume {
     }
 
     /// Below this a delta is indistinguishable from other processes writing
-    /// (Purge uses the same floor).
+    /// (PruneIt uses the same floor).
     static let noiseFloorBytes: Int64 = 64 * 1024 * 1024
 
     /// Space gained since `before`, once two readings a second apart agree.

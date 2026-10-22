@@ -7,7 +7,7 @@ static NSString *const kUAFPath =
 static NSString *const kCacheDeletePath =
     @"/System/Library/PrivateFrameworks/CacheDelete.framework/CacheDelete";
 static NSString *const kService = @"com.apple.siri.uaf.subscription.service";
-static NSString *const kErrorDomain = @"io.getpurge.spike.aimodels";
+static NSString *const kErrorDomain = @"com.pahul.pruneit.spike.aimodels";
 
 // Declared on NSObject so the compiler emits the real selector encodings,
 // including the oneway XPC method. Nothing here is ever called on an object

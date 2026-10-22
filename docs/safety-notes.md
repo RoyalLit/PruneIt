@@ -1,7 +1,7 @@
 # Safety notes
 
-Purge deletes files, so the times it got that wrong are worth writing down.
-This is the log. It has one entry for each time Purge removed, or could have
+PruneIt deletes files, so the times it got that wrong are worth writing down.
+This is the log. It has one entry for each time PruneIt removed, or could have
 removed, something it should not have. Entries marked "found internally" were
 fixed before anyone reported them. Each entry says what happened, who was
 affected, what changed in the code, and what would have caught it earlier.
@@ -50,7 +50,7 @@ than 30 days old.
 
 ### What changed
 
-Ownership now comes from the installed code, not from folder names. Purge
+Ownership now comes from the installed code, not from folder names. PruneIt
 reads the signing team and the app-group entitlements of every app in
 Applications and ~/Applications, the helpers, extensions and XPC services
 inside them, the apps that come with macOS, running apps, and the programs
@@ -67,12 +67,12 @@ cannot read or date something, the folder counts as in use.
 
 Tests built from real apps whose data folder is not named after their bundle
 id. `leftoverOfInstalledCodeIsKept` in
-[`PurgeTests/OrphanLeftoverScanPolicyTests.swift`](../PurgeTests/OrphanLeftoverScanPolicyTests.swift)
+[`PruneItTests/OrphanLeftoverScanPolicyTests.swift`](../PruneItTests/OrphanLeftoverScanPolicyTests.swift)
 runs OrbStack, Microsoft's shared groups, Telegram's share extension, Podcasts,
 Sparkle's downloader and others through the scan's rules, and
 `leftoversOfRemovedAppsAreStillFound` checks that real leftovers are still
 listed. `deepWriteMakesAnOldFolderRecent` covers the age check, and
-[`PurgeTests/InstalledCodeEvidenceTests.swift`](../PurgeTests/InstalledCodeEvidenceTests.swift)
+[`PruneItTests/InstalledCodeEvidenceTests.swift`](../PruneItTests/InstalledCodeEvidenceTests.swift)
 checks each source and that real signatures are read.
 
 It is the same lesson as the 2026-10-01 project entry: a folder's own date is
@@ -114,7 +114,7 @@ keeps its 30-day buffer until the user picks an age; leftovers are always
 Check First.
 
 A walk that hits the entry limit no longer answers "not used". The project is
-listed, but its folders are Check First, and the project card says Purge could
+listed, but its folders are Check First, and the project card says PruneIt could
 not check every file. The walk skips dependency trees nobody edits, such as
 `node_modules`, `.venv` and `Pods`, wherever they sit. It skips a generic name
 such as `build` only when it is the folder being offered, or when the folder
@@ -134,7 +134,7 @@ strictest level among its folders and one line saying why.
 ### What would have caught it earlier
 
 `StalenessThresholdDefaultTests` in
-[`PurgeTests/ProjectActivityPolicyTests.swift`](../PurgeTests/ProjectActivityPolicyTests.swift)
+[`PruneItTests/ProjectActivityPolicyTests.swift`](../PruneItTests/ProjectActivityPolicyTests.swift)
 reads the setting from a fresh `ThrowawayDefaults` and expects 180 days, and
 checks that a project edited today is not listed. In the same file,
 `entryLimitIsTooBigToCheck` and `tooBigProjectIsCheckFirst` cover the cut-off
@@ -159,7 +159,7 @@ The report came from a mismatch: the row said Safe, but the Overview counted
 nothing safe under Dev Tools.
 
 Review of the fix found a second case. Devices Xcode can't run were Safe
-whatever their last use. Removing a simulator runtime, which Purge can do,
+whatever their last use. Removing a simulator runtime, which PruneIt can do,
 makes its devices unavailable while their apps and data stay on disk and come
 back when the runtime is downloaded again. On the next scan those devices
 showed as Safe.
@@ -186,7 +186,7 @@ CLAUDE.md now says that anything removed for good is never Safe.
 ### What would have caught it earlier
 
 A rule that Safe only goes on things the one-click clean takes, checked by a
-test. `noSimulatorRowIsEverSafe` in `PurgeTests/SimulatorDeviceSafetyTests.swift`
+test. `noSimulatorRowIsEverSafe` in `PruneItTests/SimulatorDeviceSafetyTests.swift`
 runs every branch of both simulator safety functions, and the one-click tests
 there and in `SimulatorRuntimeStoreTests.swift` force a simulator Safe to prove
 the clean skips it anyway.
@@ -225,15 +225,15 @@ Maven, the global Gradle cache, NuGet, Cabal, the Ivy cache, CocoaPods spec
 repos and Playwright browsers moved to Check First. Finder, Dock, Control
 Center and System Settings caches, endpoint security agents and input methods
 are now never offered. The full diff is in
-[`explanations.json`](https://github.com/jithin-sabu/purge-app/blob/v1.8.1/purge/Resources/explanations.json)
+[`explanations.json`](https://github.com/jithin-sabu/purge-app/blob/v1.8.1/PruneIt/Resources/explanations.json)
 and
-[`DeletionSafetyPolicy.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.8.1/purge/Services/DeletionSafetyPolicy.swift)
+[`DeletionSafetyPolicy.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.8.1/PruneIt/Services/DeletionSafetyPolicy.swift)
 at v1.8.1.
 
 ### What would have caught it earlier
 
 The audit itself, run before each entry shipped instead of after. The
-[safety page](https://purgemac.com/safety) is now generated from the source
+[safety page](https://pruneit.app/safety) is now generated from the source
 at build time, so the published list cannot drift from the code.
 
 ## 2026-10-01: An active project's build folders could look stale and be swept
@@ -258,7 +258,7 @@ not changed for longer than the stale setting was exposed.
 ### What changed
 
 Age now comes from the project, not the folder
-([`ProjectActivityPolicy.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.7.1/purge/Services/ProjectActivityPolicy.swift)).
+([`ProjectActivityPolicy.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.7.1/PruneIt/Services/ProjectActivityPolicy.swift)).
 A project is active if its git metadata, any file inside it, or the artifact
 folders' own dates are newer than the cutoff. A project in use right now, with
 a process working inside it or a git lock present, is hidden whatever the age
@@ -298,7 +298,7 @@ It can be put back from there, but a running Docker would have lost it.
 The row is Check First. Its description says what the folder holds, to quit
 Docker Desktop first, and points at `docker system prune` for freeing space
 without losing volumes.
-[`DockerSafetyTierTests.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.7.1/PurgeTests/DockerSafetyTierTests.swift)
+[`DockerSafetyTierTests.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.7.1/PruneItTests/DockerSafetyTierTests.swift)
 checks both the bundled record and the resolved row. Both tests fail on the
 old tag.
 
@@ -310,7 +310,7 @@ user data. And a rule that a comment never sets a tier: the tag in
 
 ## 2026-09-21: Old Version cleanup removed the framework Chrome was running from
 
-**Reported:** [#75](https://github.com/jithin-sabu/purge-app/issues/75), Purge 1.5.2. **Fixed:** [#76](https://github.com/jithin-sabu/purge-app/pull/76), shipped in v1.5.3 (2026-09-24). **Affected:** v1.1.2 to v1.5.2.
+**Reported:** [#75](https://github.com/jithin-sabu/purge-app/issues/75), PruneIt 1.5.2. **Fixed:** [#76](https://github.com/jithin-sabu/purge-app/pull/76), shipped in v1.5.3 (2026-09-24). **Affected:** v1.1.2 to v1.5.2.
 
 ### What happened
 
@@ -322,7 +322,7 @@ the bundle held three framework folders:
 - `Versions/153.0.8010.48`
 - `Versions/153.0.8010.50`, the `Current` symlink target
 
-Purge listed the first two as "Google Chrome Old Version" under Check First.
+PruneIt listed the first two as "Google Chrome Old Version" under Check First.
 Cleaning them moved both to the Trash. Straight away Chrome could not load any
 page in any tab, while the network itself was fine. All 25 Chrome helper
 processes were still running from the deleted 152 folder, and Chrome could not
@@ -343,10 +343,10 @@ remove, but reinstall the browser if it fails to launch."
 
 ### What changed
 
-Purge now reads running process paths before offering a version, and checks
+PruneIt now reads running process paths before offering a version, and checks
 again before deleting.
 
-- [`DeletionSafetyPolicy.staleBrowserFrameworkRefusesDeletion`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/purge/Services/DeletionSafetyPolicy.swift)
+- [`DeletionSafetyPolicy.staleBrowserFrameworkRefusesDeletion`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/PruneIt/Services/DeletionSafetyPolicy.swift)
   reads the bundle and executable path of every running application, maps
   each Chrome helper back to its outer `.app`, and pulls the version out of
   `Versions/<version>/` in the path.
@@ -355,7 +355,7 @@ again before deleting.
   browser is running but no process path reveals a version, offer nothing.
 - That refusal stays out of the offered-for-cleanup cache, because the answer
   flips when the user quits the browser.
-- [`FileDeleter`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/purge/Services/FileDeleter.swift)
+- [`FileDeleter`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/PruneIt/Services/FileDeleter.swift)
   re-runs the check after sizing, immediately before the item goes to the
   Trash, and re-reads the `Current` symlink at that moment. An item that no
   longer passes is reported as "skipped for safety" instead of deleted. This
@@ -363,7 +363,7 @@ again before deleting.
   whatever it turns out to be.
 - The row's explanation now says to quit and relaunch the browser first, and
   that the browser deletes leftover versions itself on relaunch.
-- [`StaleBrowserFrameworkPolicyTests.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/PurgeTests/StaleBrowserFrameworkPolicyTests.swift)
+- [`StaleBrowserFrameworkPolicyTests.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/PruneItTests/StaleBrowserFrameworkPolicyTests.swift)
   pins the decision table.
 
 ### What would have caught it earlier
@@ -396,9 +396,9 @@ only way back.
 
 ### What changed
 
-[`DevScanner`](https://github.com/jithin-sabu/purge-app/blob/v1.5.0/purge/Services/DevScanner.swift)
+[`DevScanner`](https://github.com/jithin-sabu/purge-app/blob/v1.5.0/PruneIt/Services/DevScanner.swift)
 targets only the Caches folder.
-[`DeletionSafetyPolicy.evaluate`](https://github.com/jithin-sabu/purge-app/blob/v1.5.0/purge/Services/DeletionSafetyPolicy.swift)
+[`DeletionSafetyPolicy.evaluate`](https://github.com/jithin-sabu/purge-app/blob/v1.5.0/PruneIt/Services/DeletionSafetyPolicy.swift)
 refuses `Application Support/JetBrains` and every descendant before any
 allowlist rule runs, so it can never be scanned, sized or deleted. Three tests
 pin it.
@@ -429,9 +429,9 @@ Safe since v1.1.0, the first release with the two labels.
 ### What changed
 
 Thirty entries moved from Safe to Clean to Check First in
-[`explanations.json`](https://github.com/jithin-sabu/purge-app/blob/v1.3.0/purge/Resources/explanations.json)
+[`explanations.json`](https://github.com/jithin-sabu/purge-app/blob/v1.3.0/PruneIt/Resources/explanations.json)
 and
-[`SafetyTierList.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.3.0/purge/Services/SafetyTierList.swift),
+[`SafetyTierList.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.3.0/PruneIt/Services/SafetyTierList.swift),
 so they are no longer swept up by one-click or scheduled cleaning:
 
 - Index rebuilds: Spotlight Search, Apple Photos, Apple Mail
@@ -446,7 +446,7 @@ The full list is in the commit.
 
 A written definition of Safe, applied to every entry as a checklist rather
 than as a tag. The definition now exists on the
-[safety page](https://purgemac.com/safety): the app rebuilds it on its own and
+[safety page](https://pruneit.app/safety): the app rebuilds it on its own and
 you will not notice it is gone. Spotlight fails that test.
 
 ## 2026-07-12: Spotify cache cleanup took files a user kept there on purpose
@@ -456,23 +456,23 @@ you will not notice it is gone. Spotlight fails that test.
 ### What happened
 
 The user ran a modified Spotify client that kept its added files inside
-Spotify's cache folder. Purge listed the Spotify cache as Safe to Clean, and
-cleaning it removed those files along with the cache. Purge did what its label
+Spotify's cache folder. PruneIt listed the Spotify cache as Safe to Clean, and
+cleaning it removed those files along with the cache. PruneIt did what its label
 said. The gap was that there was no way to tell it to leave a folder alone.
 
 ### Who was affected
 
-One user. Anyone else who keeps their own files inside a folder Purge treats
+One user. Anyone else who keeps their own files inside a folder PruneIt treats
 as a cache would have hit the same thing.
 
 ### What changed
 
 Settings gained Excluded from Scans
-([`ExcludedPathsStore.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.2.8/purge/Services/ExcludedPathsStore.swift)).
+([`ExcludedPathsStore.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.2.8/PruneIt/Services/ExcludedPathsStore.swift)).
 An exclusion is a subtractive filter on top of the allowlist. It can only
-remove a candidate from the results, never widen what Purge can touch.
+remove a candidate from the results, never widen what PruneIt can touch.
 
 ### What would have caught it earlier
 
-Nothing in Purge can know what a modified client keeps in a cache folder. The
+Nothing in PruneIt can know what a modified client keeps in a cache folder. The
 lesson is that a deleter needs a per-path opt-out from the first release.

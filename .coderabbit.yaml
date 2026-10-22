@@ -5,7 +5,7 @@ inheritance: true
 reviews:
   finishing_touches:
     # CodeRabbit comments but never pushes. Its Autofix pushed a change we had
-    # already rejected to #144 (9463054). Purge deletes files, so every change
+    # already rejected to #144 (9463054). PruneIt deletes files, so every change
     # to a PR is made by a person (#145).
     autofix:
       enabled: false

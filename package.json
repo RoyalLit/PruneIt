@@ -1,5 +1,5 @@
 {
-  "name": "purge-brand-icons",
+  "name": "pruneit-brand-icons",
   "private": true,
   "scripts": {
     "generate:icons": "node scripts/generate-brand-icons.mjs",

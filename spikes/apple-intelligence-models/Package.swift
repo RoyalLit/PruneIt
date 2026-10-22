@@ -1,7 +1,7 @@
 // swift-tools-version: 5.10
 import PackageDescription
 
-// Spike for jithin-sabu/purge-app#133. A standalone CLI, not part of Purge.app.
+// Spike for jithin-sabu/purge-app#133. A standalone CLI, not part of PruneIt.app.
 let package = Package(
     name: "apple-intelligence-models",
     platforms: [.macOS(.v14)],

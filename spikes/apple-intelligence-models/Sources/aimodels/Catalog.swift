@@ -32,7 +32,7 @@ struct ModelSet {
 enum Catalog {
     /// The subscriber name the spike's own download requests carry, so Download
     /// again can unsubscribe exactly those and nothing Apple or another app owns.
-    static let subscriber = "io.getpurge.spike"
+    static let subscriber = "com.pahul.pruneit.spike"
 
     static let foundation = "com.apple.modelcatalog"
     static let visual = "com.apple.MobileAsset.UAF.FM.Visual"
