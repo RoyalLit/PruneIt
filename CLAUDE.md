@@ -14,6 +14,9 @@ PruneIt is a fork of [purge-app](https://github.com/jithin-sabu/purge-app) by Ji
 - `docs/design-system.md` describes the colours, type, and spacing tokens.
 - `docs/taste-skill.md` describes the Taste Skill plugin for frontend art direction and inspection.
 - `docs/ARCHITECTURE.md` is the full architecture walkthrough.
+- `AGENTS.md` is the universal instruction set for AI agents.
+- `RULES.md` defines the strict engineering, design taste, and safety rules.
+- `TASKS.md` is the roadmap and active task tracker.
 - `UPSTREAM.md` records the upstream commit hash from purge-app.
 
 ## Commands
