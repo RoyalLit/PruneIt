@@ -8,13 +8,18 @@
 
 ## Features
 
-- **Cache Cleaner** — dev caches (`node_modules`, `DerivedData`, `.gradle`, etc.) with a three-tier safety allowlist
-- **App Uninstaller** — removes app bundles and their leftover support files, even without Full Disk Access
-- **Large Files** — scans for files above a configurable threshold, with thumbnail preview
-- **Dev Tools** — removes Simulator runtimes, Apple Intelligence models, command-line tools managed by Homebrew/npm/pipx/uv/cargo
-- **Everything Else** — treemap view of large folders
-- **Scheduled Cleaning** — one-click or scheduled automatic cleanup of `.safe`-tier caches
-- **Menu Bar Mode** — optional status-bar icon with a mini-panel
+- **Precision Developer Workbench (New)**:
+  - **Storage Strata (The Prune Horizon)**: 3-tier architectural capacity breakdown (`Living System`, `Prunable Debris`, `Available Capacity`) replacing generic rainbow bars.
+  - **Reclaimable Yield Horizon Deck**: Bold, monospaced tabular metrics with instant clean and scan actions.
+  - **Pruning Ledger**: Directory-scoped ledger rows (`~/Library/Developer`, `~/Library/Caches`) with live status chips and drilldown affordances.
+  - **Guarded System Allocations**: Dedicated, guarded panels for Time Machine snapshots and local AI foundation models.
+- **Cache Cleaner** — Dev caches (`node_modules`, `DerivedData`, `.gradle`, etc.) governed by a strict three-tier safety allowlist (`.safe`, `.medium`, `.unknown`).
+- **App Uninstaller** — Removes app bundles and their leftover support files (`Application Support`, `Containers`, `Preferences`), even without Full Disk Access.
+- **Large Files** — Scans for disk space hogs above configurable size thresholds with thumbnail previews.
+- **Developer Tools** — Safely removes Xcode Simulator runtimes, local AI models (Ollama, LM Studio), and command-line tools.
+- **Everything Else** — Treemap visualization of system allocations and personal files.
+- **Scheduled Cleaning** — Automatic background or 1-click cleanup of `.safe`-tier caches.
+- **Menu Bar Mode** — Lightweight status-bar applet for instant pruning.
 
 ---
 
@@ -25,7 +30,7 @@
 
 ### Steps
 
-1. Download the latest `.dmg` from [Releases](https://github.com/YOUR_GITHUB/pruneit/releases).
+1. Download the latest `.dmg` from [Releases](https://github.com/RoyalLit/PruneIt/releases).
 2. Open the `.dmg` and drag **PruneIt.app** to your **Applications** folder.
 3. Try to open PruneIt. macOS will say **"PruneIt" cannot be opened because it is from an unidentified developer**.
 4. Go to **System Settings → Privacy & Security** and click **Open Anyway** next to the PruneIt warning.
@@ -115,6 +120,25 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for a full walkthrough.
 | `PruneItTests/` | Unit tests (Swift Testing framework) |
 | `docs/` | Architecture notes, safety log, design system |
 | `scripts/` | Build, lint, and localization tools |
+
+---
+
+## Agent & Developer Documentation
+
+PruneIt provides first-class documentation and operational guardrails for human contributors and autonomous AI agents:
+
+| Guide | Description |
+|---|---|
+| [`AGENTS.md`](AGENTS.md) | Universal agent operating instructions, invariants, architecture map, and verification matrix. |
+| [`RULES.md`](RULES.md) | Engineering standards, design taste rules (anti-slop, 3–5% color budget), and deletion policies. |
+| [`TASKS.md`](TASKS.md) | Living project roadmap, active redesign tasks, and verification checklist. |
+| [`GEMINI.md`](GEMINI.md) | Fast-bootstrap configuration for Gemini and Google Antigravity agents. |
+| [`CLAUDE.md`](CLAUDE.md) | Quick command reference and rules for Claude Code. |
+| [`.agents/rules/`](.agents/rules/) | Modular rule definitions discovered by agent customization engines. |
+| [`docs/design-system.md`](docs/design-system.md) | Complete design token reference (Spruce palette, typography, button styles, radii). |
+| [`docs/taste-skill.md`](docs/taste-skill.md) | Frontend art direction standards using the Taste Skill plugin. |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | In-depth architectural design, scanning pipelines, and target layout. |
+| [`docs/safety-notes.md`](docs/safety-notes.md) | Forensic incident log and historical safety audits. |
 
 ---
 

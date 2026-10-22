@@ -2,6 +2,18 @@
 
 Thank you for your interest in contributing!
 
+## Documentation & Agent Instructions
+
+Before writing code or opening a pull request, all human contributors and AI agents **MUST** review the following core documents:
+
+- **[`AGENTS.md`](AGENTS.md)**: Universal guidelines, architecture map, safety invariants, and verification matrix.
+- **[`RULES.md`](RULES.md)**: Strict rules covering design taste (3–5% color budget, hairline borders, no-slop), Swift standards, and deletion safety.
+- **[`TASKS.md`](TASKS.md)**: Roadmap, current active redesign phase, and task backlog.
+- **[`.agents/rules/`](.agents/rules/)**: Modular rule definitions automatically loaded by agent frameworks.
+- **[`docs/design-system.md`](docs/design-system.md)**: Color, typography, and shape token specifications.
+
+---
+
 ## Before you start
 
 - Open an issue first for anything bigger than a small fix.
