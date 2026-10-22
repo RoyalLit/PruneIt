@@ -9,7 +9,7 @@
 # You will be asked for your password once, to replace /Applications/PruneIt.app.
 set -euo pipefail
 
-IDENTITY="Developer ID Application: Jithin Sabu (BX83ZBV95B)"
+IDENTITY="Developer ID Application: Pahul (BX83ZBV95B)"
 TEAM="BX83ZBV95B"
 HELPER="Contents/MacOS/com.pahul.pruneit.helper"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

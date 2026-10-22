@@ -275,8 +275,11 @@
 "Installed apps" = "已安装应用";
 "Items being cleaned, %lld" = "正在清理 %lld 项";
 "Items found, %lld" = "发现 %lld 项";
-"Jithin" = "Jithin";
-"Jithin on X" = "Jithin on X";
+"Pahul" = "Pahul";
+"Crafted by Pahul" = "由 Pahul 精心打造";
+"Crafted by Pahul (@RoyalLit)" = "由 Pahul (@RoyalLit) 精心打造";
+"Crafted with precision by Pahul" = "由 Pahul 精工打造";
+
 "Keep" = "保留";
 "Keep Cleaning" = "继续清理";
 "Keep Files" = "保留文件";

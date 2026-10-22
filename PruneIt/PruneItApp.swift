@@ -2,7 +2,8 @@
 //  PruneItApp.swift
 //  PruneIt
 //
-//  Created by Jithin Sabu on 05/05/26.
+//  Crafted with precision by Pahul (@RoyalLit).
+//  Copyright © 2026 Pahul. All rights reserved.
 //
 
 import AppKit

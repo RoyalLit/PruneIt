@@ -1,3 +1,11 @@
+//
+//  AboutView.swift
+//  PruneIt
+//
+//  Crafted with precision by Pahul (@RoyalLit).
+//  Copyright © 2026 Pahul. All rights reserved.
+//
+
 import AppKit
 import SwiftUI
 
@@ -70,6 +78,13 @@ struct AboutView: View {
 
             Text("PruneIt")
                 .font(AppStyle.Typography.title)
+
+            Text(String(localized: "Crafted by Pahul"))
+                .font(AppStyle.Typography.micro)
+                .foregroundStyle(AppColors.accentPrune)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 2)
+                .background(AppColors.accentPruneSubtle, in: Capsule())
 
             if let devModeFlash {
                 Text(devModeFlash)
@@ -211,6 +226,12 @@ struct AboutView: View {
                 AboutActionRow(icon: "arrow.counterclockwise", label: String(localized: "Replay onboarding")) {
                     hasCompletedOnboarding = false
                 }
+
+                InsetCardDivider()
+
+                AboutActionRow(icon: "person.crop.circle.fill", label: String(localized: "Crafted by Pahul (@RoyalLit)")) {
+                    NSWorkspace.shared.open(Self.authorURL)
+                }
             }
         }
     }
@@ -222,6 +243,15 @@ struct AboutView: View {
                     .fontWeight(.medium)
                     .foregroundStyle(AppColors.textPrimary)
                 Text("· Open Source")
+                    .foregroundStyle(AppColors.textSecondary)
+            }
+            .font(AppStyle.Typography.metadata)
+
+            HStack(spacing: 4) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 10))
+                    .foregroundStyle(AppColors.accentPrune)
+                Text(String(localized: "Crafted with precision by Pahul"))
                     .foregroundStyle(AppColors.textSecondary)
             }
             .font(AppStyle.Typography.metadata)
@@ -291,15 +321,16 @@ struct AboutView: View {
         return formatter
     }()
 
+    static let authorURL = URL(string: "https://github.com/RoyalLit")!
+    static let repoBaseURL = URL(string: "https://github.com/RoyalLit/PruneIt")!
+
     private var reportBugURL: URL {
-        URL(string: "https://github.com/pahul/pruneit/issues")!
+        URL(string: "\(Self.repoBaseURL.absoluteString)/issues")!
     }
 
     private var featureRequestURL: URL {
-        URL(string: "https://github.com/pahul/pruneit/issues")!
+        URL(string: "\(Self.repoBaseURL.absoluteString)/issues")!
     }
-
-    static let repoBaseURL = URL(string: "https://github.com/pahul/pruneit")!
 
     static var allowlistPolicyURL: URL {
         URL(string: "\(repoBaseURL.absoluteString)/blob/main/PruneIt/Services/DeletionSafetyPolicy.swift")!

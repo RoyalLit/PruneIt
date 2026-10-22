@@ -147,6 +147,13 @@ Deletion safety is the top priority. Every path goes through `DeletionSafetyPoli
 ---
 
 
+## Author
+
+**Pahul** ([@RoyalLit](https://github.com/RoyalLit))  
+*Crafted with precision for macOS developers.*
+
+---
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

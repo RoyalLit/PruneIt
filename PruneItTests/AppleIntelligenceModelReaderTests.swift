@@ -221,12 +221,12 @@ struct AppleIntelligenceAccountsTests {
     @Test func dsclListingYieldsOtherHumanAccounts() {
         let listing = """
             _spotlight   89
-            jithin       501
+            pahul        501
             guest        502
             root         0
             """
         #expect(AppleIntelligenceAccounts.parse(listing, currentUID: 501) == ["guest"])
-        #expect(AppleIntelligenceAccounts.parse(listing, currentUID: 502) == ["jithin"])
+        #expect(AppleIntelligenceAccounts.parse(listing, currentUID: 502) == ["pahul"])
     }
 
     @Test func optInFileSaysWhetherAnAccountUsesIt() throws {

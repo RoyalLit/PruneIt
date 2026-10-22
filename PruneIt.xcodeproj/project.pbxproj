@@ -717,7 +717,7 @@
 				INFOPLIST_FILE = PruneIt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PruneIt;
 				INFOPLIST_KEY_CFBundleName = PruneIt;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Pahul (@RoyalLit). All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -769,7 +769,7 @@
 				INFOPLIST_FILE = PruneIt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PruneIt;
 				INFOPLIST_KEY_CFBundleName = PruneIt;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Pahul (@RoyalLit). All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
