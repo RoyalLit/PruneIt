@@ -36,6 +36,11 @@ xcodebuild clean build \
 
 APP_PATH="$BUILD_DIR/app/$APP_NAME.app"
 
+# Ensure complete multi-resolution AppIcon is in the app bundle
+if [ -f "$REPO_ROOT/Assets/PruneIt.icns" ]; then
+  cp "$REPO_ROOT/Assets/PruneIt.icns" "$APP_PATH/Contents/Resources/AppIcon.icns"
+fi
+
 if [ ! -d "$APP_PATH" ]; then
   echo "ERROR: $APP_PATH not found after build. Check scheme/target names." >&2
   exit 1
@@ -53,6 +58,12 @@ rm -rf "$STAGING_DIR"
 mkdir -p "$STAGING_DIR"
 cp -R "$APP_PATH" "$STAGING_DIR/"
 ln -s /Applications "$STAGING_DIR/Applications"
+
+if [ -f "$REPO_ROOT/Assets/dmg/VolumeIcon.icns" ]; then
+  cp "$REPO_ROOT/Assets/dmg/VolumeIcon.icns" "$STAGING_DIR/.VolumeIcon.icns"
+  SetFile -c icnC "$STAGING_DIR/.VolumeIcon.icns" 2>/dev/null || true
+  SetFile -a C "$STAGING_DIR" 2>/dev/null || true
+fi
 
 hdiutil create \
   -volname "$APP_NAME $VERSION" \

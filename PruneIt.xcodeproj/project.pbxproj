@@ -19,7 +19,6 @@
 		50A1F20DF87D12D3DF8F7DF5 /* HelperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA85A6094291A6BEC3B68F5 /* HelperService.swift */; };
 		5368CFB286758549978735D8 /* com.pahul.pruneit.helper.plist in Copy LaunchDaemon plist */ = {isa = PBXBuildFile; fileRef = D4EC98BBF7E30D5C32FFB67D /* com.pahul.pruneit.helper.plist */; };
 		5666778899AABBCCDDEEFF00 /* InstalledApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0102132435465768798A9BA /* InstalledApp.swift */; };
-		5AB9306A2FAF6F5400EB0EBD /* PruneIt.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5AB930692FAF6F5400EB0EBD /* PruneIt.icon */; };
 		5AD314EE2FFB1DB500AEB32F /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 5AD314ED2FFB1DB500AEB32F /* Sparkle */; };
 		67778899AABBCCDDEEFF0011 /* ByteFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012132435465768798A9BACB /* ByteFormatter.swift */; };
 		788899AABBCCDDEEFF001122 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C4D8E8868801EE41EAE019 /* Cocoa.framework */; };
@@ -128,7 +127,6 @@
 		012132435465768798A9BACB /* ByteFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ByteFormatter.swift; path = PruneIt/Utilities/ByteFormatter.swift; sourceTree = SOURCE_ROOT; };
 		23866D74E1EC150691D3E969 /* com.pahul.pruneit.helper */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; path = com.pahul.pruneit.helper; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C4D8E8868801EE41EAE019 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		5AB930692FAF6F5400EB0EBD /* PruneIt.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = PruneIt.icon; sourceTree = "<group>"; };
 		5AF380452FAA15E4001693A0 /* PruneIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PruneIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AF381002FAA15E4001693A0 /* PruneItTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PruneItTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C6D7E8F901A2B3C4D5E6F70 /* PruneItWatchMain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PruneItWatchMain.swift; sourceTree = "<group>"; };
@@ -246,7 +244,6 @@
 		5AF3803C2FAA15E4001693A0 = {
 			isa = PBXGroup;
 			children = (
-				5AB930692FAF6F5400EB0EBD /* PruneIt.icon */,
 				5AF380472FAA15E4001693A0 /* PruneIt */,
 				5AF381012FAA15E4001693A0 /* PruneItTests */,
 				5AF380462FAA15E4001693A0 /* Products */,
@@ -466,7 +463,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AB9306A2FAF6F5400EB0EBD /* PruneIt.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,7 +693,7 @@
 		5AF380512FAA15E6001693A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = PruneIt;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				AUTOMATION_APPLE_EVENTS = NO;
@@ -749,7 +745,7 @@
 		5AF380522FAA15E6001693A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = PruneIt;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				AUTOMATION_APPLE_EVENTS = NO;
