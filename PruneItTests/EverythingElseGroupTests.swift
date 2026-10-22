@@ -458,7 +458,7 @@ struct EverythingElseGroupTests {
     }
 
     @Test func theGroupsNeverAddUpToMoreThanEverythingElse() {
-        // Clones and purgeable files can make the walk overstate (#131), and a
+        // Clones and reclaimable files can make the walk overstate (#131), and a
         // saved category total has no paths to take out.
         var measurement = EverythingElseMeasurement(access: .full)
         measurement.apply(.measured(EverythingElseMeasuredRoot(root: root(.protectedCaches, "/Users/alice/Library/Caches"), folders: [

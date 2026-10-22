@@ -13,7 +13,7 @@ Newest first.
 
 ## 2026-10-16: Leftovers offered an installed OrbStack's Docker data
 
-**Reported** by @vim-diesel ([#197](https://github.com/jithin-sabu/purge-app/issues/197)). **Fixed:** [#199](https://github.com/jithin-sabu/purge-app/pull/199), shipped in v1.11.1 (2026-10-17). **Affected:** v1.5.2 to v1.11.0.
+**Reported** by @vim-diesel ([#197](https://github.com/RoyalLit/PruneIt/issues/197)). **Fixed:** [#199](https://github.com/RoyalLit/PruneIt/pull/199), shipped in v1.11.1 (2026-10-17). **Affected:** v1.5.2 to v1.11.0.
 
 ### What happened
 
@@ -80,7 +80,7 @@ not when it was last used.
 
 ## 2026-10-15: Projects in use were Safe to Clean under "Consider stale after"
 
-**Found internally**, no report. **Fixed:** [#194](https://github.com/jithin-sabu/purge-app/pull/194), shipped in v1.11.0 (2026-10-15). **Affected:** v1.1.1 to v1.10.0, for anyone who never changed the setting.
+**Found internally**, no report. **Fixed:** [#194](https://github.com/RoyalLit/PruneIt/pull/194), shipped in v1.11.0 (2026-10-15). **Affected:** v1.1.1 to v1.10.0, for anyone who never changed the setting.
 
 ### What happened
 
@@ -146,7 +146,7 @@ scanner does.
 
 ## 2026-10-14: Simulators were Safe to Clean although they are removed for good
 
-**Reported** by @zihua-zhang while testing the 1.9.0 Chinese beta ([#110](https://github.com/jithin-sabu/purge-app/issues/110)). **Fixed:** [#166](https://github.com/jithin-sabu/purge-app/pull/166) and [#167](https://github.com/jithin-sabu/purge-app/pull/167), shipped in v1.11.0 (2026-10-15). **Affected:** v1.1.0 to v1.10.0.
+**Reported** by @zihua-zhang while testing the 1.9.0 Chinese beta ([#110](https://github.com/RoyalLit/PruneIt/issues/110)). **Fixed:** [#166](https://github.com/RoyalLit/PruneIt/pull/166) and [#167](https://github.com/RoyalLit/PruneIt/pull/167), shipped in v1.11.0 (2026-10-15). **Affected:** v1.1.0 to v1.10.0.
 
 ### What happened
 
@@ -193,7 +193,7 @@ the clean skips it anyway.
 
 ## 2026-10-06: Allowlist audit moved data folders out of Safe to Clean
 
-**Found internally**, no report. **Fixed:** [#103](https://github.com/jithin-sabu/purge-app/pull/103), shipped in v1.8.1 (2026-10-06). **Affected:** v1.1.0 to v1.8.0.
+**Found internally**, no report. **Fixed:** [#103](https://github.com/RoyalLit/PruneIt/pull/103), shipped in v1.8.1 (2026-10-06). **Affected:** v1.1.0 to v1.8.0.
 
 ### What happened
 
@@ -225,9 +225,9 @@ Maven, the global Gradle cache, NuGet, Cabal, the Ivy cache, CocoaPods spec
 repos and Playwright browsers moved to Check First. Finder, Dock, Control
 Center and System Settings caches, endpoint security agents and input methods
 are now never offered. The full diff is in
-[`explanations.json`](https://github.com/jithin-sabu/purge-app/blob/v1.8.1/PruneIt/Resources/explanations.json)
+[`explanations.json`](../PruneIt/Resources/explanations.json)
 and
-[`DeletionSafetyPolicy.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.8.1/PruneIt/Services/DeletionSafetyPolicy.swift)
+[`DeletionSafetyPolicy.swift`](../PruneIt/Services/DeletionSafetyPolicy.swift)
 at v1.8.1.
 
 ### What would have caught it earlier
@@ -238,7 +238,7 @@ at build time, so the published list cannot drift from the code.
 
 ## 2026-10-01: An active project's build folders could look stale and be swept
 
-**Found internally**, no report. **Fixed:** [#87](https://github.com/jithin-sabu/purge-app/pull/87), shipped in v1.7.1 (2026-10-05). **Affected:** v1.1.1 to v1.7.0.
+**Found internally**, no report. **Fixed:** [#87](https://github.com/RoyalLit/PruneIt/pull/87), shipped in v1.7.1 (2026-10-05). **Affected:** v1.1.1 to v1.7.0.
 
 ### What happened
 
@@ -258,7 +258,7 @@ not changed for longer than the stale setting was exposed.
 ### What changed
 
 Age now comes from the project, not the folder
-([`ProjectActivityPolicy.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.7.1/PruneIt/Services/ProjectActivityPolicy.swift)).
+([`ProjectActivityPolicy.swift`](../PruneIt/Services/ProjectActivityPolicy.swift)).
 A project is active if its git metadata, any file inside it, or the artifact
 folders' own dates are newer than the cutoff. A project in use right now, with
 a process working inside it or a git lock present, is hidden whatever the age
@@ -271,7 +271,7 @@ the Chrome entry below, applied to projects.
 
 ## 2026-10-01: Docker Desktop was Safe to Clean, so one-click cleans could trash the VM disk
 
-**Found internally**, no report. **Fixed:** [#86](https://github.com/jithin-sabu/purge-app/pull/86), shipped in v1.7.1 (2026-10-05). **Affected:** v1.1.0 to v1.7.0.
+**Found internally**, no report. **Fixed:** [#86](https://github.com/RoyalLit/PruneIt/pull/86), shipped in v1.7.1 (2026-10-05). **Affected:** v1.1.0 to v1.7.0.
 
 ### What happened
 
@@ -284,7 +284,7 @@ cleaning both picked it up. A comment in `DeletionSafetyPolicy` said "Check
 First, not Safe", but that list only decides whether a path can be offered at
 all, so the comment never took effect.
 
-Found while scoping [#67](https://github.com/jithin-sabu/purge-app/issues/67),
+Found while scoping [#67](https://github.com/RoyalLit/PruneIt/issues/67),
 which assumed Docker was already Check First.
 
 ### Who was affected
@@ -298,7 +298,7 @@ It can be put back from there, but a running Docker would have lost it.
 The row is Check First. Its description says what the folder holds, to quit
 Docker Desktop first, and points at `docker system prune` for freeing space
 without losing volumes.
-[`DockerSafetyTierTests.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.7.1/PruneItTests/DockerSafetyTierTests.swift)
+[`DockerSafetyTierTests.swift`](https://github.com/jithin-sabu/PruneIt/blob/v1.7.1/PruneItTests/DockerSafetyTierTests.swift)
 checks both the bundled record and the resolved row. Both tests fail on the
 old tag.
 
@@ -310,7 +310,7 @@ user data. And a rule that a comment never sets a tier: the tag in
 
 ## 2026-09-21: Old Version cleanup removed the framework Chrome was running from
 
-**Reported:** [#75](https://github.com/jithin-sabu/purge-app/issues/75), PruneIt 1.5.2. **Fixed:** [#76](https://github.com/jithin-sabu/purge-app/pull/76), shipped in v1.5.3 (2026-09-24). **Affected:** v1.1.2 to v1.5.2.
+**Reported:** [#75](https://github.com/RoyalLit/PruneIt/issues/75), PruneIt 1.5.2. **Fixed:** [#76](https://github.com/RoyalLit/PruneIt/pull/76), shipped in v1.5.3 (2026-09-24). **Affected:** v1.1.2 to v1.5.2.
 
 ### What happened
 
@@ -346,7 +346,7 @@ remove, but reinstall the browser if it fails to launch."
 PruneIt now reads running process paths before offering a version, and checks
 again before deleting.
 
-- [`DeletionSafetyPolicy.staleBrowserFrameworkRefusesDeletion`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/PruneIt/Services/DeletionSafetyPolicy.swift)
+- [`DeletionSafetyPolicy.staleBrowserFrameworkRefusesDeletion`](../PruneIt/Services/DeletionSafetyPolicy.swift)
   reads the bundle and executable path of every running application, maps
   each Chrome helper back to its outer `.app`, and pulls the version out of
   `Versions/<version>/` in the path.
@@ -355,7 +355,7 @@ again before deleting.
   browser is running but no process path reveals a version, offer nothing.
 - That refusal stays out of the offered-for-cleanup cache, because the answer
   flips when the user quits the browser.
-- [`FileDeleter`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/PruneIt/Services/FileDeleter.swift)
+- [`FileDeleter`](../PruneIt/Services/FileDeleter.swift)
   re-runs the check after sizing, immediately before the item goes to the
   Trash, and re-reads the `Current` symlink at that moment. An item that no
   longer passes is reported as "skipped for safety" instead of deleted. This
@@ -363,7 +363,7 @@ again before deleting.
   whatever it turns out to be.
 - The row's explanation now says to quit and relaunch the browser first, and
   that the browser deletes leftover versions itself on relaunch.
-- [`StaleBrowserFrameworkPolicyTests.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.5.3/PruneItTests/StaleBrowserFrameworkPolicyTests.swift)
+- [`StaleBrowserFrameworkPolicyTests.swift`](https://github.com/jithin-sabu/PruneIt/blob/v1.5.3/PruneItTests/StaleBrowserFrameworkPolicyTests.swift)
   pins the decision table.
 
 ### What would have caught it earlier
@@ -375,7 +375,7 @@ the v1.1.2 code.
 
 ## 2026-09-11: JetBrains cleaner deleted installed plugins and all IDE settings
 
-**Reported** by a user outside GitHub, no tracked issue. **Fixed:** [#48](https://github.com/jithin-sabu/purge-app/pull/48), shipped in v1.5.0 (2026-09-11). **Affected:** v1.1.0 to v1.4.0.
+**Reported** by a user outside GitHub, no tracked issue. **Fixed:** [#48](https://github.com/RoyalLit/PruneIt/pull/48), shipped in v1.5.0 (2026-09-11). **Affected:** v1.1.0 to v1.4.0.
 
 ### What happened
 
@@ -396,9 +396,9 @@ only way back.
 
 ### What changed
 
-[`DevScanner`](https://github.com/jithin-sabu/purge-app/blob/v1.5.0/PruneIt/Services/DevScanner.swift)
+[`DevScanner`](../PruneIt/Services/DevScanner.swift)
 targets only the Caches folder.
-[`DeletionSafetyPolicy.evaluate`](https://github.com/jithin-sabu/purge-app/blob/v1.5.0/PruneIt/Services/DeletionSafetyPolicy.swift)
+[`DeletionSafetyPolicy.evaluate`](../PruneIt/Services/DeletionSafetyPolicy.swift)
 refuses `Application Support/JetBrains` and every descendant before any
 allowlist rule runs, so it can never be scanned, sized or deleted. Three tests
 pin it.
@@ -411,7 +411,7 @@ on that principle.
 
 ## 2026-07-25: Spotlight and 29 other items were Safe to Clean although cleaning them had visible consequences
 
-**Reported:** [#10](https://github.com/jithin-sabu/purge-app/issues/10). **Fixed:** commit [`c265a95`](https://github.com/jithin-sabu/purge-app/commit/c265a9585f29fe551fb68641065db0e17efa9207), shipped in v1.3.0 (2026-08-02). **Affected:** v1.1.0 to v1.2.9.
+**Reported:** [#10](https://github.com/RoyalLit/PruneIt/issues/10). **Fixed:** commit [`c265a95`](commit `c265a9585f29fe551fb68641065db0e17efa9207`), shipped in v1.3.0 (2026-08-02). **Affected:** v1.1.0 to v1.2.9.
 
 ### What happened
 
@@ -429,9 +429,9 @@ Safe since v1.1.0, the first release with the two labels.
 ### What changed
 
 Thirty entries moved from Safe to Clean to Check First in
-[`explanations.json`](https://github.com/jithin-sabu/purge-app/blob/v1.3.0/PruneIt/Resources/explanations.json)
+[`explanations.json`](../PruneIt/Resources/explanations.json)
 and
-[`SafetyTierList.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.3.0/PruneIt/Services/SafetyTierList.swift),
+[`SafetyTierList.swift`](../PruneIt/Services/SafetyTierList.swift),
 so they are no longer swept up by one-click or scheduled cleaning:
 
 - Index rebuilds: Spotlight Search, Apple Photos, Apple Mail
@@ -451,7 +451,7 @@ you will not notice it is gone. Spotlight fails that test.
 
 ## 2026-07-12: Spotify cache cleanup took files a user kept there on purpose
 
-**Reported:** [#3](https://github.com/jithin-sabu/purge-app/issues/3). **Fixed:** [#4](https://github.com/jithin-sabu/purge-app/pull/4), shipped in v1.2.8 (2026-07-13).
+**Reported:** [#3](https://github.com/RoyalLit/PruneIt/issues/3). **Fixed:** [#4](https://github.com/RoyalLit/PruneIt/pull/4), shipped in v1.2.8 (2026-07-13).
 
 ### What happened
 
@@ -468,7 +468,7 @@ as a cache would have hit the same thing.
 ### What changed
 
 Settings gained Excluded from Scans
-([`ExcludedPathsStore.swift`](https://github.com/jithin-sabu/purge-app/blob/v1.2.8/PruneIt/Services/ExcludedPathsStore.swift)).
+([`ExcludedPathsStore.swift`](../PruneIt/Services/ExcludedPathsStore.swift)).
 An exclusion is a subtractive filter on top of the allowlist. It can only
 remove a candidate from the results, never widen what PruneIt can touch.
 

@@ -1,6 +1,6 @@
 # PruneIt Architecture
 
-This document describes the architecture of **PruneIt** (forked from `purge-app`), explaining its target structure, scanning engine, safety invariant model, in-use detection, deletion mechanisms, system integrations, and recommended starting files.
+This document describes the architecture of **PruneIt**, explaining its target structure, scanning engine, safety invariant model, in-use detection, deletion mechanisms, system integrations, and recommended starting files.
 
 ---
 

@@ -52,7 +52,3 @@ These are the safety core. A bug here can delete files that cannot be recovered 
 | Unit tests | `xcodebuild -project PruneIt.xcodeproj -scheme PruneIt -destination 'platform=macOS' test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO` |
 | Design tokens lint | `node scripts/lint-design-tokens.mjs` |
 | Localization check | `python3 scripts/check-localization.py` |
-
-## Acknowledgements
-
-PruneIt is forked from [purge-app](https://github.com/jithin-sabu/purge-app) by Jithin Sabu (MIT License).

@@ -115,7 +115,3 @@ gap. Dev Tools headings use `medium` above later sections, no extra space above
 the first section, and `xxSmall` below, followed by the card's `xxSmall` top inset.
 
 Cards use a 0.5pt `borderSubtle` hairline instead of a shadow.
-
-## Agent art direction & Taste Skill
-
-For public web landing pages, documentation styling, and marketing components, PruneIt integrates the [Taste Skill (`design-taste-frontend`)](taste-skill.md) plugin (installed under `.agents/skills/design-taste-frontend`). It ensures interface layouts, palettes, typography, and section compositions follow researched, high-craft aesthetics rather than generic AI defaults.

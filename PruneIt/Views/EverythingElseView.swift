@@ -375,8 +375,8 @@ struct EverythingElseView: View {
                 : String(localized: "Sizes are as counted on disk."))
             Image(systemName: "info.circle")
                 .font(.system(size: 11))
-                .help("Clones and purgeable files can make a folder read larger than what removing it would free. Hard links are counted once within each folder.")
-                .accessibilityLabel("Clones and purgeable files can make a folder read larger than what removing it would free. Hard links are counted once within each folder.")
+                .help("Clones and reclaimable files can make a folder read larger than what removing it would free. Hard links are counted once within each folder.")
+                .accessibilityLabel("Clones and reclaimable files can make a folder read larger than what removing it would free. Hard links are counted once within each folder.")
         }
         .font(AppStyle.Typography.metadata)
         .foregroundStyle(AppColors.textTertiary)

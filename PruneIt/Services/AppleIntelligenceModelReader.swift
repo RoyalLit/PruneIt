@@ -9,11 +9,10 @@ import Foundation
 /// `SUCorePersistedStatePolicySecureCodedObjectsFields.assetDescriptor`, whose
 /// root holds `downloadedFilesystemBytes`, `isOnFilesystem` and
 /// `secureOperationEliminating`. Confirmed on macOS 26.6 and 27.0 by the spike
-/// in `spikes/apple-intelligence-models`.
 ///
 /// The byte counts are Apple's. On macOS 27 the volume gave back about half the
 /// summed figure when the models went (the rest was already counted as
-/// purgeable), so the app shows them as Apple's estimate and records the
+/// reclaimable), so the app shows them as Apple's estimate and records the
 /// measured delta after a removal.
 nonisolated enum AppleIntelligenceModelReader {
     static let descriptorsRoot = "/System/Library/AssetsV2/persisted/AutoAssetDescriptors"
@@ -420,8 +419,8 @@ nonisolated enum AppleIntelligenceWorker {
     }
 }
 
-/// Free blocks only, with no purgeable accounting. On macOS 27 freshly
-/// downloaded models are purgeable, so they vanish from the figure System
+/// Free blocks only, with no reclaimable accounting. On macOS 27 freshly
+/// downloaded models are reclaimable, so they vanish from the figure System
 /// Settings shows but not from this one; the two together say what a removal
 /// really gave back.
 nonisolated enum VolumeRawCapacityReader {

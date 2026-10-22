@@ -29,7 +29,3 @@ something it should not:
 2. Include the file path, how it appeared in the UI, and what label/safety level it showed.
 
 After a fix is shipped, a post-mortem is added to [`docs/safety-notes.md`](docs/safety-notes.md).
-
-## Acknowledgements
-
-PruneIt is forked from [purge-app](https://github.com/jithin-sabu/purge-app) by Jithin Sabu (MIT License).

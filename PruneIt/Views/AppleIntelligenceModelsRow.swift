@@ -171,7 +171,7 @@ struct OverviewAppleIntelligenceRow: View {
         case .removed(_, let shown, let raw):
             // Two honest figures: what System Settings now shows as more available,
             // and what the disk itself gave back. They differ because macOS already
-            // counted part of the models as available (purgeable) before.
+            // counted part of the models as available (reclaimable) before.
             if let shown, let raw, raw > shown {
                 return String(localized: "Removed: Settings shows \(formatBytes(shown)) more, \(formatBytes(raw)) freed on the disk")
             }

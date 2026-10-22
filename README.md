@@ -2,9 +2,6 @@
 
 **PruneIt** is a native macOS app that finds developer caches, build artifacts, orphaned app leftovers, large files, simulator runtimes, and Apple Intelligence models — and moves them to the Trash (or removes them permanently where the system requires it). It runs entirely on-device with no subscriptions and no telemetry.
 
-> **Status:** Early release. Built on the [purge-app](https://github.com/jithin-sabu/purge-app) open-source core (MIT Licensed). See [Acknowledgements](#acknowledgements).
-
----
 
 ## Features
 
@@ -136,7 +133,6 @@ PruneIt provides first-class documentation and operational guardrails for human 
 | [`CLAUDE.md`](CLAUDE.md) | Quick command reference and rules for Claude Code. |
 | [`.agents/rules/`](.agents/rules/) | Modular rule definitions discovered by agent customization engines. |
 | [`docs/design-system.md`](docs/design-system.md) | Complete design token reference (Spruce palette, typography, button styles, radii). |
-| [`docs/taste-skill.md`](docs/taste-skill.md) | Frontend art direction standards using the Taste Skill plugin. |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | In-depth architectural design, scanning pipelines, and target layout. |
 | [`docs/safety-notes.md`](docs/safety-notes.md) | Forensic incident log and historical safety audits. |
 
@@ -150,11 +146,6 @@ Deletion safety is the top priority. Every path goes through `DeletionSafetyPoli
 
 ---
 
-## Acknowledgements
-
-PruneIt is built on **[purge-app](https://github.com/jithin-sabu/purge-app)** by [Jithin Sabu](https://github.com/jithin-sabu), used under the [MIT License](LICENSE). The scanning engine, deletion safety system, UI architecture, and all core logic originate from that project. We are grateful for the excellent open-source work.
-
----
 
 ## License
 

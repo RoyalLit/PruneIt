@@ -1,27 +1,41 @@
-Secrets.xcconfig
-*.xcconfig
-node_modules/
+# Xcode & Build Artifacts
 build/
 DerivedData/
 xcuserdata/
-*.vsix
-*.profraw
-# Local Claude Code state; the shared skills and commands folders are committed
-.claude/*
-!.claude/skills/
-!.claude/commands/
-release.sh
-
-# Export / packaging artifacts
+*.xcconfig
+Secrets.xcconfig
 *.app/
 DistributionSummary.plist
 ExportOptions.plist
 Packaging.log
-.cursor/rules/commit-conventions.mdc
+*.profraw
+*.vsix
+release.sh
 
-# Local release-note drafts (the shipped copy lives in the GitHub release)
-RELEASE_NOTES_*.md
+# Dependencies
+node_modules/
 
-# Local Command Code tooling state (not part of the app)
+# OS & Editor
+.DS_Store
+*.swp
+*.orig
+.cursor/
+
+# Agent & AI Tooling (Kept local, excluded from repository to preserve clean codebase)
+.agents/
+.claude/
+.coderabbit.yaml
+skills-lock.json
 .commandcode/
 .taste-skill/
+GEMINI.md
+CLAUDE.md
+AGENTS.md
+RULES.md
+TASKS.md
+docs/taste-skill.md
+
+# Scratch & Temporary Exploration
+scratch/
+spikes/
+RELEASE_NOTES_*.md
