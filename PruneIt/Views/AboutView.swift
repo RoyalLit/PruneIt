@@ -2,7 +2,7 @@
 //  AboutView.swift
 //  PruneIt
 //
-//  Crafted with precision by Pahul (@RoyalLit).
+//  Built with purpose by Pahul (@RoyalLit).
 //  Copyright © 2026 Pahul. All rights reserved.
 //
 
@@ -79,7 +79,7 @@ struct AboutView: View {
             Text("PruneIt")
                 .font(AppStyle.Typography.title)
 
-            Text(String(localized: "Crafted by Pahul"))
+            Text(String(localized: "Built with purpose by Pahul"))
                 .font(AppStyle.Typography.micro)
                 .foregroundStyle(AppColors.accentPrune)
                 .padding(.horizontal, 8)
@@ -229,7 +229,7 @@ struct AboutView: View {
 
                 InsetCardDivider()
 
-                AboutActionRow(icon: "person.crop.circle.fill", label: String(localized: "Crafted by Pahul (@RoyalLit)")) {
+                AboutActionRow(icon: "person.crop.circle.fill", label: String(localized: "Built with purpose by Pahul (@RoyalLit)")) {
                     NSWorkspace.shared.open(Self.authorURL)
                 }
             }
@@ -251,7 +251,7 @@ struct AboutView: View {
                 Image(systemName: "sparkles")
                     .font(.system(size: 10))
                     .foregroundStyle(AppColors.accentPrune)
-                Text(String(localized: "Crafted with precision by Pahul"))
+                Text(String(localized: "Built with purpose by Pahul"))
                     .foregroundStyle(AppColors.textSecondary)
             }
             .font(AppStyle.Typography.metadata)

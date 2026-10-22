@@ -1,5 +1,7 @@
 # PruneIt
 
+> *Built with purpose by Pahul.*
+
 **PruneIt** is a native macOS app that finds developer caches, build artifacts, orphaned app leftovers, large files, simulator runtimes, and Apple Intelligence models — and moves them to the Trash (or removes them permanently where the system requires it). It runs entirely on-device with no subscriptions and no telemetry.
 
 
@@ -150,7 +152,7 @@ Deletion safety is the top priority. Every path goes through `DeletionSafetyPoli
 ## Author
 
 **Pahul** ([@RoyalLit](https://github.com/RoyalLit))  
-*Crafted with precision for macOS developers.*
+*Built with purpose by Pahul for macOS developers.*
 
 ---
 

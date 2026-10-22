@@ -345,6 +345,8 @@ struct ContentView: View {
             .padding(.bottom, AppStyle.Spacing.xSmall)
 
             SidebarSummaryView()
+
+            SidebarWatermarkView()
         }
         .frame(
             maxWidth: .infinity,
@@ -960,7 +962,7 @@ struct SidebarSummaryView: View {
             trashCard
         }
         .padding(.horizontal, AppStyle.Spacing.small)
-        .padding(.bottom, AppStyle.Spacing.small)
+        .padding(.bottom, AppStyle.Spacing.xSmall)
     }
 
     /// What is already in the Trash, as one sentence on its own card. Cleaning moves
@@ -1060,4 +1062,39 @@ private func makePreviewStore() -> PruneItStore {
         )
     ]
     return store
+}
+
+struct SidebarWatermarkView: View {
+    @EnvironmentObject private var store: PruneItStore
+    @State private var isHovering = false
+
+    var body: some View {
+        Button {
+            store.selectedTab = .about
+        } label: {
+            HStack(spacing: 5) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 8, weight: .semibold))
+                    .foregroundStyle(isHovering ? AppColors.accentPrune : AppColors.textTertiary)
+                Text(String(localized: "Built with purpose by Pahul"))
+                    .font(AppStyle.Typography.micro)
+                    .foregroundStyle(isHovering ? AppColors.textSecondary : AppColors.textTertiary)
+                    .lineLimit(1)
+            }
+            .padding(.vertical, 3)
+            .padding(.horizontal, 6)
+            .background(
+                RoundedRectangle(cornerRadius: AppStyle.Radius.sm, style: .continuous)
+                    .fill(isHovering ? AppColors.fillSecondary : Color.clear)
+            )
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .onHover { isHovering = $0 }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.horizontal, AppStyle.Spacing.small)
+        .padding(.bottom, AppStyle.Spacing.small)
+        .help(String(localized: "Built with purpose by Pahul"))
+        .accessibilityLabel(String(localized: "Built with purpose by Pahul"))
+    }
 }
