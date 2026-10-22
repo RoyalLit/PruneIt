@@ -28,13 +28,16 @@ Tokens are named by job. The neutrals are a warm graphite: low-chroma greys lean
 | `borderStrong` | `#D5D2CD` | `#3D3B38` | Outlines of controls | |
 | `actionPrimary` | `#353431` | `#ECEAE6` | The one main action; checkbox and focus accent | 12.5 / 15.0 with its label |
 | `onActionPrimary` | `#FFFFFF` | `#171615` | Label on `actionPrimary` | |
+| `accentPrune` | `#1B6C80` | `#2EA3BE` | Signature Spruce/Teal: prunable yield & active strata | 4.6 / 6.2 |
+| `accentPruneSubtle` | `#EEF6F8` | `#162A30` | Subtle background for active strata / prunable chips | |
+| `accentPruneBorder` | `#BCDCE4` | `#235260` | Hairline border for focused strata items | |
 | `actionDestructive` | `#D1312A` | `#D9372D` | Confirming a move to Trash, white label | 5.0 / 4.6 |
 | `statusSafeText` / `Fill` | `#1F7A35` / `#E6F4EA` | `#5FD36B` / `#1B2E22` | Safe tag | 4.8 / 7.5 |
 | `statusCheckText` / `Fill` | `#8A5300` / `#FAEEDA` | `#F2B84B` / `#332910` | Check first tag | 5.5 / 8.0 |
 | `statusDangerText` / `Fill` | `#B4302A` / `#FBE8E5` | `#F47468` / `#321B19` | In use, errors | 5.2 / 5.8 |
 | `statusUnsureText` / `Fill` | `#5A5853` / `#EFEDEA` | `#A9A6A0` / `#282725` | Unknown | 6.1 / 6.2 |
 
-Hover and pressed shades exist for `actionPrimary` and `actionDestructive` too. `AppColors.Chart` holds the Overview breakdown colours (Okabe and Ito, colour-blind safe) and the warm greys for "everything else" and free space. It also holds the four Everything else page colours (#159), named for what the user can do: `managedInApps` blue, `yourFiles` amber, `leftAlone` coral and `managedByMacOS` grey. They differ in lightness as well as hue. Text on them is `bucketLabel`, except on the grey tile, which uses `managedByMacOSLabel`.
+Hover and pressed shades exist for `actionPrimary` and `actionDestructive` too. `AppColors.Chart` holds the Overview breakdown colours (an architectural devtools palette anchored by Spruce, distinct in lightness and hue) and the warm greys for "everything else" (living system) and free space. It also holds the four Everything else page colours (#159), named for what the user can do: `managedInApps` blue, `yourFiles` amber, `leftAlone` coral and `managedByMacOS` grey. They differ in lightness as well as hue. Text on them is `bucketLabel`, except on the grey tile, which uses `managedByMacOSLabel`.
 
 The cleanup celebration follows the app's appearance and draws on `surfaceBase`, so it uses the ordinary tokens in both modes. Plain white and black are only for shadows, masks, glyphs on coloured chart tiles, and the menu bar dropdown's native selection highlight.
 

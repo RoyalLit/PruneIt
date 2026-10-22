@@ -151,8 +151,21 @@ struct OverviewEverythingElseRow: View {
         HStack(spacing: AppStyle.Spacing.small) {
             OverviewIconTile(symbol: "ellipsis", color: AppColors.Chart.everythingElse)
             VStack(alignment: .leading, spacing: 2) {
-                Text("Everything else")
-                    .font(AppStyle.Typography.headline)
+                HStack(spacing: 6) {
+                    Text("Everything else")
+                        .font(AppStyle.Typography.headline)
+                        .foregroundStyle(AppColors.textPrimary)
+
+                    Text("~/Documents, /System")
+                        .font(AppStyle.Typography.micro)
+                        .foregroundStyle(AppColors.textTertiary)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 1)
+                        .background(
+                            RoundedRectangle(cornerRadius: AppStyle.Radius.xs, style: .continuous)
+                                .fill(AppColors.fillSecondary)
+                        )
+                }
                 Text(detail)
                     .font(AppStyle.Typography.callout)
                     .foregroundStyle(AppColors.textSecondary)
@@ -167,7 +180,13 @@ struct OverviewEverythingElseRow: View {
             Text(formatStorageBytes(breakdown.everythingElseBytes))
                 .font(AppStyle.Typography.sectionTitle)
                 .overviewNumberTransition(breakdown.everythingElseBytes, reduceMotion: reduceMotion)
+                .foregroundStyle(AppColors.textPrimary)
                 .frame(minWidth: 64, alignment: .trailing)
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(AppColors.textTertiary.opacity(0.6))
+                .padding(.leading, 2)
         }
         .padding(.horizontal, AppStyle.Row.scanCardHorizontalPadding)
         .padding(.vertical, 11)

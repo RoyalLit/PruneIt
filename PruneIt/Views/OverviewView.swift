@@ -46,21 +46,13 @@ struct OverviewView: View {
         )
         VStack(alignment: .leading, spacing: AppStyle.Spacing.large) {
             if breakdown.totalBytes > 0 {
-                VStack(alignment: .leading, spacing: AppStyle.Spacing.small) {
-                    diskSummary(breakdown)
-                    OverviewDiskBar(
-                        segments: barSegments(breakdown),
-                        highlightedID: highlightedID,
-                        onHover: { highlightedID = $0 }
-                    )
-                }
+                strataDeck(breakdown)
             }
 
-            categoriesCard(breakdown, now: now)
+            categoriesLedger(breakdown, now: now)
 
             if breakdown.totalBytes > 0 {
-                restOfDiskCard(breakdown)
-                systemDataCard(now: now)
+                guardedAllocationsCard(breakdown, now: now)
             }
 
             footnotes(now: now)
@@ -76,25 +68,114 @@ struct OverviewView: View {
         return highlightedID == id ? .emphasized : .dimmed
     }
 
-    // MARK: Disk summary
+    // MARK: - Strata Deck (Signature Element)
 
-    private func diskSummary(_ breakdown: OverviewBreakdown) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: AppStyle.Spacing.xSmall) {
-            Text("\(formatStorageBytes(breakdown.usedBytes)) used")
-                .font(AppStyle.Typography.title.weight(.bold))
-                .overviewNumberTransition(breakdown.usedBytes, reduceMotion: reduceMotion)
-            Text("of \(formatStorageBytes(breakdown.totalBytes))")
-                .font(AppStyle.Typography.rowTitle)
-                .foregroundStyle(AppColors.textSecondary)
-                .overviewNumberTransition(breakdown.totalBytes, reduceMotion: reduceMotion)
-            Spacer(minLength: AppStyle.Spacing.small)
-            // Right end, above the free part of the bar.
-            Text("\(formatStorageBytes(breakdown.freeBytes)) free")
-                .font(AppStyle.Typography.rowTitle)
-                .foregroundStyle(AppColors.textSecondary)
-                .overviewNumberTransition(breakdown.freeBytes, reduceMotion: reduceMotion)
+    private func strataDeck(_ breakdown: OverviewBreakdown) -> some View {
+        VStack(alignment: .leading, spacing: AppStyle.Spacing.medium) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(alignment: .firstTextBaseline, spacing: AppStyle.Spacing.xSmall) {
+                        Text(strataHeadline(breakdown))
+                            .font(AppStyle.Typography.title.weight(.bold))
+                            .foregroundStyle(store.safeRecoverableBytes > 0 ? AppColors.accentPrune : AppColors.textPrimary)
+                            .overviewNumberTransition(store.safeRecoverableBytes > 0 ? store.safeRecoverableBytes : breakdown.usedBytes, reduceMotion: reduceMotion)
+
+                        if store.safeRecoverableBytes > 0 {
+                            Text("Safe to Prune")
+                                .font(AppStyle.Typography.micro)
+                                .foregroundStyle(AppColors.accentPrune)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(
+                                    Capsule()
+                                        .fill(AppColors.accentPruneSubtle)
+                                        .overlay(Capsule().strokeBorder(AppColors.accentPruneBorder, lineWidth: 0.5))
+                                )
+                        }
+                    }
+
+                    Text(strataSubline(breakdown))
+                        .font(AppStyle.Typography.callout)
+                        .foregroundStyle(AppColors.textSecondary)
+                }
+
+                Spacer(minLength: AppStyle.Spacing.small)
+
+                HStack(spacing: AppStyle.Spacing.xSmall) {
+                    OverviewScanButton()
+                    OverviewCleanSafeButton()
+                }
+            }
+
+            OverviewDiskBar(
+                segments: barSegments(breakdown),
+                highlightedID: highlightedID,
+                onHover: { highlightedID = $0 }
+            )
+
+            strataZoneLegend(breakdown)
         }
-        .accessibilityElement(children: .combine)
+        .padding(AppStyle.Spacing.large)
+        .overviewCard()
+    }
+
+    private func strataHeadline(_ breakdown: OverviewBreakdown) -> String {
+        if store.safeRecoverableBytes > 0 {
+            return formatStorageBytes(store.safeRecoverableBytes)
+        }
+        if store.isScanningAll {
+            return String(localized: "Analyzing Strata…")
+        }
+        return "\(formatStorageBytes(breakdown.usedBytes)) Used"
+    }
+
+    private func strataSubline(_ breakdown: OverviewBreakdown) -> String {
+        if store.safeRecoverableBytes > 0 {
+            return String(localized: "\(formatStorageBytes(breakdown.usedBytes)) used across \(formatStorageBytes(breakdown.totalBytes)) volume · \(formatStorageBytes(breakdown.freeBytes)) free")
+        }
+        return String(localized: "of \(formatStorageBytes(breakdown.totalBytes)) volume · \(formatStorageBytes(breakdown.freeBytes)) available capacity")
+    }
+
+    private func strataZoneLegend(_ breakdown: OverviewBreakdown) -> some View {
+        let prunableBytes = OverviewCategory.allCases.reduce(Int64(0)) { $0 + breakdown.bytes(for: $1) }
+        return HStack(spacing: AppStyle.Spacing.large) {
+            zoneItem(
+                label: String(localized: "Living System"),
+                bytes: breakdown.everythingElseBytes,
+                color: AppColors.Chart.everythingElse,
+                id: OverviewDiskBar.everythingElseID
+            )
+            zoneItem(
+                label: String(localized: "Prunable Debris"),
+                bytes: prunableBytes,
+                color: AppColors.accentPrune,
+                id: highlightedID.flatMap { id in OverviewCategory(rawValue: id) != nil ? id : nil }
+            )
+            Spacer()
+            zoneItem(
+                label: String(localized: "Free Space"),
+                bytes: breakdown.freeBytes,
+                color: AppColors.Chart.freeSpace,
+                id: OverviewDiskBar.freeID
+            )
+        }
+        .padding(.top, 2)
+    }
+
+    private func zoneItem(label: String, bytes: Int64, color: Color, id: String?) -> some View {
+        HStack(spacing: 6) {
+            Circle()
+                .fill(color)
+                .frame(width: 7, height: 7)
+            Text(label)
+                .font(AppStyle.Typography.metadata)
+                .foregroundStyle(AppColors.textSecondary)
+            Text(formatStorageBytes(bytes))
+                .font(AppStyle.Typography.metadataEmphasis)
+                .foregroundStyle(AppColors.textPrimary)
+                .monospacedDigit()
+        }
+        .opacity(highlightedID == nil || (id != nil && highlightedID == id) ? 1 : 0.45)
     }
 
     private func barSegments(_ breakdown: OverviewBreakdown) -> [OverviewDiskBar.Segment] {
@@ -121,67 +202,75 @@ struct OverviewView: View {
         return segments
     }
 
-    // MARK: Categories
+    // MARK: - Pruning Ledger
 
-    private func categoriesCard(_ breakdown: OverviewBreakdown, now: Date) -> some View {
-        VStack(spacing: 0) {
-            ForEach(Array(OverviewCategory.allCases.enumerated()), id: \.element) { index, category in
-                if index > 0 {
-                    InsetCardDivider()
-                }
-                OverviewCategoryRow(
-                    category: category,
-                    bytes: breakdown.bytes(for: category),
-                    share: breakdown.share(of: breakdown.bytes(for: category)),
-                    now: now,
-                    linkedState: linkedRowState(category.rawValue)
-                )
-            }
-        }
-        .overviewCard()
-    }
-
-    private func restOfDiskCard(_ breakdown: OverviewBreakdown) -> some View {
-        VStack(spacing: 0) {
-            OverviewEverythingElseRow(
-                breakdown: breakdown,
-                linkedState: linkedRowState(OverviewDiskBar.everythingElseID)
-            )
-            InsetCardDivider()
-            OverviewPlainRow(
-                color: AppColors.Chart.freeSpace,
-                title: String(localized: "Free"),
-                detail: String(localized: "Available for new files"),
-                bytes: breakdown.freeBytes,
-                share: breakdown.share(of: breakdown.freeBytes),
-                linkedState: linkedRowState(OverviewDiskBar.freeID)
-            )
-        }
-        .overviewCard()
-    }
-
-    /// Things inside System Data that PruneIt can remove. They are part of the used
-    /// space above but have no place in the bar, so they get a card of their own
-    /// where every row ends in its action and any size goes in the line under the
-    /// title, instead of a figure that would read like the bar's.
-    private func systemDataCard(now: Date) -> some View {
+    private func categoriesLedger(_ breakdown: OverviewBreakdown, now: Date) -> some View {
         VStack(alignment: .leading, spacing: AppStyle.Spacing.xSmall) {
-            Text("Hidden in System Data")
-                .font(AppStyle.Typography.headline)
-                .foregroundStyle(AppColors.textSecondary)
-                .padding(.horizontal, AppStyle.Spacing.xxSmall)
-                .accessibilityAddTraits(.isHeader)
+            HStack(alignment: .firstTextBaseline) {
+                Text("Pruning Ledger")
+                    .font(AppStyle.Typography.sectionTitle)
+                    .foregroundStyle(AppColors.textPrimary)
+                Spacer()
+                Text("Inspected Categories & Scope")
+                    .font(AppStyle.Typography.metadata)
+                    .foregroundStyle(AppColors.textTertiary)
+            }
+            .padding(.horizontal, AppStyle.Spacing.xxSmall)
+
             VStack(spacing: 0) {
-                // No tool says how much these take, so the row has no size.
-                // Always shown, even with none, so people learn these exist and where
-                // to find them when they do.
+                ForEach(Array(OverviewCategory.allCases.enumerated()), id: \.element) { index, category in
+                    if index > 0 {
+                        InsetCardDivider()
+                    }
+                    OverviewCategoryRow(
+                        category: category,
+                        bytes: breakdown.bytes(for: category),
+                        share: breakdown.share(of: breakdown.bytes(for: category)),
+                        now: now,
+                        linkedState: linkedRowState(category.rawValue)
+                    )
+                }
+            }
+            .overviewCard()
+        }
+    }
+
+    // MARK: - Guarded System Allocations
+
+    private func guardedAllocationsCard(_ breakdown: OverviewBreakdown, now: Date) -> some View {
+        VStack(alignment: .leading, spacing: AppStyle.Spacing.xSmall) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("Guarded System Allocations")
+                    .font(AppStyle.Typography.sectionTitle)
+                    .foregroundStyle(AppColors.textPrimary)
+                Spacer()
+                Text("Protected by macOS")
+                    .font(AppStyle.Typography.metadata)
+                    .foregroundStyle(AppColors.textTertiary)
+            }
+            .padding(.horizontal, AppStyle.Spacing.xxSmall)
+
+            VStack(spacing: 0) {
+                OverviewEverythingElseRow(
+                    breakdown: breakdown,
+                    linkedState: linkedRowState(OverviewDiskBar.everythingElseID)
+                )
+                InsetCardDivider()
+                OverviewPlainRow(
+                    symbol: "circle.dashed",
+                    color: AppColors.Chart.freeSpace,
+                    title: String(localized: "Available Free Space"),
+                    detail: String(localized: "Unallocated capacity ready for new files"),
+                    bytes: breakdown.freeBytes,
+                    share: breakdown.share(of: breakdown.freeBytes),
+                    linkedState: linkedRowState(OverviewDiskBar.freeID)
+                )
+                InsetCardDivider()
                 OverviewSnapshotRow(
                     snapshotStore: snapshotStore,
                     now: now,
                     linkedState: linkedRowState(OverviewSnapshotRow.id)
                 )
-                // Apple Intelligence's models, macOS 27 only, and only when there is
-                // something on the Mac, a block in place, or a removal to report (#133).
                 if appleIntelligenceStore.isRelevant {
                     InsetCardDivider()
                     OverviewAppleIntelligenceRow(
@@ -261,6 +350,18 @@ private struct OverviewCategoryRow: View {
                 HStack(spacing: 6) {
                     Text(OverviewCategoryStyle.name(category))
                         .font(AppStyle.Typography.headline)
+                        .foregroundStyle(AppColors.textPrimary)
+
+                    Text(OverviewCategoryStyle.pathScope(category))
+                        .font(AppStyle.Typography.micro)
+                        .foregroundStyle(AppColors.textTertiary)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 1)
+                        .background(
+                            RoundedRectangle(cornerRadius: AppStyle.Radius.xs, style: .continuous)
+                                .fill(AppColors.fillSecondary)
+                        )
+
                     if OverviewCategoryStyle.isReview(category), showsFigure {
                         AppBadge(text: String(localized: "Review first"), tone: .warning)
                     }
@@ -272,6 +373,11 @@ private struct OverviewCategoryRow: View {
 
             trailing
                 .transition(.opacity)
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(AppColors.textTertiary.opacity(0.6))
+                .padding(.leading, 2)
         }
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: phase)
         .padding(.horizontal, AppStyle.Row.scanCardHorizontalPadding)
@@ -460,26 +566,8 @@ struct OverviewIconTile: View {
     var appPath: String? = nil
 
     static let size = AppStyle.IconTile.size
-    private static let shape = AppStyle.IconTile.shape()
-    /// An app icon fills about 82% of its canvas and leaves the rest clear, where a
-    /// catalog mark fills the whole tile. Drawing the icon this much larger than the
-    /// slot makes its body the same size as the tiles around it before clipping.
+    private static let shape = RoundedRectangle(cornerRadius: AppStyle.Radius.sm, style: .continuous)
     private static let appIconScale: CGFloat = 1 / 0.82
-
-    private var tileBackground: some View {
-        Self.shape
-            .fill(color)
-            // Lighter at the top, a touch darker at the bottom.
-            .overlay(Self.shape.fill(LinearGradient(colors: [.white.opacity(0.22), .white.opacity(0)], startPoint: .top, endPoint: .bottom)))
-            .overlay(Self.shape.fill(LinearGradient(colors: [.black.opacity(0), .black.opacity(0.12)], startPoint: .top, endPoint: .bottom)))
-    }
-
-    private var rim: some View {
-        Self.shape.strokeBorder(
-            LinearGradient(colors: [.white.opacity(0.35), .black.opacity(0.12)], startPoint: .top, endPoint: .bottom),
-            lineWidth: 0.5
-        )
-    }
 
     var body: some View {
         Group {
@@ -499,16 +587,17 @@ struct OverviewIconTile: View {
             } else if let symbol {
                 Image(systemName: symbol)
                     .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(.white)
-                    .shadow(color: .black.opacity(0.18), radius: 0.5, y: 0.5)
+                    .foregroundStyle(color)
                     .frame(width: Self.size, height: Self.size)
-                    .background { tileBackground }
-                    .overlay { rim }
+                    .background(color.opacity(0.12))
+                    .overlay(Self.shape.strokeBorder(color.opacity(0.3), lineWidth: 0.5))
             } else {
-                // Free space: an empty tile, outlined in the bar's free color.
-                Self.shape
-                    .strokeBorder(color, style: StrokeStyle(lineWidth: 1.5, dash: [3, 2.5]))
+                Image(systemName: "circle.dashed")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(color)
                     .frame(width: Self.size, height: Self.size)
+                    .background(AppColors.fillSecondary.opacity(0.4))
+                    .overlay(Self.shape.strokeBorder(AppColors.borderSubtle, lineWidth: 0.5))
             }
         }
         .frame(width: Self.size, height: Self.size)
@@ -534,6 +623,7 @@ struct OverviewPlainRow: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(LocalizedStringKey(title))
                     .font(AppStyle.Typography.headline)
+                    .foregroundStyle(AppColors.textPrimary)
                 Text(LocalizedStringKey(detail))
                     .font(AppStyle.Typography.callout)
                     .foregroundStyle(AppColors.textSecondary)
@@ -547,7 +637,12 @@ struct OverviewPlainRow: View {
             Text(formatStorageBytes(bytes))
                 .font(AppStyle.Typography.sectionTitle)
                 .overviewNumberTransition(bytes, reduceMotion: reduceMotion)
+                .foregroundStyle(AppColors.textPrimary)
                 .frame(minWidth: 64, alignment: .trailing)
+            Image(systemName: "chevron.right")
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(AppColors.textTertiary.opacity(0.3))
+                .padding(.leading, 2)
         }
         .padding(.horizontal, AppStyle.Row.scanCardHorizontalPadding)
         .padding(.vertical, 11)
@@ -840,13 +935,23 @@ enum OverviewCategoryStyle {
         }
     }
 
+    static func pathScope(_ category: OverviewCategory) -> String {
+        switch category {
+        case .appCaches: return "~/Library/Caches"
+        case .devTools: return "~/Library/Developer"
+        case .largeFiles: return "> 50 MB"
+        case .apps: return "/Applications"
+        case .leftovers: return "Remnants"
+        }
+    }
+
     static func symbol(_ category: OverviewCategory) -> String {
         switch category {
-        case .appCaches: return "internaldrive.fill"
-        case .devTools: return "hammer.fill"
-        case .largeFiles: return "doc.fill"
-        case .apps: return "square.grid.2x2.fill"
-        case .leftovers: return "shippingbox.fill"
+        case .appCaches: return "internaldrive"
+        case .devTools: return "hammer"
+        case .largeFiles: return "doc.text"
+        case .apps: return "square.grid.2x2"
+        case .leftovers: return "shippingbox"
         }
     }
 
@@ -931,7 +1036,11 @@ struct OverviewDiskBar: View {
                 }
             }
             .frame(width: geometry.size.width, height: Self.height, alignment: .leading)
-            .clipShape(Capsule(style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: AppStyle.Radius.sm, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: AppStyle.Radius.sm, style: .continuous)
+                    .strokeBorder(AppColors.borderSubtle, lineWidth: 0.5)
+            )
             .animation(reduceMotion ? nil : OverviewMotion.bar, value: layout)
             // One hover for the whole bar, read by position: the 2 pt gaps between
             // segments then belong to the nearest one instead of flickering to nothing.

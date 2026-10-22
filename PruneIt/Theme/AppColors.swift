@@ -82,31 +82,32 @@ enum AppColors {
     /// the bolt still reads on the pale background.
     static let accentCelebrate = Color(light: 0xD18F00, dark: 0xFFC70D)
 
+    // MARK: - PruneIt Workbench Accent
+
+    /// The signature Spruce/Teal data hue for PruneIt (from framed-sheet devtools).
+    /// Represents prunable reclaimable yield, storage strata focus, and active precision states.
+    static let accentPrune = Color(light: 0x1B6C80, dark: 0x2EA3BE)
+    static let accentPruneSubtle = Color(light: 0xEEF6F8, dark: 0x162A30)
+    static let accentPruneBorder = Color(light: 0xBCDCE4, dark: 0x235260)
+
     // MARK: - Charts
 
-    /// The Overview breakdown. The Okabe–Ito palette, made to stay distinct with
-    /// any kind of color blindness: sky blue, blue, orange, vermillion, reddish
-    /// purple. Light mode uses the published values; dark mode lifts each a
-    /// little so it holds up on the dark card. Neighbours on the bar differ in
-    /// lightness as well as hue.
+    /// The Overview breakdown. Architectural devtools palette: cohesive, high-legibility
+    /// tones anchored by PruneIt's signature Spruce, distinct in both light and dark modes.
     enum Chart {
-        static let appCaches = Color(light: 0x56B4E9, dark: 0x6CC3F0)
-        static let devTools = Color(light: 0x0072B2, dark: 0x3A94D0)
-        static let largeFiles = Color(light: 0xE69F00, dark: 0xF0B020)
-        static let apps = Color(light: 0xD55E00, dark: 0xE8772A)
-        static let leftovers = Color(light: 0xCC79A7, dark: 0xDA93BA)
-        /// Icon tiles carry a white glyph, which the pale sky blue and pink can't
-        /// hold, so those two tiles use a deeper shade than their bar segment.
-        /// Dev Tools goes deeper too in dark mode, so its tile stays apart from
-        /// the App Caches one.
-        static let appCachesTile = Color(light: 0x3399D3, dark: 0x3A9BD5)
-        static let devToolsTile = Color(light: 0x0072B2, dark: 0x1E78BA)
-        static let leftoversTile = Color(light: 0xB35A8D, dark: 0xBE6C9C)
+        static let appCaches = Color(light: 0x1B6C80, dark: 0x2EA3BE)
+        static let devTools = Color(light: 0x285973, dark: 0x4B8CAE)
+        static let largeFiles = Color(light: 0xA36E18, dark: 0xD49733)
+        static let apps = Color(light: 0x4D687A, dark: 0x7695A8)
+        static let leftovers = Color(light: 0xAD504B, dark: 0xD16E69)
+        static let appCachesTile = Color(light: 0x1B6C80, dark: 0x2EA3BE)
+        static let devToolsTile = Color(light: 0x285973, dark: 0x4B8CAE)
+        static let leftoversTile = Color(light: 0xAD504B, dark: 0xD16E69)
         /// Close to the sidebar's "used" grey, and well apart from free space in
         /// both themes.
-        static let everythingElse = Color(light: 0x8C8983, dark: 0xA8A49D)
+        static let everythingElse = Color(light: 0x7A7773, dark: 0x96938D)
         /// Free space on the storage bars.
-        static let freeSpace = Color(light: 0xDAD7D2, dark: 0x4E4B47)
+        static let freeSpace = Color(light: 0xE2DFDA, dark: 0x383633)
 
         /// The Everything else page's four buckets (#159), the Signal palette:
         /// each colour says what to do. Blue opens an app, amber is yours to

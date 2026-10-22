@@ -24,3 +24,4 @@ RELEASE_NOTES_*.md
 
 # Local Command Code tooling state (not part of the app)
 .commandcode/
+.taste-skill/
