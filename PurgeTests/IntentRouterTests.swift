@@ -310,7 +310,7 @@ struct IntentRouterTests {
     func appPickerMatchesUninstaller() {
         let discovered = AppUninstallScanner.discoverInstalledApps()
         #expect(discovered.allSatisfy { !$0.bundleURL.path.hasPrefix("/System/") })
-        #expect(discovered.allSatisfy { $0.bundleID != "io.getpurge.app" })
+        #expect(discovered.allSatisfy { $0.bundleID != "com.pahul.pruneit" })
 
         let url = URL(fileURLWithPath: "/Applications/Zoom.app")
         let entity = InstalledAppEntity(.init(name: "Zoom", bundleURL: url, bundleID: "us.zoom.xos"))

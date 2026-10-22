@@ -49,7 +49,7 @@ final class ScheduledCleaningRegistrar: ObservableObject {
     static let shared = ScheduledCleaningRegistrar()
 
     /// Single pending repeating request; aligns with purge bundle conventions.
-    static let repeatingReminderIdentifier = "io.getpurge.app.scheduled-clean"
+    static let repeatingReminderIdentifier = "com.pahul.pruneit.scheduled-clean"
 
     private static let lastGraceSweepKey = "ScheduledCleaningRegistrar.lastGraceSweep"
     private static let lastOutcomeKey = "ScheduledCleaningRegistrar.lastOutcome"

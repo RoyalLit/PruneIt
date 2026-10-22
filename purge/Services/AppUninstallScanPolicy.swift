@@ -33,7 +33,7 @@ enum AppUninstallScanPolicy {
     /// Purge's own identifiers, hard-excluded so the app can never queue itself
     /// for deletion. The fallback matches `FirstRunGate`'s default domain.
     nonisolated static let protectedBundleIDs: Set<String> = {
-        var ids: Set<String> = ["io.getpurge.app"]
+        var ids: Set<String> = ["com.pahul.pruneit"]
         if let main = Bundle.main.bundleIdentifier { ids.insert(main) }
         return ids
     }()

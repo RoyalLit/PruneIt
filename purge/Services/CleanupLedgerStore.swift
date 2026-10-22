@@ -48,7 +48,7 @@ final class CleanupLedgerStore {
                 .appendingPathComponent("PurgeTestLedger-\(ProcessInfo.processInfo.processIdentifier)", isDirectory: true)
         }
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
-            .appendingPathComponent("io.getpurge.app", isDirectory: true)
+            .appendingPathComponent("com.pahul.pruneit", isDirectory: true)
             ?? FileManager.default.temporaryDirectory
         return base.appendingPathComponent("ledger", isDirectory: true)
     }

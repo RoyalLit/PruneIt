@@ -25,7 +25,7 @@ struct ExternalUninstallRequestTests {
         ExternalUninstallRequest.resolve(
             urls: urls,
             roots: roots,
-            purgeBundleIDs: ["io.getpurge.app"],
+            purgeBundleIDs: ["com.pahul.pruneit"],
             readInfo: { _ in info }
         )
     }
@@ -138,7 +138,7 @@ struct ExternalUninstallRequestTests {
     @Test("Purge turns itself down even from inside Applications")
     func purgeItself() {
         let app = applications.appendingPathComponent("Purge.app")
-        #expect(resolve([app], info: info(name: "Purge", bundleID: "io.getpurge.app")) == .purgeItself)
+        #expect(resolve([app], info: info(name: "Purge", bundleID: "com.pahul.pruneit")) == .purgeItself)
     }
 
     @Test("A selection with no app bundle is turned down")

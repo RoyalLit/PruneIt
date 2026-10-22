@@ -1,7 +1,7 @@
 import Foundation
 
 /// Append-only diagnostic log for the trash-measurement pipeline, written to
-/// `~/Library/Application Support/io.getpurge.app/trash-debug.log`.
+/// `~/Library/Application Support/com.pahul.pruneit/trash-debug.log`.
 ///
 /// Temporary instrumentation for chasing the "In Trash resets to zero after a clean"
 /// report: every watcher event, size pass, resolution, and published value lands here
@@ -25,7 +25,7 @@ nonisolated enum TrashDebugLog {
 
     private static let directoryURL: URL = FileManager.default
         .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        .appendingPathComponent("io.getpurge.app", isDirectory: true)
+        .appendingPathComponent("com.pahul.pruneit", isDirectory: true)
 
     static let fileURL: URL = directoryURL.appendingPathComponent("trash-debug.log")
 

@@ -9,7 +9,7 @@ import Foundation
 /// service to release each set, and measures what the volume gave back.
 /// Download Again waits for the user to remove that profile, then asks the
 /// service for the sets. Both private calls run in a throwaway child process,
-/// `io.getpurge.assetworker`. Nothing here ever runs on its own: not scheduled,
+/// `com.pahul.pruneit.assetworker`. Nothing here ever runs on its own: not scheduled,
 /// not part of Clean Safe Items.
 ///
 /// macOS 27 only: on 15 and 26 Apple's own switch releases the models, and the

@@ -639,7 +639,7 @@ private struct OverviewSnapshotRow: View {
         } else if showsDiskUtility {
             Button("Open Disk Utility") { Self.openDiskUtility() }
                 .buttonStyle(.purge(.secondary, size: .small))
-                .help(String(localized: "Purge keeps the newest snapshot and the one from your last backup, which Time Machine may still need. To delete those too, choose View > Show APFS Snapshots in Disk Utility."))
+                .help(String(localized: "PruneIt keeps the newest snapshot and the one from your last backup, which Time Machine may still need. To delete those too, choose View > Show APFS Snapshots in Disk Utility."))
         }
     }
 
@@ -747,7 +747,7 @@ private struct OverviewSnapshotConfirmation: View {
                 Text(count == 1 ? LocalizedStringKey("Remove 1 Time Machine snapshot?") : LocalizedStringKey("Remove \(count) Time Machine snapshots?"))
                     .font(AppStyle.Typography.sectionTitle)
                     .foregroundStyle(AppColors.textPrimary)
-                Text("Snapshots may hold the only copy of files you changed or deleted since your last backup. Removed snapshots can't be put back. Purge keeps the newest snapshot and the one from your last backup, which Time Machine may still need. Backups on your backup disk aren't touched.")
+                Text("Snapshots may hold the only copy of files you changed or deleted since your last backup. Removed snapshots can't be put back. PruneIt keeps the newest snapshot and the one from your last backup, which Time Machine may still need. Backups on your backup disk aren't touched.")
                     .font(AppStyle.Typography.callout)
                     .foregroundStyle(AppColors.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)

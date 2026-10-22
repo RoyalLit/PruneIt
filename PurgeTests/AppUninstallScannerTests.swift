@@ -156,7 +156,7 @@ struct AppUninstallScannerTests {
         // Whatever this machine has installed, the scan must never surface a
         // system bundle or Purge itself.
         #expect(apps.allSatisfy { !$0.bundleURL.path.hasPrefix("/System/") })
-        #expect(apps.allSatisfy { $0.bundleID != "io.getpurge.app" })
+        #expect(apps.allSatisfy { $0.bundleID != "com.pahul.pruneit" })
     }
 
     @Test

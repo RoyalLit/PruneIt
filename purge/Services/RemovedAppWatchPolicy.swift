@@ -155,7 +155,7 @@ nonisolated enum RemovedAppWatchPolicy {
         let path = app.bundleURL.standardizedFileURL.path
         if path.hasPrefix("/System/") { return false }
         guard let bundleID = app.bundleID?.lowercased(), !bundleID.isEmpty else { return false }
-        if bundleID == "io.getpurge.app" { return false }
+        if bundleID == "com.pahul.pruneit" { return false }
         return !installedBundleIDs.contains(bundleID)
     }
 

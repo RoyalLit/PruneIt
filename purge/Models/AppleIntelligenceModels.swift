@@ -54,7 +54,7 @@ nonisolated struct AppleIntelligenceModelSet: Equatable, Sendable, Identifiable 
 nonisolated enum AppleIntelligenceCatalog {
     /// The subscriber name Purge's own download requests carry, so Download
     /// again replaces exactly those and nothing Apple or another app owns.
-    static let subscriber = "io.getpurge.app"
+    static let subscriber = "com.pahul.pruneit"
 
     static let sets: [AppleIntelligenceModelSet] = [
         AppleIntelligenceModelSet(

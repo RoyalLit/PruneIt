@@ -44,7 +44,7 @@ struct AppUninstallScanPolicyTests {
     @Test
     func purgeItselfIsProtected() {
         let purge = URL(fileURLWithPath: "/Applications/Purge.app", isDirectory: true)
-        #expect(AppUninstallScanPolicy.isProtectedApp(bundleURL: purge, bundleID: "io.getpurge.app"))
+        #expect(AppUninstallScanPolicy.isProtectedApp(bundleURL: purge, bundleID: "com.pahul.pruneit"))
     }
 
     @Test

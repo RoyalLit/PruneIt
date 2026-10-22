@@ -167,7 +167,7 @@ nonisolated enum CleanupLedgerLabel {
     }
 
     /// Whether a path is an application bundle. A folder named after a bundle ID
-    /// can also end in `.app` (`~/Library/Caches/io.getpurge.app`), so a name
+    /// can also end in `.app` (`~/Library/Caches/com.pahul.pruneit`), so a name
     /// shaped like a bundle ID does not count.
     static func isAppBundle(path: String) -> Bool {
         path.split(separator: "/").last.map { isAppBundleName(String($0)) } ?? false
@@ -191,7 +191,7 @@ nonisolated enum CleanupLedgerLabel {
         guard looksLikeBundleID(candidate) else { return folder }
         if let name = resolveBundleID(candidate) { return name }
         // An app that is no longer installed: its bundle ID's last meaningful part
-        // is still closer to a name than the reverse-DNS string. `io.getpurge.app`
+        // is still closer to a name than the reverse-DNS string. `com.pahul.pruneit`
         // should read "getpurge", not "app".
         let parts = candidate.split(separator: ".").map(String.init)
         return parts.last { !genericBundleSuffixes.contains($0.lowercased()) } ?? folder

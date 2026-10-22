@@ -21,10 +21,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>io.getpurge.app</string>
+			<string>com.pahul.pruneit</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>purge</string>
+				<string>pruneit</string>
 			</array>
 		</dict>
 	</array>
@@ -34,24 +34,27 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Uninstall with Purge</string>
+				<string>Uninstall with PruneIt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>uninstallWithPurge</string>
 			<key>NSPortName</key>
-			<string>Purge</string>
+			<string>PruneIt</string>
 			<key>NSSendFileTypes</key>
 			<array>
 				<string>com.apple.application-bundle</string>
 			</array>
 		</dict>
 	</array>
+	<!-- Phase 4: Sparkle updates disabled until user configures custom EdDSA keys and feed -->
 	<key>SUEnableAutomaticChecks</key>
-	<true/>
+	<false/>
 	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/jithin-sabu/purge-app/main/appcast.xml</string>
+	<!-- TODO: Set to your hosted appcast URL (e.g. https://raw.githubusercontent.com/pahul/pruneit/main/appcast.xml) -->
+	<string>TODO_REPLACE_WITH_YOUR_SPARKLE_FEED_URL</string>
 	<key>SUPublicEDKey</key>
-	<string>rkjBm25Uagl/vCfXNQ5DtKZSBhO8EDt29ucUJhF98qI=</string>
+	<!-- TODO: Generate with `generate_keys` and paste your public EdDSA key here -->
+	<string>TODO_REPLACE_WITH_YOUR_SPARKLE_ED_PUBLIC_KEY</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>86400</integer>
 </dict>

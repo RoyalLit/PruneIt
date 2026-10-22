@@ -68,7 +68,7 @@ struct AboutView: View {
                 .contentShape(Rectangle())
                 .onTapGesture { registerIconTap() }
 
-            Text("Purge")
+            Text("PruneIt")
                 .font(AppStyle.Typography.title)
 
             if let devModeFlash {
@@ -211,14 +211,6 @@ struct AboutView: View {
                 AboutActionRow(icon: "arrow.counterclockwise", label: String(localized: "Replay onboarding")) {
                     hasCompletedOnboarding = false
                 }
-
-                InsetCardDivider()
-
-                AboutActionRow(icon: "cup.and.saucer.fill", label: String(localized: "Buy me a coffee")) {
-                    // Counts as having seen the ask, so cleanups stop mentioning it.
-                    SupportNudge.recordLinkOpened()
-                    NSWorkspace.shared.open(SupportNudge.url)
-                }
             }
         }
     }
@@ -226,21 +218,11 @@ struct AboutView: View {
     private var footerSection: some View {
         VStack(spacing: 6) {
             HStack(spacing: 4) {
-                Text("Made with")
+                Text("PruneIt")
+                    .fontWeight(.medium)
+                    .foregroundStyle(AppColors.textPrimary)
+                Text("· Forked from purge-app")
                     .foregroundStyle(AppColors.textSecondary)
-                Image(systemName: "heart.fill")
-                    .foregroundStyle(AppColors.statusDangerText)
-                Text("by")
-                    .foregroundStyle(AppColors.textSecondary)
-                Button {
-                    NSWorkspace.shared.open(xProfileURL)
-                } label: {
-                    Text("Jithin")
-                        .fontWeight(.medium)
-                        .foregroundStyle(AppColors.textPrimary)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Jithin on X")
             }
             .font(AppStyle.Typography.metadata)
 
@@ -310,18 +292,14 @@ struct AboutView: View {
     }()
 
     private var reportBugURL: URL {
-        URL(string: "mailto:jithin@purgemac.com?subject=Purge%20Bug%20Report")!
+        URL(string: "https://github.com/pahul/pruneit/issues")!
     }
 
     private var featureRequestURL: URL {
-        URL(string: "mailto:jithin@purgemac.com?subject=Purge%20Feature%20Request")!
+        URL(string: "https://github.com/pahul/pruneit/issues")!
     }
 
-    private var xProfileURL: URL {
-        URL(string: "https://x.com/sabu_jithin")!
-    }
-
-    static let repoBaseURL = URL(string: "https://github.com/jithin-sabu/purge-app")!
+    static let repoBaseURL = URL(string: "https://github.com/pahul/pruneit")!
 
     static var allowlistPolicyURL: URL {
         URL(string: "\(repoBaseURL.absoluteString)/blob/main/purge/Services/DeletionSafetyPolicy.swift")!
@@ -359,7 +337,7 @@ private struct LifetimeSizeComparisonChip: View {
 private struct AboutAllowlistSummaryBlock: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("what purge can clean")
+            Text("what pruneit can clean")
                 .font(AppStyle.Typography.metadata.weight(.semibold))
                 .foregroundStyle(AppColors.textSecondary)
                 .textCase(.uppercase)

@@ -64,7 +64,7 @@ struct CleanupLedgerTests {
         #expect(label("~/.npm/_cacache") == "npm")
         #expect(label("~/.cache/huggingface/hub") == "huggingface")
         #expect(label("/Applications/Slack.app") == "Slack")
-        #expect(label("~/Library/Caches/io.getpurge.app") == "getpurge")
+        #expect(label("~/Library/Caches/com.pahul.pruneit") == "getpurge")
         #expect(label("~/Downloads/installer.dmg") == "installer.dmg")
     }
 
@@ -79,13 +79,13 @@ struct CleanupLedgerTests {
         #expect(label == "ShipIt")
     }
 
-    /// Purge's own cache folder is named after its bundle ID, `io.getpurge.app`.
+    /// Purge's own cache folder is named after its bundle ID, `com.pahul.pruneit`.
     /// Treating it as an app turned ordinary cleans into uninstalls.
     @Test
     func bundleIDFolderEndingInAppIsNotAnApp() {
         #expect(CleanupLedgerLabel.isAppBundle(path: "/Applications/Microsoft Teams.app"))
         #expect(CleanupLedgerLabel.isAppBundle(path: "~/Applications/Xcode.app"))
-        #expect(!CleanupLedgerLabel.isAppBundle(path: "~/Library/Caches/io.getpurge.app"))
+        #expect(!CleanupLedgerLabel.isAppBundle(path: "~/Library/Caches/com.pahul.pruneit"))
         #expect(!CleanupLedgerLabel.isAppBundle(path: "~/Library/Caches/.app"))
     }
 

@@ -70,7 +70,7 @@ enum FirstRunGate {
     @discardableResult
     static func resolve(
         defaults: UserDefaults = .standard,
-        domainName: String = Bundle.main.bundleIdentifier ?? "io.getpurge.app",
+        domainName: String = Bundle.main.bundleIdentifier ?? "com.pahul.pruneit",
         supportDirectory: URL? = defaultSupportDirectory(),
         appVersion: String = currentAppVersion(),
         now: Date = Date()
@@ -108,7 +108,7 @@ enum FirstRunGate {
 
     static func defaultSupportDirectory() -> URL? {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
-            .appendingPathComponent("io.getpurge.app", isDirectory: true)
+            .appendingPathComponent("com.pahul.pruneit", isDirectory: true)
     }
 
     static func currentAppVersion() -> String {

@@ -7,7 +7,7 @@ import Testing
 @Suite("Stores keep what the tests write out of the user's files")
 struct TestHostStoreIsolationTests {
     private let realSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        .appendingPathComponent("io.getpurge.app", isDirectory: true)
+        .appendingPathComponent("com.pahul.pruneit", isDirectory: true)
 
     @Test
     func exclusionsSafetyChoicesAndHistoryLiveInTheTestRunsScratchFolder() {

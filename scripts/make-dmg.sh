@@ -1,90 +1,74 @@
 #!/usr/bin/env bash
-# Build, sign, notarize and staple the release DMG.
+# scripts/make-dmg.sh
+# Phase 5: Builds a Release .dmg for PruneIt and writes a SHA-256 checksum.
+# Usage: bash scripts/make-dmg.sh
+# Output: build/PruneIt-<version>.dmg and build/PruneIt-<version>.dmg.sha256
 #
-# Usage: ./scripts/make-dmg.sh <version> [path-to-Purge.app]
-# Example: ./scripts/make-dmg.sh 1.3.2 /tmp/purge-release/export/Purge.app
-#
-# Prints the edSignature, length and sha256 needed for the appcast entry.
-# Run ./release.sh afterwards to publish, then commit the appcast.
+# Prerequisites:
+#   - Xcode command-line tools installed (xcodebuild, hdiutil, plutil)
+#   - No Developer ID certificate required (ad-hoc / unsigned)
+
 set -euo pipefail
 
-VERSION="${1:?Usage: ./scripts/make-dmg.sh <version> [path-to-Purge.app]}"
-APP="${2:-/tmp/purge-release/export/Purge.app}"
-
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-IDENTITY="Developer ID Application: Jithin Sabu (BX83ZBV95B)"
-NOTARY_PROFILE="purge-notary"
-OUT_DIR="$HOME/Downloads/Purge"
-DMG="$OUT_DIR/Purgev${VERSION}.dmg"
-STAGING="$(mktemp -d)/staging"
+BUILD_DIR="$REPO_ROOT/build"
+DERIVED_DATA="$BUILD_DIR/DerivedData"
+APP_NAME="PruneIt"
+SCHEME="purge"
+PROJECT="$REPO_ROOT/purge.xcodeproj"
+CONFIGURATION="Release"
 
-[ -d "$APP" ] || { echo "App not found at: $APP" >&2; exit 1; }
+echo "==> Cleaning build dir..."
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR" "$DERIVED_DATA"
 
-# The app carries its version from build time. A DMG named 1.3.2 around a
-# 1.3.1 build looks completely fine until Sparkle offers the same update
-# forever, so refuse the mismatch here rather than discover it after release.
-APP_VERSION="$(defaults read "$APP/Contents/Info" CFBundleShortVersionString)"
-if [ "$APP_VERSION" != "$VERSION" ]; then
-  echo "Version mismatch: app is $APP_VERSION but building Purgev${VERSION}.dmg" >&2
-  echo "Bump MARKETING_VERSION in both configs and re-archive." >&2
+echo "==> Building $APP_NAME ($CONFIGURATION)..."
+xcodebuild clean build \
+  -project "$PROJECT" \
+  -scheme "$SCHEME" \
+  -configuration "$CONFIGURATION" \
+  -destination 'platform=macOS' \
+  -derivedDataPath "$DERIVED_DATA" \
+  CODE_SIGN_IDENTITY="" \
+  CODE_SIGNING_REQUIRED=NO \
+  CODE_SIGNING_ALLOWED=NO \
+  CONFIGURATION_BUILD_DIR="$BUILD_DIR/app"
+
+APP_PATH="$BUILD_DIR/app/$APP_NAME.app"
+
+if [ ! -d "$APP_PATH" ]; then
+  echo "ERROR: $APP_PATH not found after build. Check scheme/target names." >&2
   exit 1
 fi
 
-echo "==> Verifying the exported app is properly signed"
-# Older Xcode left Sparkle's nested binaries ad-hoc signed, which notarization
-# rejects. Recent Xcode does not. Check rather than re-sign blindly: re-signing
-# a good export risks breaking the outer signature for no gain.
-codesign --verify --deep --strict "$APP"
-for nested in Autoupdate Updater.app XPCServices/Installer.xpc XPCServices/Downloader.xpc; do
-  path="$APP/Contents/Frameworks/Sparkle.framework/Versions/Current/$nested"
-  [ -e "$path" ] || continue
-  # Capture first: piping straight into `grep -q` lets grep exit after its
-  # first match and SIGPIPE codesign, which pipefail then reports as codesign
-  # itself failing even though the timestamp was right there in the output.
-  info="$(codesign -dvvv "$path" 2>&1)"
-  echo "$info" | grep -q "^Timestamp=" \
-    || { echo "$nested has no secure timestamp; re-sign inside-out before continuing." >&2; exit 1; }
-done
+# Read version from built bundle
+VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$APP_PATH/Contents/Info.plist" 2>/dev/null || echo "0.0.0")
+DMG_NAME="$APP_NAME-$VERSION.dmg"
+DMG_PATH="$BUILD_DIR/$DMG_NAME"
 
-echo "==> Staging"
-# Only the app: exporting also writes ExportOptions.plist, DistributionSummary.plist
-# and Packaging.log beside it, and create-dmg would happily package them.
-mkdir -p "$STAGING"
-cp -R "$APP" "$STAGING/"
+echo "==> Creating .dmg ($DMG_NAME)..."
+# Create a temporary folder with the app and an Applications symlink
+STAGING_DIR="$BUILD_DIR/dmg-staging"
+rm -rf "$STAGING_DIR"
+mkdir -p "$STAGING_DIR"
+cp -R "$APP_PATH" "$STAGING_DIR/"
+ln -s /Applications "$STAGING_DIR/Applications"
 
-echo "==> Creating $DMG"
-mkdir -p "$OUT_DIR"
-rm -f "$DMG"
-# dmg_bg.png is 1200x736 at 144 dpi: 600x368 points, drawn 1:1 in the
-# icon view. Finder stores the title bar inside window bounds (~32 pt
-# on macOS 11+), so a 368 pt window leaves only 336 pt of content and
-# clips the bottom of the art. 400 pt makes the content area 368 pt.
-create-dmg \
-  --volname "Purge" \
-  --volicon "$REPO_ROOT/Assets/dmg/VolumeIcon.icns" \
-  --background "$REPO_ROOT/Assets/dmg/dmg_bg.png" \
-  --window-pos 200 120 \
-  --window-size 600 400 \
-  --icon-size 100 \
-  --text-size 16 \
-  --icon "Purge.app" 175 192 \
-  --app-drop-link 425 192 \
-  "$DMG" "$STAGING"
+hdiutil create \
+  -volname "$APP_NAME $VERSION" \
+  -srcfolder "$STAGING_DIR" \
+  -ov \
+  -format UDZO \
+  "$DMG_PATH"
 
-echo "==> Signing the DMG (before notarizing)"
-codesign --force --timestamp --sign "$IDENTITY" "$DMG"
+rm -rf "$STAGING_DIR"
 
-echo "==> Notarizing"
-xcrun notarytool submit "$DMG" --keychain-profile "$NOTARY_PROFILE" --wait
+echo "==> Computing SHA-256..."
+SHA=$(shasum -a 256 "$DMG_PATH" | awk '{print $1}')
+echo "$SHA  $DMG_NAME" > "$DMG_PATH.sha256"
 
-echo "==> Stapling"
-xcrun stapler staple "$DMG"
-spctl -a -t open --context context:primary-signature -vv "$DMG"
-
-echo
-echo "==> Appcast values"
-# sign_update runs last: stapling changes the file size, and a stale length
-# breaks the update for everyone.
-"$REPO_ROOT/bin/sign_update" "$DMG"
-echo "sha256: $(shasum -a 256 "$DMG" | awk '{print $1}')"
-echo "dmg:    $DMG"
+echo ""
+echo "==> Done."
+echo "    DMG:    $DMG_PATH"
+echo "    SHA256: $DMG_PATH.sha256"
+echo "    SHA256 value: $SHA"

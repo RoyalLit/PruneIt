@@ -224,7 +224,7 @@ nonisolated enum KeyedArchiveReader {
 /// `/Library/Managed Preferences` (technique from pared). It holds nothing
 /// else; removing it is the whole undo, and only the user can do that.
 nonisolated enum AppleIntelligenceDownloadBlock {
-    static let profileIdentifier = "io.getpurge.app.apple-intelligence-models"
+    static let profileIdentifier = "com.pahul.pruneit.apple-intelligence-models"
     static let domain = "com.apple.MobileAsset"
     static let keyPrefix = "DownloadServerBaseURLOverride-"
     static let blockedURL = "https://127.0.0.1:9/purge-blocked/"
@@ -302,7 +302,7 @@ nonisolated enum AppleIntelligenceDownloadBlock {
     /// Purge's own under the user's temporary directory. Earlier versions wrote
     /// it to Downloads, which put a file there and could prompt for access (#179).
     static var profileDirectoryURL: URL {
-        FileManager.default.temporaryDirectory.appendingPathComponent("io.getpurge.app.profiles", isDirectory: true)
+        FileManager.default.temporaryDirectory.appendingPathComponent("com.pahul.pruneit.profiles", isDirectory: true)
     }
 
     static let profileFileName = "Purge Apple Intelligence Models.mobileconfig"
@@ -380,7 +380,7 @@ nonisolated enum AppleIntelligenceAccounts {
     }
 }
 
-/// Runs the embedded `io.getpurge.assetworker` for one private call and reads
+/// Runs the embedded `com.pahul.pruneit.assetworker` for one private call and reads
 /// its JSON reply. A crash of the worker is reported as such, not as a Purge crash.
 nonisolated enum AppleIntelligenceWorker {
     nonisolated struct Outcome {
@@ -392,7 +392,7 @@ nonisolated enum AppleIntelligenceWorker {
     }
 
     static var executableURL: URL {
-        Bundle.main.bundleURL.appendingPathComponent("Contents/MacOS/io.getpurge.assetworker")
+        Bundle.main.bundleURL.appendingPathComponent("Contents/MacOS/com.pahul.pruneit.assetworker")
     }
 
     static func run(_ op: String, _ input: [String: Any] = [:], timeout: TimeInterval) async -> Outcome {

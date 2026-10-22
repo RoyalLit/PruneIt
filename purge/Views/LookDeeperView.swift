@@ -79,7 +79,7 @@ struct LookDeeperView: View {
   private var askingBody: some View {
     VStack(spacing: AppStyle.Spacing.large) {
       VStack(spacing: AppStyle.Spacing.small) {
-        OnboardingStepTitle(text: String(localized: "Want Purge to look deeper?"))
+        OnboardingStepTitle(text: String(localized: "Want PruneIt to look deeper?"))
           .onboardingBlurIn(index: 0)
 
         Text(leadText)
@@ -90,8 +90,8 @@ struct LookDeeperView: View {
           .onboardingBlurIn(index: 1)
       }
 
-      // What access unlocks, as tiles, then what Purge promises, as one quiet row.
-      // Each promise is something Purge does, not a limit on the permission:
+      // What access unlocks, as tiles, then what PruneIt promises, as one quiet row.
+      // Each promise is something PruneIt does, not a limit on the permission:
       // Full Disk Access itself can read and write, so "can't" would not be true.
       HStack(spacing: AppStyle.Spacing.small) {
         LookDeeperTile(symbol: "square.stack.3d.up", text: String(localized: "App Store app caches"))
@@ -116,12 +116,12 @@ struct LookDeeperView: View {
       .onboardingBlurIn(index: 3)
 
       VStack(spacing: AppStyle.Spacing.small) {
-        OnboardingPrimaryButton(title: String(localized: "Let Purge in"), systemImage: "arrow.up.forward", action: letPurgeIn)
+        OnboardingPrimaryButton(title: String(localized: "Let PruneIt in"), systemImage: "arrow.up.forward", action: letPruneItIn)
         OnboardingSecondaryButton(title: String(localized: "Not now"), action: onNotNow)
           .keyboardShortcut(.cancelAction)
 
         if didOpenSettings {
-          Text("Turn on Purge in System Settings, then come back. If macOS offers to reopen Purge, go ahead.")
+          Text("Turn on PruneIt in System Settings, then come back. If macOS offers to reopen PruneIt, go ahead.")
             .font(AppStyle.Typography.metadata)
             .foregroundStyle(AppColors.textSecondary)
             .multilineTextAlignment(.center)
@@ -177,7 +177,7 @@ struct LookDeeperView: View {
           .foregroundStyle(AppColors.textSecondary)
           .onboardingBlurIn(index: findings.categories.count + 1)
       } else {
-        OnboardingStepTitle(text: String(localized: "Purge can see everything now"))
+        OnboardingStepTitle(text: String(localized: "PruneIt can see everything now"))
           .onboardingBlurIn(index: 0)
         Text(Self.smallFindingsMessage(findings))
           .font(AppStyle.Typography.sectionTitle.weight(.regular))
@@ -197,10 +197,10 @@ struct LookDeeperView: View {
 
   static func smallFindingsMessage(_ findings: LockedPlacesFindings) -> String {
     if findings.isPartial {
-      return String(localized: "Large Files and the uninstaller are ready. Purge is still checking your projects, so more may turn up.")
+      return String(localized: "Large Files and the uninstaller are ready. PruneIt is still checking your projects, so more may turn up.")
     }
     return findings.bytes > 0
-      ? String(localized: "Large Files and the uninstaller are ready, and Purge found a little more to clean too.")
+      ? String(localized: "Large Files and the uninstaller are ready, and PruneIt found a little more to clean too.")
       : String(localized: "Large Files and the uninstaller are ready. Nothing big was hiding in the locked folders.")
   }
 
@@ -213,7 +213,7 @@ struct LookDeeperView: View {
     }
   }
 
-  private func letPurgeIn() {
+  private func letPruneItIn() {
     withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
       didOpenSettings = true
     }

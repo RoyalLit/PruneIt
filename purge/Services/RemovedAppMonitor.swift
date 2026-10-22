@@ -7,7 +7,7 @@ import ServiceManagement
 /// Purge, usually a Finder drag to the Trash (issue #65).
 ///
 /// Opt-in from Settings, never from onboarding. Watching is done by a background
-/// Launch Agent (`io.getpurge.watch`) so removals are caught even when Purge is
+/// Launch Agent (`com.pahul.pruneit.watch`) so removals are caught even when Purge is
 /// quit. The agent records the removal and opens Purge with `purge://removed-apps`
 /// at once; this type checks that record, drains it, and presents the review
 /// sheet. Nothing is removed without the sheet. When the review ends, a window

@@ -224,7 +224,7 @@ struct PurgeCommands: Commands {
         // launch scan does, many times a second) SwiftUI resets the menu, the
         // alternate goes, and the open menu is left with a blank row at the bottom.
         CommandGroup(replacing: .appTermination) {
-            Button("Quit Purge") { NSApp.terminate(nil) }
+            Button("Quit PruneIt") { NSApp.terminate(nil) }
                 .keyboardShortcut("q", modifiers: .command)
         }
     }

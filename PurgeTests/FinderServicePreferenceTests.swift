@@ -9,7 +9,7 @@ import Testing
 @Suite("Finder service switch")
 struct FinderServicePreferenceTests {
     private let suite = ThrowawayDefaults()
-    private let key = FinderServicePreference.statusKey(bundleID: "io.getpurge.app")
+    private let key = FinderServicePreference.statusKey(bundleID: "com.pahul.pruneit")
 
     private final class FlushCounter {
         var count = 0
@@ -25,7 +25,7 @@ struct FinderServicePreferenceTests {
 
     @Test("The entry is keyed the way pbs keys it")
     func statusKeyFormat() {
-        #expect(key == "io.getpurge.app - Uninstall with Purge - uninstallWithPurge")
+        #expect(key == "com.pahul.pruneit - Uninstall with Purge - uninstallWithPurge")
     }
 
     @Test("The constants match the service in Info.plist")

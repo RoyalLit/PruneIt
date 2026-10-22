@@ -1,4 +1,4 @@
-name: Build
+name: Build and Test
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-26
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
 
@@ -21,6 +21,9 @@ jobs:
       - name: Check translations
         run: python3 scripts/check-localization.py
 
+      # Phase 5: Ad-hoc signing — no Developer ID or notarization required.
+      # CODE_SIGN_IDENTITY="" and CODE_SIGNING_ALLOWED=NO are the correct flags
+      # for unsigned builds. This is intentional; see README "Installing PruneIt".
       - name: Build (unsigned)
         run: |
           xcodebuild clean build \
@@ -35,8 +38,6 @@ jobs:
       - name: Run unit tests
         timeout-minutes: 20
         run: |
-          # These two suites deliberately exhaust Swift's worker pool. Run them
-          # separately so unrelated async tests can finish before their deadlines.
           mkdir -p TestResults
           xcodebuild test \
             -project purge.xcodeproj \

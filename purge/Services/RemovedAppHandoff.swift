@@ -30,7 +30,7 @@ nonisolated enum RemovedAppHandoff {
         .appendingPathComponent("Library/Application Support/Purge", isDirectory: true)
 
     static let launchURL = URL(string: "purge://removed-apps")!
-    static let agentPlistName = "io.getpurge.watch.plist"
+    static let agentPlistName = "com.pahul.pruneit.watch.plist"
     /// Long enough to cover an administrator password prompt left open before a
     /// root-owned bundle moves; the watcher reports the move when it happens.
     static let ignoreGrace: TimeInterval = 600
@@ -44,19 +44,19 @@ nonisolated enum RemovedAppHandoff {
     /// the registered one. Registering an agent that is already registered changes
     /// nothing, so without this a watcher started from an Xcode build, or from a
     /// copy since replaced, keeps running old code.
-    static let agentOwnerNotification = Notification.Name("io.getpurge.watch.owner")
+    static let agentOwnerNotification = Notification.Name("com.pahul.pruneit.watch.owner")
 
     /// Posted by Purge to check the watcher is running. macOS can list the agent
     /// as allowed while nothing runs: it crashed, launchd gave up restarting it,
     /// or the user switched it off in System Settings. Only an answer proves it.
-    static let agentPingNotification = Notification.Name("io.getpurge.watch.ping")
+    static let agentPingNotification = Notification.Name("com.pahul.pruneit.watch.ping")
     /// The watcher's answer, sent only while it is watching. The object is the
     /// path of the agent executable that answered.
-    static let agentPongNotification = Notification.Name("io.getpurge.watch.pong")
+    static let agentPongNotification = Notification.Name("com.pahul.pruneit.watch.pong")
 
     /// Where the agent executable sits inside a Purge bundle.
     static func agentExecutable(inApp appURL: URL) -> URL {
-        appURL.appendingPathComponent("Contents/MacOS/io.getpurge.watch")
+        appURL.appendingPathComponent("Contents/MacOS/com.pahul.pruneit.watch")
     }
 
     private static var pendingFolder: URL {

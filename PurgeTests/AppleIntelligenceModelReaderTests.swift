@@ -134,7 +134,7 @@ struct AppleIntelligenceDownloadBlockTests {
     @Test func payloadIdentifiersAreStableAndDistinct() {
         #expect(AppleIntelligenceDownloadBlock.stableUUID("a") == AppleIntelligenceDownloadBlock.stableUUID("a"))
         #expect(AppleIntelligenceDownloadBlock.stableUUID("a") != AppleIntelligenceDownloadBlock.stableUUID("b"))
-        #expect(UUID(uuidString: AppleIntelligenceDownloadBlock.stableUUID("io.getpurge")) != nil)
+        #expect(UUID(uuidString: AppleIntelligenceDownloadBlock.stableUUID("com.pahul.pruneit")) != nil)
     }
 
     @Test func aNewProfileKeepsTheBlocksAlreadyInForce() {

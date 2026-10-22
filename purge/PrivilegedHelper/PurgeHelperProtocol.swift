@@ -6,7 +6,7 @@ import Foundation
 /// requirement string — a drift that would surface only as a silent XPC failure.
 enum PurgeHelperConstants {
     /// launchd label, Mach service name, and helper bundle identifier — all one string.
-    static let machServiceName = "io.getpurge.helper"
+    static let machServiceName = "com.pahul.pruneit.helper"
 
     /// The helper's build version, shared so the app and the daemon agree on it.
     /// Bump it whenever the helper's behaviour changes: the app compares this against
@@ -25,7 +25,7 @@ enum PurgeHelperConstants {
 
     /// The daemon property list bundled at `Contents/Library/LaunchDaemons/`, named
     /// to `SMAppService.daemon(plistName:)`.
-    static let daemonPlistName = "io.getpurge.helper.plist"
+    static let daemonPlistName = "com.pahul.pruneit.helper.plist"
 
     /// The team the app and helper are both signed by. Baked into the requirements
     /// below so a differently-signed binary can neither impersonate the app to the
@@ -35,7 +35,7 @@ enum PurgeHelperConstants {
     /// What the helper demands of whoever connects: the genuine, Apple-notarized,
     /// same-team Purge app. Applied with `NSXPCConnection.setCodeSigningRequirement`.
     static let clientRequirement =
-        "identifier \"io.getpurge.app\" and anchor apple generic and " +
+        "identifier \"com.pahul.pruneit\" and anchor apple generic and " +
         "certificate leaf[subject.OU] = \"\(teamIdentifier)\""
 
     /// What the app demands of the helper it dials, so a planted binary answering on

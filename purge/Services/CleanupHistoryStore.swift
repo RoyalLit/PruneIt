@@ -23,7 +23,7 @@ final class CleanupHistoryStore: ObservableObject {
             baseDir = TestHost.supportDirectory()
         } else {
             baseDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
-                .appendingPathComponent("io.getpurge.app", isDirectory: true)
+                .appendingPathComponent("com.pahul.pruneit", isDirectory: true)
                 ?? FileManager.default.temporaryDirectory
         }
         if !FileManager.default.fileExists(atPath: baseDir.path) {

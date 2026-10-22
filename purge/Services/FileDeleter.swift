@@ -684,7 +684,7 @@ nonisolated final class FileDeleter: Sendable {
 
     /// Public on purpose: simctl's text is the only way to read a failed device
     /// delete from someone's log (#161).
-    private static let simulatorLog = Logger(subsystem: "io.getpurge.app", category: "simulators")
+    private static let simulatorLog = Logger(subsystem: "com.pahul.pruneit", category: "simulators")
 
     /// Prefetched with a contents-only listing, so sizing a file costs no extra stat.
     private static let contentsEntryKeys: [URLResourceKey] = [

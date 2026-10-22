@@ -296,7 +296,7 @@ struct RemovedAppWatchPolicyTests {
             removedByPurge: false
         ))
         #expect(!RemovedAppWatchPolicy.shouldOfferReview(
-            for: makeApp(name: "Purge", bundlePath: "/Applications/Purge.app", bundleID: "io.getpurge.app"),
+            for: makeApp(name: "Purge", bundlePath: "/Applications/Purge.app", bundleID: "com.pahul.pruneit"),
             bundleStillExists: false,
             installedBundleIDs: [],
             otherCopyExists: false,
@@ -424,8 +424,8 @@ struct RemovedAppWatchPolicyTests {
 
     @Test("An agent from another Purge copy is stale, the owner's own agent is not")
     func agentStaleWhenOwnerIsAnotherCopy() {
-        let installed = "/Applications/Purge.app/Contents/MacOS/io.getpurge.watch"
-        let xcode = "/Users/me/Library/Developer/Xcode/DerivedData/purge-abc/Build/Products/Debug/Purge.app/Contents/MacOS/io.getpurge.watch"
+        let installed = "/Applications/Purge.app/Contents/MacOS/com.pahul.pruneit.watch"
+        let xcode = "/Users/me/Library/Developer/Xcode/DerivedData/purge-abc/Build/Products/Debug/Purge.app/Contents/MacOS/com.pahul.pruneit.watch"
         #expect(RemovedAppWatchPolicy.agentIsStale(ownPath: xcode, ownerPath: installed, ownerExists: true))
         #expect(!RemovedAppWatchPolicy.agentIsStale(ownPath: installed, ownerPath: installed, ownerExists: true))
         #expect(!RemovedAppWatchPolicy.agentIsStale(

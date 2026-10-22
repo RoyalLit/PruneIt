@@ -876,10 +876,10 @@
     "tag": "safe",
     "explanation": "This is temporary data created by the Purge app itself. It is safe to delete.",
     "bundle_ids": [
-      "io.getpurge.app"
+      "com.pahul.pruneit"
     ],
     "aliases": [
-      "io.getpurge.app"
+      "com.pahul.pruneit"
     ],
     "scope": "app_caches",
     "kind": "utilities"

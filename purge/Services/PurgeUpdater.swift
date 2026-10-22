@@ -79,7 +79,7 @@ final class PurgeUpdater: NSObject, ObservableObject, SPUUpdaterDelegate {
 
     /// The title for the Restart to Update menu items and About row.
     static func restartTitle(forVersion version: String) -> String {
-        String(localized: "Restart to Update to Purge \(version)")
+        String(localized: "Restart to Update to PruneIt \(version)")
     }
 
     // MARK: - SPUUpdaterDelegate

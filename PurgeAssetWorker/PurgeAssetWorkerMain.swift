@@ -2,7 +2,7 @@ import Foundation
 
 /// Throwaway child process for Purge's two private Apple Intelligence calls
 /// (issue #133): releasing the model sets and asking for them again. Purge runs
-/// it as `io.getpurge.assetworker <op> <json>` from its own bundle, once per
+/// it as `com.pahul.pruneit.assetworker <op> <json>` from its own bundle, once per
 /// call, and reads one JSON object back on stdout. A changed private interface
 /// crashes this process, which Purge reports as such, and never Purge itself.
 ///

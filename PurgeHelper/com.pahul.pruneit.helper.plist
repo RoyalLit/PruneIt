@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>io.getpurge.helper</string>
+	<string>com.pahul.pruneit.helper</string>
 	<key>BundleProgram</key>
-	<string>Contents/MacOS/io.getpurge.helper</string>
+	<string>Contents/MacOS/com.pahul.pruneit.helper</string>
 	<key>MachServices</key>
 	<dict>
-		<key>io.getpurge.helper</key>
+		<key>com.pahul.pruneit.helper</key>
 		<true/>
 	</dict>
 	<key>AssociatedBundleIdentifiers</key>
 	<array>
-		<string>io.getpurge.app</string>
+		<string>com.pahul.pruneit</string>
 	</array>
 </dict>
 </plist>

@@ -2,7 +2,7 @@ import Foundation
 
 /// Reads and writes the owner ledger (`LeftoverOwnerLedger`, #224) as one JSON
 /// file beside the cleanup ledger:
-/// `~/Library/Application Support/io.getpurge.app/leftover-owners.json`.
+/// `~/Library/Application Support/com.pahul.pruneit/leftover-owners.json`.
 ///
 /// The file is small, one entry per app with a human-named folder, so every
 /// write replaces it whole and atomically. A file that cannot be read counts as
@@ -29,7 +29,7 @@ nonisolated final class LeftoverOwnerLedgerStore: @unchecked Sendable {
             return TestHost.supportDirectory().appendingPathComponent(fileName)
         }
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
-            .appendingPathComponent("io.getpurge.app", isDirectory: true)
+            .appendingPathComponent("com.pahul.pruneit", isDirectory: true)
             ?? FileManager.default.temporaryDirectory
         return base.appendingPathComponent(fileName)
     }

@@ -19,7 +19,7 @@ import Foundation
 final class FinderServicePreference: ObservableObject {
     static let shared = FinderServicePreference(
         defaults: UserDefaults(suiteName: domain) ?? .standard,
-        statusKey: statusKey(bundleID: Bundle.main.bundleIdentifier ?? "io.getpurge.app"),
+        statusKey: statusKey(bundleID: Bundle.main.bundleIdentifier ?? "com.pahul.pruneit"),
         flush: flushServicesCache
     )
 

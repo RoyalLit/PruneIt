@@ -25,7 +25,7 @@ enum ExcludedPathsStore {
         // never reach the user's own list, so they get a scratch folder.
         if TestHost.isActive() { return TestHost.supportDirectory() }
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        return base.appendingPathComponent("io.getpurge.app", isDirectory: true)
+        return base.appendingPathComponent("com.pahul.pruneit", isDirectory: true)
     }
 
     nonisolated static func fileURL() -> URL {

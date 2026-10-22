@@ -72,7 +72,7 @@ struct OrphanLeftoverScanPolicyTests {
     @Test
     func purgeIsNeverItsOwnOrphan() {
         let installed = index(["one.two", "three.four", "five.six", "seven.eight", "nine.ten"])
-        #expect(!OrphanLeftoverScanPolicy.isOrphan(bundleID: "io.getpurge.app", installed: installed))
+        #expect(!OrphanLeftoverScanPolicy.isOrphan(bundleID: "com.pahul.pruneit", installed: installed))
     }
 
     @Test

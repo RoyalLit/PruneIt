@@ -17,13 +17,13 @@ struct OnboardingWelcomeStep: View {
           .foregroundStyle(AppColors.textPrimary.opacity(0.8))
           .tracking(0.2)
 
-        Text("Purge")
+        Text("PruneIt")
           .font(AppStyle.Typography.display.weight(.semibold))
           .foregroundStyle(AppColors.textPrimary)
       }
       .multilineTextAlignment(.center)
       .accessibilityElement(children: .combine)
-      .accessibilityLabel("Welcome to Purge")
+      .accessibilityLabel("Welcome to PruneIt")
     }
     .frame(maxWidth: OnboardingLayout.contentMaxWidth, maxHeight: .infinity)
   }
