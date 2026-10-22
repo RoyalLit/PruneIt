@@ -654,6 +654,8 @@ struct ContentView: View {
                     OverviewScanButton()
                     OverviewCleanSafeButton()
                 }
+                .fixedSize(horizontal: true, vertical: false)
+                .layoutPriority(1)
             } else if store.selectedTab == .appCaches || store.selectedTab == .devTools {
                 HStack(spacing: AppStyle.Spacing.xSmall) {
                     if !store.hasFullDiskAccess {
@@ -665,10 +667,16 @@ struct ContentView: View {
                         isQueued: store.isScanQueued(.cachesAndDevTools)
                     )
                 }
+                .fixedSize(horizontal: true, vertical: false)
+                .layoutPriority(1)
             } else if store.selectedTab == .largeFiles, store.hasFullDiskAccess {
                 LargeFilesHeaderActions()
+                    .fixedSize(horizontal: true, vertical: false)
+                    .layoutPriority(1)
             } else if store.selectedTab == .uninstaller, store.hasFullDiskAccess {
                 UninstallHeaderActions()
+                    .fixedSize(horizontal: true, vertical: false)
+                    .layoutPriority(1)
             }
         }
     }

@@ -214,7 +214,8 @@ struct LargeFilesView: View {
 
             LargeFileDeleteButton(selection: store.largeFileSelection)
         }
-        .fixedSize()
+        .fixedSize(horizontal: true, vertical: false)
+        .layoutPriority(1)
     }
 
     private var controlsChrome: some View {
@@ -1358,7 +1359,8 @@ struct LargeFilesHeaderActions: View {
 
             LargeFileDeleteButton(selection: store.largeFileSelection)
         }
-        .fixedSize()
+        .fixedSize(horizontal: true, vertical: false)
+        .layoutPriority(1)
     }
 }
 

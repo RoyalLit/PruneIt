@@ -1195,7 +1195,8 @@ struct UninstallHeaderActions: View {
             .buttonStyle(.pruneIt(.primary))
             .disabled(isPrimaryDisabled)
         }
-        .fixedSize()
+        .fixedSize(horizontal: true, vertical: false)
+        .layoutPriority(1)
     }
 
     private var section: UninstallSection { store.uninstallSection }

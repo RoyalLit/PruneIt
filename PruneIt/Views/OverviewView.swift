@@ -72,7 +72,7 @@ struct OverviewView: View {
 
     private func strataDeck(_ breakdown: OverviewBreakdown) -> some View {
         VStack(alignment: .leading, spacing: AppStyle.Spacing.medium) {
-            HStack(alignment: .top) {
+            HStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(alignment: .firstTextBaseline, spacing: AppStyle.Spacing.xSmall) {
                         Text(strataHeadline(breakdown))
@@ -81,7 +81,7 @@ struct OverviewView: View {
                             .overviewNumberTransition(store.safeRecoverableBytes > 0 ? store.safeRecoverableBytes : breakdown.usedBytes, reduceMotion: reduceMotion)
 
                         if store.safeRecoverableBytes > 0 {
-                            Text("Safe to Prune")
+                            Text(String(localized: "Safe to Prune"))
                                 .font(AppStyle.Typography.micro)
                                 .foregroundStyle(AppColors.accentPrune)
                                 .padding(.horizontal, 6)
@@ -97,7 +97,9 @@ struct OverviewView: View {
                     Text(strataSubline(breakdown))
                         .font(AppStyle.Typography.callout)
                         .foregroundStyle(AppColors.textSecondary)
+                        .lineLimit(2)
                 }
+                .layoutPriority(0)
 
                 Spacer(minLength: AppStyle.Spacing.small)
 
@@ -105,6 +107,8 @@ struct OverviewView: View {
                     OverviewScanButton()
                     OverviewCleanSafeButton()
                 }
+                .fixedSize(horizontal: true, vertical: false)
+                .layoutPriority(1)
             }
 
             OverviewDiskBar(

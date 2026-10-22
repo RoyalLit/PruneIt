@@ -31,7 +31,7 @@ struct PruneItButtonStyle: ButtonStyle {
         case large
     }
 
-    enum Width {
+    enum Width: Equatable {
         /// Hug the label.
         case fit
         /// Stretch to the available width.
@@ -79,8 +79,10 @@ private struct PruneItButtonBody: View {
             .foregroundStyle(foreground)
             .tint(foreground)
             .lineLimit(1)
+            .fixedSize(horizontal: shouldFixHorizontalSize, vertical: false)
             .padding(.horizontal, isSquare ? 0 : horizontalPadding)
             .frame(height: height)
+            .fixedSize(horizontal: shouldFixHorizontalSize, vertical: true)
             .background(background, in: Capsule(style: .continuous))
             .overlay {
                 if let border {
@@ -90,6 +92,7 @@ private struct PruneItButtonBody: View {
             }
             .contentShape(Capsule(style: .continuous))
             .opacity(isEnabled ? 1 : 0.45)
+            .layoutPriority(1)
             .onHover { isHovering = $0 }
             .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: isHovering)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
@@ -101,10 +104,13 @@ private struct PruneItButtonBody: View {
         switch width {
         case .fit:
             configuration.label
+                .fixedSize(horizontal: true, vertical: false)
         case .fill:
             configuration.label.frame(maxWidth: .infinity)
         case .fixed(let value):
-            configuration.label.frame(width: max(0, value - horizontalPadding * 2))
+            configuration.label
+                .fixedSize(horizontal: true, vertical: false)
+                .frame(minWidth: max(0, value - horizontalPadding * 2))
         case .square:
             configuration.label.frame(width: height)
         }
@@ -113,6 +119,13 @@ private struct PruneItButtonBody: View {
     private var isSquare: Bool {
         if case .square = width { return true }
         return false
+    }
+
+    private var shouldFixHorizontalSize: Bool {
+        switch width {
+        case .fit, .fixed: return true
+        case .fill, .square: return false
+        }
     }
 
     private var height: CGFloat {

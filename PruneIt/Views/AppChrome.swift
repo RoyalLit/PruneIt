@@ -156,10 +156,13 @@ struct AppSectionPageHeader<Trailing: View>: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
+            .layoutPriority(0)
 
             Spacer(minLength: AppStyle.Spacing.medium)
 
             trailing()
+                .fixedSize(horizontal: true, vertical: false)
+                .layoutPriority(1)
         }
         .padding(.horizontal, AppDetailPageLayout.horizontalInset)
         .padding(.top, AppDetailPageLayout.topContentInset)
@@ -274,7 +277,8 @@ struct AppScanCleanActions: View {
             AppScanButton(scanPhase: scanPhase, isQueued: isQueued, action: onScan)
             AppCleanSelectedButton()
         }
-        .fixedSize()
+        .fixedSize(horizontal: true, vertical: false)
+        .layoutPriority(1)
     }
 }
 
@@ -361,9 +365,13 @@ struct CleaningButtonLabel: View {
             }
 
             Text(LocalizedStringKey(title))
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
                 .contentTransition(reduceMotion ? .identity : .numericText())
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.45), value: title)
         }
+        .fixedSize(horizontal: true, vertical: false)
+        .layoutPriority(1)
         .labelStyle(.titleAndIcon)
     }
 }
@@ -423,15 +431,18 @@ struct AnimatedDeleteActionLabel: View {
             .clipped()
         }
         .lineLimit(1)
+        .fixedSize(horizontal: true, vertical: false)
+        .layoutPriority(1)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityTitle)
         .onPreferenceChange(AnimatedDeleteActionWidthKey.self) { width in
             guard width > 0 else { return }
+            let targetWidth = ceil(width) + 1
             if reduceMotion {
-                measuredTextWidth = width
+                measuredTextWidth = targetWidth
             } else {
                 withAnimation(widthAnimation) {
-                    measuredTextWidth = width
+                    measuredTextWidth = targetWidth
                 }
             }
         }
@@ -440,6 +451,8 @@ struct AnimatedDeleteActionLabel: View {
     private var textContent: some View {
         HStack(spacing: 0) {
             Text(LocalizedStringKey(hasSelection ? activeTitle : inactiveTitle))
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
                 .contentTransition(reduceMotion ? .identity : .opacity)
 
             if hasSelection, selectedBytes != nil {
@@ -447,6 +460,7 @@ struct AnimatedDeleteActionLabel: View {
                     .transition(suffixTransition)
             }
         }
+        .fixedSize(horizontal: true, vertical: false)
         .animation(widthAnimation, value: hasSelection)
         .animation(textAnimation, value: selectedBytes)
         // A new title (Uninstall to Remove in the uninstaller) crossfades

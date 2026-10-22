@@ -271,7 +271,8 @@ struct FilterSortToolbar: View {
         }
         .buttonStyle(.pruneIt(.primary))
         .disabled(bulkDisabled)
-        .fixedSize()
+        .fixedSize(horizontal: true, vertical: false)
+        .layoutPriority(1)
     }
 
     private func safetyChip(_ filter: SafetyFilter) -> some View {
