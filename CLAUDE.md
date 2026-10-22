@@ -12,6 +12,7 @@ PruneIt is a fork of [purge-app](https://github.com/jithin-sabu/purge-app) by Ji
 - `PruneItTests/` holds the unit tests. They use Swift Testing (`@Test`, `#expect`), not XCTest. Shared test helpers are in `PruneItTests/Support/`.
 - `docs/safety-notes.md` logs every time PruneIt removed, or could have removed, something it should not have.
 - `docs/design-system.md` describes the colours, type, and spacing tokens.
+- `docs/taste-skill.md` describes the Taste Skill plugin for frontend art direction and inspection.
 - `docs/ARCHITECTURE.md` is the full architecture walkthrough.
 - `UPSTREAM.md` records the upstream commit hash from purge-app.
 
