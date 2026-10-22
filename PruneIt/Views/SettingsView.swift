@@ -540,6 +540,7 @@ struct SettingsView: View {
                 caption: updatesSummary,
                 isOn: automaticUpdateChecksBinding
             )
+            .disabled(!updater.isConfigured)
 
             settingsSectionDivider
 
@@ -548,12 +549,15 @@ struct SettingsView: View {
                 caption: automaticInstallSummary,
                 isOn: automaticUpdateDownloadsBinding
             )
-            .disabled(!updater.allowsAutomaticUpdates)
+            .disabled(!updater.isConfigured || !updater.allowsAutomaticUpdates)
         }
     }
 
     private var updatesSummary: String {
-        String(localized: """
+        guard updater.isConfigured else {
+            return String(localized: "Automatic updates are not configured for this build.")
+        }
+        return String(localized: """
         PruneIt checks once a day. When automatic installs are off, a new version opens the \
         update window. Every download is signature-checked.
         """)

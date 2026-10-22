@@ -1279,3 +1279,5 @@
 "PruneIt started the background jobs it had stopped again." = "PruneIt 已重新启动它之前停止的后台任务。";
 "PruneIt couldn't start %@ again. It starts again when you next log in." = "PruneIt 无法重新启动 %@。它会在你下次登录时再次启动。";
 "PruneIt couldn't start %@ again. They start again when you next log in." = "PruneIt 无法重新启动 %@。它们会在你下次登录时再次启动。";
+
+"Automatic updates are not configured for this build." = "此版本未配置自动更新。";

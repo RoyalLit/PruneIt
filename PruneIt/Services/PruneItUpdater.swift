@@ -12,7 +12,10 @@ import Sparkle
 
 @MainActor
 final class PruneItUpdater: NSObject, ObservableObject, SPUUpdaterDelegate {
-    private var controller: SPUStandardUpdaterController!
+    private var controller: SPUStandardUpdaterController?
+
+    /// Whether Sparkle has a valid feed URL and public EdDSA key configured in Info.plist.
+    @Published private(set) var isConfigured = false
 
     /// Mirrors Sparkle's own setting so SwiftUI can observe it. Sparkle persists the real
     /// value in user defaults under `SUEnableAutomaticChecks`, which takes precedence over
@@ -43,31 +46,60 @@ final class PruneItUpdater: NSObject, ObservableObject, SPUUpdaterDelegate {
 
     override init() {
         super.init()
-        controller = SPUStandardUpdaterController(
+
+        guard Self.hasValidConfiguration else {
+            return
+        }
+
+        let standardController = SPUStandardUpdaterController(
             startingUpdater: true,
             updaterDelegate: self,
             userDriverDelegate: nil
         )
-        automaticallyChecksForUpdates = controller.updater.automaticallyChecksForUpdates
-        controller.updater.publisher(for: \.canCheckForUpdates)
+        self.controller = standardController
+        self.isConfigured = true
+
+        automaticallyChecksForUpdates = standardController.updater.automaticallyChecksForUpdates
+        standardController.updater.publisher(for: \.canCheckForUpdates)
             .assign(to: &$canCheckForUpdates)
-        controller.updater.publisher(for: \.automaticallyDownloadsUpdates)
+        standardController.updater.publisher(for: \.automaticallyDownloadsUpdates)
             .assign(to: &$automaticallyDownloadsUpdates)
-        controller.updater.publisher(for: \.allowsAutomaticUpdates)
+        standardController.updater.publisher(for: \.allowsAutomaticUpdates)
             .assign(to: &$allowsAutomaticUpdates)
     }
 
+    private static var hasValidConfiguration: Bool {
+        guard let info = Bundle.main.infoDictionary else { return false }
+        guard let feedURLString = info["SUFeedURL"] as? String,
+              !feedURLString.isEmpty,
+              !feedURLString.contains("TODO"),
+              let feedURL = URL(string: feedURLString),
+              feedURL.scheme == "https" || feedURL.scheme == "http" else {
+            return false
+        }
+        guard let publicKey = info["SUPublicEDKey"] as? String,
+              !publicKey.isEmpty,
+              !publicKey.contains("TODO"),
+              let keyData = Data(base64Encoded: publicKey),
+              keyData.count == 32 else {
+            return false
+        }
+        return true
+    }
+
     func setAutomaticallyChecksForUpdates(_ enabled: Bool) {
+        guard let controller else { return }
         controller.updater.automaticallyChecksForUpdates = enabled
         automaticallyChecksForUpdates = enabled
     }
 
     func setAutomaticallyDownloadsUpdates(_ enabled: Bool) {
+        guard let controller else { return }
         controller.updater.automaticallyDownloadsUpdates = enabled
     }
 
     func checkForUpdates() {
-        guard controller.updater.canCheckForUpdates else { return }
+        guard let controller, controller.updater.canCheckForUpdates else { return }
         controller.updater.checkForUpdates()
     }
 

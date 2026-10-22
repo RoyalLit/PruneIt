@@ -46,15 +46,9 @@
 			</array>
 		</dict>
 	</array>
-	<!-- Phase 4: Sparkle updates disabled until user configures custom EdDSA keys and feed -->
+	<!-- Sparkle updates: configured when you publish release feeds and EdDSA keys -->
 	<key>SUEnableAutomaticChecks</key>
 	<false/>
-	<key>SUFeedURL</key>
-	<!-- TODO: Set to your hosted appcast URL (e.g. https://raw.githubusercontent.com/pahul/pruneit/main/appcast.xml) -->
-	<string>TODO_REPLACE_WITH_YOUR_SPARKLE_FEED_URL</string>
-	<key>SUPublicEDKey</key>
-	<!-- TODO: Generate with `generate_keys` and paste your public EdDSA key here -->
-	<string>TODO_REPLACE_WITH_YOUR_SPARKLE_ED_PUBLIC_KEY</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>86400</integer>
 </dict>
