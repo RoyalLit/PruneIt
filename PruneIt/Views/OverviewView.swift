@@ -566,19 +566,32 @@ struct OverviewIconTile: View {
                     .scaledToFit()
                     .frame(width: Self.size * Self.appIconScale, height: Self.size * Self.appIconScale)
                     .frame(width: Self.size, height: Self.size)
-            } else if let symbol {
-                Image(systemName: symbol)
+            } else if symbol == "circle.dashed" {
+                Image(systemName: "circle.dashed")
                     .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(color)
+                    .foregroundStyle(AppColors.textTertiary)
                     .frame(width: Self.size, height: Self.size)
-                    .background(color.opacity(0.12))
-                    .overlay(Self.shape.strokeBorder(color.opacity(0.3), lineWidth: 0.5))
+                    .background(AppColors.fillSecondary.opacity(0.5))
+                    .overlay(Self.shape.strokeBorder(AppColors.borderSubtle, lineWidth: 0.5))
+            } else if let symbol {
+                ZStack {
+                    LinearGradient(
+                        colors: [color, color.opacity(0.88)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    Image(systemName: symbol)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Color.white)
+                }
+                .frame(width: Self.size, height: Self.size)
+                .overlay(Self.shape.strokeBorder(Color.white.opacity(0.18), lineWidth: 0.5))
             } else {
                 Image(systemName: "circle.dashed")
                     .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(color)
+                    .foregroundStyle(AppColors.textTertiary)
                     .frame(width: Self.size, height: Self.size)
-                    .background(AppColors.fillSecondary.opacity(0.4))
+                    .background(AppColors.fillSecondary.opacity(0.5))
                     .overlay(Self.shape.strokeBorder(AppColors.borderSubtle, lineWidth: 0.5))
             }
         }

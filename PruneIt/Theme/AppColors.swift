@@ -95,19 +95,28 @@ enum AppColors {
     /// The Overview breakdown. Architectural devtools palette: cohesive, high-legibility
     /// tones anchored by PruneIt's signature Spruce, distinct in both light and dark modes.
     enum Chart {
-        static let appCaches = Color(light: 0x1B6C80, dark: 0x2EA3BE)
-        static let devTools = Color(light: 0x285973, dark: 0x4B8CAE)
-        static let largeFiles = Color(light: 0xA36E18, dark: 0xD49733)
-        static let apps = Color(light: 0x4D687A, dark: 0x7695A8)
-        static let leftovers = Color(light: 0xAD504B, dark: 0xD16E69)
-        static let appCachesTile = Color(light: 0x1B6C80, dark: 0x2EA3BE)
-        static let devToolsTile = Color(light: 0x285973, dark: 0x4B8CAE)
-        static let leftoversTile = Color(light: 0xAD504B, dark: 0xD16E69)
-        /// Close to the sidebar's "used" grey, and well apart from free space in
-        /// both themes.
-        static let everythingElse = Color(light: 0x7A7773, dark: 0x96938D)
+        // App Caches: Vibrant Emerald Green
+        static let appCaches = Color(light: 0x059669, dark: 0x10B981)
+        static let appCachesTile = Color(light: 0x059669, dark: 0x059669)
+
+        // Dev Tools: Rich Royal Purple
+        static let devTools = Color(light: 0x7C3AED, dark: 0xA855F7)
+        static let devToolsTile = Color(light: 0x7C3AED, dark: 0x7C3AED)
+
+        // Large Files: Warm Amber / Gold
+        static let largeFiles = Color(light: 0xD97706, dark: 0xF59E0B)
+
+        // Installed Apps: Vibrant Royal Blue
+        static let apps = Color(light: 0x2563EB, dark: 0x3B82F6)
+
+        // Leftovers: Crisp Crimson / Coral Rose
+        static let leftovers = Color(light: 0xE11D48, dark: 0xFB7185)
+        static let leftoversTile = Color(light: 0xE11D48, dark: 0xE11D48)
+
+        /// Living System / personal files neutral graphite slate
+        static let everythingElse = Color(light: 0x64748B, dark: 0x94A3B8)
         /// Free space on the storage bars.
-        static let freeSpace = Color(light: 0xE2DFDA, dark: 0x383633)
+        static let freeSpace = Color(light: 0xE2E8F0, dark: 0x27272A)
 
         /// The Everything else page's four buckets (#159), the Signal palette:
         /// each colour says what to do. Blue opens an app, amber is yours to

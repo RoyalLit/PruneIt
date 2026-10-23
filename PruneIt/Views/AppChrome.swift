@@ -2,21 +2,11 @@ import AppKit
 import SwiftUI
 
 struct AppBrandMark: View {
-    var iconSize: CGFloat = 22
-
     var body: some View {
-        HStack(spacing: 8) {
-            Image(nsImage: NSApplication.shared.applicationIconImage)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: iconSize, height: iconSize)
-                .clipShape(RoundedRectangle(cornerRadius: AppStyle.Radius.xs, style: .continuous))
-
-            Text("PruneIt")
-                .font(AppStyle.Typography.sectionTitle)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("PruneIt")
+        Text("PruneIt")
+            .font(AppStyle.Typography.sectionTitle.weight(.semibold))
+            .foregroundStyle(AppColors.textPrimary)
+            .accessibilityLabel("PruneIt")
     }
 }
 

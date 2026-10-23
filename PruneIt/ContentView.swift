@@ -323,6 +323,7 @@ struct ContentView: View {
                 AppBrandMark()
                     .padding(.top, SidebarLayout.topContentInset)
                     .padding(.bottom, AppStyle.Spacing.large)
+                    .padding(.horizontal, SidebarLayout.navRowInnerPadding)
 
                 VStack(alignment: .leading, spacing: 2) {
                     navRow(.overview)
