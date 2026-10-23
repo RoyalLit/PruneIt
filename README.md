@@ -1,4 +1,4 @@
-# PruneIt | Native macOS Precision Storage Cleaner & Developer Workbench
+# PruneIt | Native macOS Precision Storage Cleaner
 
 [![macOS](https://img.shields.io/badge/macOS-13.0+-black?style=flat-square&logo=apple)](https://apple.com/macos)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-FA7343?style=flat-square&logo=swift)](https://swift.org/)
@@ -9,7 +9,7 @@
 
 > Built with purpose by Pahul.
 
-**PruneIt** is a native macOS precision storage cleaner and developer workbench designed for software engineers, creators, and power users. It discovers developer caches, build artifacts, orphaned application leftovers, large files, simulator runtimes, and local AI model weights — and safely moves them to the Trash (or removes system artifacts permanently via native system APIs).
+**PruneIt** is a native macOS precision storage cleaner built for all Mac users — from everyday users and creators to power users and developers. It discovers unnecessary application and system caches, orphaned leftovers, large forgotten files, simulator runtimes, and developer build artifacts — and safely moves them to the Trash (or removes system artifacts permanently via native system APIs).
 
 PruneIt runs **100% on-device** with zero subscriptions, zero tracking, and zero telemetry.
 
@@ -18,20 +18,20 @@ PruneIt runs **100% on-device** with zero subscriptions, zero tracking, and zero
 ## 🖼️ Product Showcase
 
 <div align="center">
-  <img src="./Assets/overview.png" alt="PruneIt Developer Workbench Overview" width="750" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3);" />
+  <img src="./Assets/overview.png" alt="PruneIt Overview" width="750" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3);" />
 </div>
 
 ---
 
 ## 🌟 Vision & Value Proposition
 
-Traditional storage cleaners are bloated, aggressive, subscription-gated black boxes that treat developer files and system caches like generic junk. **PruneIt** is built from the ground up as a **precision developer workbench**:
+Traditional storage cleaners are bloated, aggressive, subscription-gated black boxes that treat your personal files and caches like generic junk. **PruneIt** is built from the ground up as a **precision storage cleaner for everyone**:
 
 - **🔒 Strict Inviolable Safety**: Centralized `DeletionSafetyPolicy` prevents accidental deletion of project files, active git repositories, shell configurations, and critical user roots.
 - **🗑️ Trash-First Philosophy**: Moves reclaimable items to the Trash by default so you can inspect and restore anything before permanently emptying.
-- **⚡ Developer-Native Scanners**: First-class detection for `node_modules`, `DerivedData`, `.gradle`, Cargo, Swift Package Manager, CocoaPods, Flutter, PyPI, and Docker artifacts.
+- **⚡ Smart Comprehensive Scanners**: First-class detection for everyday app caches, system leftovers, large forgotten files, as well as developer toolchains (`node_modules`, `DerivedData`, `.gradle`, Cargo, Docker, etc.).
 - **🤖 Local AI & Modern Runtimes**: Specialized, guarded cleanup for Ollama, LM Studio, Hugging Face model stores, and Apple Intelligence assets.
-- **🎨 Precision Workbench Design**: Architectural three-tier storage breakdown (`Living System`, `Prunable Debris`, `Available Capacity`) with monospaced metrics, dark mode support, and full keyboard navigation.
+- **🎨 Precision Modern Design**: Architectural three-tier storage breakdown (`Living System`, `Prunable Debris`, `Available Capacity`) with monospaced metrics, dark mode support, and full keyboard navigation.
 
 ---
 
@@ -154,7 +154,7 @@ bash scripts/make-dmg.sh
 ## 👤 Author
 
 **Pahul** ([@RoyalLit](https://github.com/RoyalLit))  
-*Built with purpose for macOS developers.*
+*Built with purpose for all macOS users.*
 
 ---
 
