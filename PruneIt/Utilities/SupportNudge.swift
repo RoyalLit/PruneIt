@@ -8,7 +8,7 @@ import Foundation
 /// under Done covers big cleans in between, at most once a week, and the card
 /// restarts that week too. Once either link has been opened, neither returns.
 enum SupportNudge {
-    static let url = URL(string: "https://github.com/pahul/pruneit")!
+    static let url = URL(string: "https://github.com/RoyalLit/PruneIt")!
 
     /// Milestones in decimal gigabytes, matching how `formatBytes` reports sizes:
     /// 100 GB, then every 50 GB after it.

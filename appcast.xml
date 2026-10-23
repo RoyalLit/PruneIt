@@ -2,7 +2,7 @@
 <!-- Phase 4: Placeholder appcast.xml for PruneIt.
      The original author's release history has been removed.
 
-     TODO: To publish your own updates via Sparkle:
+     Note: To publish your own updates via Sparkle:
      1. Generate an EdDSA key pair:
            sparkle/bin/generate_keys
      2. Set the public key in PruneIt/Info.plist under SUPublicEDKey.
@@ -14,7 +14,7 @@
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
   <channel>
     <title>PruneIt</title>
-    <link>https://github.com/pahul/pruneit</link>
+    <link>https://github.com/RoyalLit/PruneIt</link>
     <description>PruneIt update feed.</description>
     <language>en</language>
   </channel>

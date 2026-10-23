@@ -72,43 +72,31 @@ struct OverviewView: View {
 
     private func strataDeck(_ breakdown: OverviewBreakdown) -> some View {
         VStack(alignment: .leading, spacing: AppStyle.Spacing.medium) {
-            HStack(alignment: .center) {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(alignment: .firstTextBaseline, spacing: AppStyle.Spacing.xSmall) {
-                        Text(strataHeadline(breakdown))
-                            .font(AppStyle.Typography.title.weight(.bold))
-                            .foregroundStyle(store.safeRecoverableBytes > 0 ? AppColors.accentPrune : AppColors.textPrimary)
-                            .overviewNumberTransition(store.safeRecoverableBytes > 0 ? store.safeRecoverableBytes : breakdown.usedBytes, reduceMotion: reduceMotion)
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .firstTextBaseline, spacing: AppStyle.Spacing.xSmall) {
+                    Text(strataHeadline(breakdown))
+                        .font(AppStyle.Typography.title.weight(.bold))
+                        .foregroundStyle(store.safeRecoverableBytes > 0 ? AppColors.accentPrune : AppColors.textPrimary)
+                        .overviewNumberTransition(store.safeRecoverableBytes > 0 ? store.safeRecoverableBytes : breakdown.usedBytes, reduceMotion: reduceMotion)
 
-                        if store.safeRecoverableBytes > 0 {
-                            Text(String(localized: "Safe to Prune"))
-                                .font(AppStyle.Typography.micro)
-                                .foregroundStyle(AppColors.accentPrune)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(
-                                    Capsule()
-                                        .fill(AppColors.accentPruneSubtle)
-                                        .overlay(Capsule().strokeBorder(AppColors.accentPruneBorder, lineWidth: 0.5))
+                    if store.safeRecoverableBytes > 0 {
+                        Text(String(localized: "Safe to Prune"))
+                            .font(AppStyle.Typography.micro)
+                            .foregroundStyle(AppColors.accentPrune)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(AppColors.accentPruneSubtle)
+                                    .overlay(Capsule().strokeBorder(AppColors.accentPruneBorder, lineWidth: 0.5))
                                 )
-                        }
                     }
-
-                    Text(strataSubline(breakdown))
-                        .font(AppStyle.Typography.callout)
-                        .foregroundStyle(AppColors.textSecondary)
-                        .lineLimit(2)
                 }
-                .layoutPriority(0)
 
-                Spacer(minLength: AppStyle.Spacing.small)
-
-                HStack(spacing: AppStyle.Spacing.xSmall) {
-                    OverviewScanButton()
-                    OverviewCleanSafeButton()
-                }
-                .fixedSize(horizontal: true, vertical: false)
-                .layoutPriority(1)
+                Text(strataSubline(breakdown))
+                    .font(AppStyle.Typography.callout)
+                    .foregroundStyle(AppColors.textSecondary)
+                    .lineLimit(2)
             }
 
             OverviewDiskBar(
@@ -120,7 +108,7 @@ struct OverviewView: View {
             strataZoneLegend(breakdown)
         }
         .padding(AppStyle.Spacing.large)
-        .overviewCard()
+        .overviewCard(hasBorder: false)
     }
 
     private func strataHeadline(_ breakdown: OverviewBreakdown) -> String {
@@ -884,12 +872,17 @@ extension View {
     /// The card surface. Rows are clipped to its rounded shape so a row's hover fill
     /// stays inside the corners, and the border is drawn over them so the fill
     /// can't cover it.
-    func overviewCard() -> some View {
+    @ViewBuilder
+    func overviewCard(hasBorder: Bool = true) -> some View {
         let shape = RoundedRectangle(cornerRadius: AppStyle.Radius.lg, style: .continuous)
-        return self
+        self
             .background(shape.fill(AppColors.surfaceCard))
             .clipShape(shape)
-            .overlay(shape.strokeBorder(AppColors.borderSubtle))
+            .overlay {
+                if hasBorder {
+                    shape.strokeBorder(AppColors.borderSubtle)
+                }
+            }
     }
 }
 

@@ -8,7 +8,7 @@ Only the latest release of PruneIt is actively supported.
 
 **Do not file a public GitHub issue for security vulnerabilities.**
 
-Please email the maintainer privately at: `TODO_YOUR_SECURITY_EMAIL`
+Please email the maintainer privately at: [royalpahul@gmail.com](mailto:royalpahul@gmail.com)
 
 Include:
 - A clear description of the vulnerability
