@@ -139,7 +139,6 @@ bash scripts/make-dmg.sh
 | [**Architecture Specification**](./docs/ARCHITECTURE.md) | In-depth technical breakdown of state machines, scanners, and helper daemons. |
 | [**Design System**](./docs/design-system.md) | Typography scales, warm graphite palette, and component design tokens. |
 | [**Safety Notes**](./docs/safety-notes.md) | Explicit allowlists, blacklists, and system path protections. |
-| [**Audit Action Plan**](./docs/AUDIT_ACTION_PLAN.md) | Multi-agent production audit and technical roadmap. |
 
 ---
 

@@ -2,6 +2,10 @@
 build/
 DerivedData/
 xcuserdata/
+*.xcworkspace
+!PruneIt.xcodeproj/project.xcworkspace
+*.xcuserstate
+*.xcuserdatad
 *.xcconfig
 Secrets.xcconfig
 *.app/
@@ -11,17 +15,26 @@ Packaging.log
 *.profraw
 *.vsix
 release.sh
+TestResults/
+*.xcresult
 
 # Dependencies
 node_modules/
+.swiftpm/
+.build/
 
 # OS & Editor
 .DS_Store
 *.swp
 *.orig
+*.bak
+*.tmp
+*.log
 .cursor/
+.vscode/
+.idea/
 
-# Agent & AI Tooling (Kept local, excluded from repository to preserve clean codebase)
+# Agent & AI Tooling (Kept private, excluded from repository)
 .agents/
 .claude/
 .coderabbit.yaml
@@ -34,8 +47,13 @@ AGENTS.md
 RULES.md
 TASKS.md
 docs/taste-skill.md
+docs/AUDIT_ACTION_PLAN.md
+AUDIT*.md
+*ACTION_PLAN*.md
 
-# Scratch & Temporary Exploration
+# Scratch, Spikes & Internal Exploration
 scratch/
 spikes/
+backup/
 RELEASE_NOTES_*.md
+.env*
