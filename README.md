@@ -159,3 +159,4 @@ Deletion safety is the top priority. Every path goes through `DeletionSafetyPoli
 ## License
 
 MIT — see [LICENSE](LICENSE).
+

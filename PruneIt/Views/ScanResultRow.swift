@@ -244,6 +244,9 @@ struct ScanResultRow: View {
                 .onTapGesture {
                     onToggle()
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityValue(isSelected ? String(localized: "Selected") : String(localized: "Not selected"))
+                .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
                 .accessibilityAction {
                     onToggle()
                 }

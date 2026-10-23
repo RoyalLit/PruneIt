@@ -1,14 +1,16 @@
 import Foundation
 
-nonisolated func formatBytes(_ bytes: Int64) -> String {
-    guard bytes > 0 else { return String(localized: "0 bytes") }
-
+private let cachedByteCountFormatter: ByteCountFormatter = {
     let formatter = ByteCountFormatter()
     formatter.allowedUnits = [.useBytes, .useKB, .useMB, .useGB, .useTB]
     formatter.countStyle = .file
     formatter.includesUnit = true
+    return formatter
+}()
 
-    return formatter.string(fromByteCount: bytes)
+nonisolated func formatBytes(_ bytes: Int64) -> String {
+    guard bytes > 0 else { return String(localized: "0 bytes") }
+    return cachedByteCountFormatter.string(fromByteCount: bytes)
 }
 
 /// Formats volume figures for the storage sidebar — one decimal at most (e.g. "313.4 GB").

@@ -93,10 +93,10 @@ extension PruneItStore {
             guard everythingElseMeasureGeneration == generation else { return }
             guard !Task.isCancelled else { break }
             measurement.apply(event)
-            everythingElseMeasurement = measurement
-            // Progress inside a root changes no figure, so the breakdown and
-            // the map stay cached; only the ring moves.
+            // Progress inside a root changes no figure, so avoid publishing
+            // and triggering store-wide view invalidation on every chunk.
             if case .progress = event { continue }
+            everythingElseMeasurement = measurement
             everythingElseMeasurementRevision &+= 1
         }
         guard everythingElseMeasureGeneration == generation else { return }

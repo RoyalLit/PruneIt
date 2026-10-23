@@ -276,6 +276,7 @@
 "Items being cleaned, %lld" = "正在清理 %lld 项";
 "Items found, %lld" = "发现 %lld 项";
 "Pahul" = "Pahul";
+"Select all items in %@" = "全选 %@ 中的所有项";
 "Built with purpose by Pahul" = "由 Pahul 倾心打造";
 "Built with purpose by Pahul (@RoyalLit)" = "由 Pahul (@RoyalLit) 倾心打造";
 "Crafted by Pahul" = "由 Pahul 精心打造";

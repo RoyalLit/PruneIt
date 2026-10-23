@@ -17,7 +17,7 @@ enum AppColors {
     static let textSecondary = Color(light: 0x64625E, dark: 0xA6A39D)
     /// Icons, chevrons, placeholders and timestamps. Never a sentence someone
     /// has to read (3.8:1 light, 4.1:1 dark).
-    static let textTertiary = Color(light: 0x85827C, dark: 0x807D78)
+    static let textTertiary = Color(light: 0x6B6863, dark: 0x9E9B95)
 
     // MARK: - Surfaces
 

@@ -502,6 +502,18 @@ nonisolated final class FileDeleter: Sendable {
                 continue
             }
 
+            // Central safety gate backstop: never allow files hitting never-delete
+            // rules (Keychains, Mail, System, etc.) to be deleted, even if marked eligible.
+            guard DeletionSafetyPolicy.evaluate(url) != .blockedNeverDelete else {
+                skippedItems.append(SkippedDeletionItem(
+                    path: url.path,
+                    displayName: friendlyTitle,
+                    reason: "Blocked by global deletion safety policy",
+                    isUserVisible: true
+                ))
+                continue
+            }
+
             onProgress?(.itemStarted(name: friendlyTitle ?? url.lastPathComponent))
             let size = pathToExpectedSizeBytes[standardizedPath] ?? FolderSizing.singleFileSize(at: url)
             do {

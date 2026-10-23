@@ -1112,6 +1112,10 @@ struct DevToolsView<PageHeader: View>: View {
                     TriStateCheckbox(title: "", state: projectSelectTriState(forGroupID: group.id)) {
                         toggleProjectEligibleSelection(groupID: group.id)
                     }
+                    .accessibilityLabel(String.localizedStringWithFormat(
+                        NSLocalizedString("Select all items in %@", comment: "Accessibility label for group select all"),
+                        group.displayName
+                    ))
                 }
                 .frame(width: 24)
 
