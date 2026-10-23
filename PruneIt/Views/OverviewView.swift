@@ -215,7 +215,7 @@ struct OverviewView: View {
                     .font(AppStyle.Typography.sectionTitle)
                     .foregroundStyle(AppColors.textPrimary)
                 Spacer()
-                Text("Inspected Categories & Scope")
+                Text("Inspected Categories")
                     .font(AppStyle.Typography.metadata)
                     .foregroundStyle(AppColors.textTertiary)
             }
@@ -355,16 +355,6 @@ private struct OverviewCategoryRow: View {
                     Text(OverviewCategoryStyle.name(category))
                         .font(AppStyle.Typography.headline)
                         .foregroundStyle(AppColors.textPrimary)
-
-                    Text(OverviewCategoryStyle.pathScope(category))
-                        .font(AppStyle.Typography.micro)
-                        .foregroundStyle(AppColors.textTertiary)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 1)
-                        .background(
-                            RoundedRectangle(cornerRadius: AppStyle.Radius.xs, style: .continuous)
-                                .fill(AppColors.fillSecondary)
-                        )
 
                     if OverviewCategoryStyle.isReview(category), showsFigure {
                         AppBadge(text: String(localized: "Review first"), tone: .warning)
@@ -936,16 +926,6 @@ enum OverviewCategoryStyle {
         // counts only the apps themselves, and this total includes their files.
         case .apps: return String(localized: "Installed apps")
         case .leftovers: return String(localized: "Leftovers from deleted apps")
-        }
-    }
-
-    static func pathScope(_ category: OverviewCategory) -> String {
-        switch category {
-        case .appCaches: return "~/Library/Caches"
-        case .devTools: return "~/Library/Developer"
-        case .largeFiles: return "> 50 MB"
-        case .apps: return "/Applications"
-        case .leftovers: return "Remnants"
         }
     }
 
