@@ -74,7 +74,7 @@ final class PruneItUpdater: NSObject, ObservableObject, SPUUpdaterDelegate {
               !feedURLString.isEmpty,
               !feedURLString.contains("TODO"),
               let feedURL = URL(string: feedURLString),
-              feedURL.scheme == "https" || feedURL.scheme == "http" else {
+              feedURL.scheme == "https" else {
             return false
         }
         guard let publicKey = info["SUPublicEDKey"] as? String,
