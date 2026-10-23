@@ -79,13 +79,6 @@ struct AboutView: View {
             Text("PruneIt")
                 .font(AppStyle.Typography.title)
 
-            Text(String(localized: "Built with purpose by Pahul"))
-                .font(AppStyle.Typography.micro)
-                .foregroundStyle(AppColors.accentPrune)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 2)
-                .background(AppColors.accentPruneSubtle, in: Capsule())
-
             if let devModeFlash {
                 Text(devModeFlash)
                     .font(AppStyle.Typography.callout.weight(.medium))
@@ -229,7 +222,7 @@ struct AboutView: View {
 
                 InsetCardDivider()
 
-                AboutActionRow(icon: "person.crop.circle.fill", label: String(localized: "Built with purpose by Pahul (@RoyalLit)")) {
+                AboutActionRow(icon: "person.crop.circle.fill", label: String(localized: "Crafted by Pahul (@RoyalLit)")) {
                     NSWorkspace.shared.open(Self.authorURL)
                 }
             }
@@ -243,15 +236,6 @@ struct AboutView: View {
                     .fontWeight(.medium)
                     .foregroundStyle(AppColors.textPrimary)
                 Text("· Open Source")
-                    .foregroundStyle(AppColors.textSecondary)
-            }
-            .font(AppStyle.Typography.metadata)
-
-            HStack(spacing: 4) {
-                Image(systemName: "sparkles")
-                    .font(.system(size: 10))
-                    .foregroundStyle(AppColors.accentPrune)
-                Text(String(localized: "Built with purpose by Pahul"))
                     .foregroundStyle(AppColors.textSecondary)
             }
             .font(AppStyle.Typography.metadata)
