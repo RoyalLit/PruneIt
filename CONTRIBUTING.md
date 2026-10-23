@@ -22,7 +22,7 @@ Before writing code or opening a pull request, all human contributors and AI age
   `feat: warn when Large Files items sync to iCloud (#25)`
   Types in use: `feat`, `fix`, `docs`, `test`, `ci`, `refactor`, `release`.
 - Write commit bodies and PR descriptions in plain, short sentences. Include real numbers when you measured something.
-- For UI changes, add before/after screenshots in dark mode to `docs/screenshots/`.
+- For UI changes, attach before/after screenshots in dark mode to your pull request.
 
 ## Safety-critical code
 
